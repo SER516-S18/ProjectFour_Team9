@@ -57,7 +57,7 @@ public class StatusIndicator extends JPanel {
     }
 
     /**
-     * Paints the status circle with relevant colors
+     * Override method to paint the status circle with relevant colors
      *
      * @param graphics Graphics object to change the color the circle
      */

@@ -42,7 +42,7 @@ public class TopController extends TopAbstractController {
     }
 
     /**
-     * Method to initialize the top view and to add listeners
+     * Override Method to initialize the top view and to add listeners
      * to all the components in the panel
      */
     @Override
@@ -62,7 +62,7 @@ public class TopController extends TopAbstractController {
     class IntervalDocumentListener implements DocumentListener {
 
         /**
-         * Method to remove update of time interval
+         * Overide Method to remove update of time interval
          */
         @Override
         public void removeUpdate(DocumentEvent e) {
@@ -85,7 +85,7 @@ public class TopController extends TopAbstractController {
         }
 
         /**
-         * Method to update the time interval
+         * Override Method to update the time interval
          */
         @Override
         public void insertUpdate(DocumentEvent e) {

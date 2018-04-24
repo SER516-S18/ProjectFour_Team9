@@ -30,7 +30,7 @@ public class EmotionsView extends EmotionsAbstractView {
     }
 
     /**
-     * Method to initialize the emotions view panel
+     * Override Method to initialize the emotions view panel
      *
      * @param subViews object of type ViewInterface
      */

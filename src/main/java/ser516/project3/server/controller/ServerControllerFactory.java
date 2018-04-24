@@ -48,7 +48,7 @@ public class ServerControllerFactory {
      * @param controllerType - the Type of the controller
      * @param model          - the controllers model
      * @param view           - the controllers view
-     * @return the controller object
+     * @return  			 - the controller object
      */
     public ControllerInterface getController(String controllerType, ModelInterface model, ViewInterface view) {
         if (controllerType == null) {

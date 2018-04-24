@@ -42,7 +42,7 @@ public class ConsoleView extends ConsoleAbstractView implements Observer {
     }
 
     /**
-     * Method to initialize the expressions view panel
+     * Override Method to initialize the expressions view panel
      *
      * @param subViews object of type ViewInterface
      */
@@ -78,7 +78,10 @@ public class ConsoleView extends ConsoleAbstractView implements Observer {
     }
 
     /**
-     * Method to append the new messages to console
+     * Override Method to append the new messages to console
+     * 
+     * @param messageArrayObject object of Observable
+     * 
      */
     @Override
     public void update(Observable messageArrayObject, Object observerObj) {
@@ -91,6 +94,12 @@ public class ConsoleView extends ConsoleAbstractView implements Observer {
         consoleOutput.append("\n");
     }
     
+    /**
+     * Adds the listener to the respective component in the view class
+     *
+     * @param eventListener the listener for the respective component
+     * @param componentName component to which the listener has to be added
+     */
     @Override
 	public void addListener(EventListener eventListener, String componentName) {
 		if(componentName.equals("BUTTON_CLEARCONSOLE")) {

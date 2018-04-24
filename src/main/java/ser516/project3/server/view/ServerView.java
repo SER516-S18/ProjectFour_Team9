@@ -26,7 +26,6 @@ import ser516.project3.server.Components.Top.TopView;
 
 /**
  * The JFrame class of Server application
- * 
  * @author Ganesh, Janani, Sangeetha
  */
 @SuppressWarnings("serial")
@@ -43,7 +42,6 @@ public class ServerView extends JFrame implements ViewInterface {
 
 	/**
 	 * Method to return the ServerView instance
-	 * 
 	 */
 	public static ServerView getServerView() {
 		if (serverViewInstance == null) {
@@ -53,11 +51,8 @@ public class ServerView extends JFrame implements ViewInterface {
 	}
 
 	/**
-	 * Method to initialize the expressions view panel
-	 * 
-	 * @param subViews
-	 *            object of type ViewInterface
-	 * 
+	 * Override Method to initialize the expressions view panel
+	 * @param subViews object of type ViewInterface
 	 */
 	@Override
 	public void initializeView(ViewInterface[] subViews) {
@@ -77,6 +72,12 @@ public class ServerView extends JFrame implements ViewInterface {
 		setVisible(true);
 	}
 	
+	/**
+	 * Override Method to update the view
+	 * Empty but mandatory as it is an override method
+	 * @param model object of type ModelInterface
+	 */
+	
 	@Override
 	public void updateView(ModelInterface model) {
 		// TODO Auto-generated method stub
@@ -85,7 +86,6 @@ public class ServerView extends JFrame implements ViewInterface {
 
 	/**
 	 * This method will initialize the second sub panel of the Server window
-	 *
 	 * @return the second sub-panel
 	 */
 	private Component createConfigurationPanels() {
@@ -141,11 +141,8 @@ public class ServerView extends JFrame implements ViewInterface {
 	}
 
 	/**
-	 * Method to WindowListener to the Server window
-	 * 
-	 * @param windowAdapter
-	 *            WindowAdapter object
-	 * 
+	 * Method to add WindowListener to the Server window
+	 * @param windowAdapter WindowAdapter object
 	 */
 	public void addServerWindowListener(WindowAdapter windowAdapter) {
 		addWindowListener(windowAdapter);

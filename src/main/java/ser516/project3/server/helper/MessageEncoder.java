@@ -25,8 +25,8 @@ import java.util.Map;
 public class MessageEncoder implements Encoder.Text<MessageModel> {
 
     /**
-     * Initializer for the Message encoder. Empty as no initial configuration
-     * needs to be updated
+     * Override method for Initializer of the Message encoder. 
+     * Empty as no initial configuration needs to be updated
      *
      * @param config The configuration of endpoint for the encoding
      */
@@ -36,7 +36,7 @@ public class MessageEncoder implements Encoder.Text<MessageModel> {
     }
 
     /**
-     * Destroys the component if created
+     * Override Mthod to destroy the component if created
      */
     @Override
     public void destroy() {
@@ -44,7 +44,7 @@ public class MessageEncoder implements Encoder.Text<MessageModel> {
     }
 
     /**
-     * Encodes the model to JSON format to be transmitted
+     * Override Method to encodes the model to JSON format to be transmitted
      *
      * @param messageModel model to be encoded
      * @return returns the encoded

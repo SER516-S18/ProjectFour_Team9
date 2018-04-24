@@ -20,7 +20,7 @@ public class TimerController extends TimerAbstractController {
     }
 
     /**
-     * Method to initialize the timer view
+     * Override Method to initialize the timer view
      */
     @Override
     public void initializeView() {

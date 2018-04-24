@@ -77,7 +77,7 @@ public class ServerController implements ControllerInterface {
     }
 
     /**
-     * Method create initialize all the sub panels in the server
+     * Override Method to initialize all the sub panels in the server
      */
     @Override
     public void initializeView() {
@@ -91,8 +91,8 @@ public class ServerController implements ControllerInterface {
     }
 
     /**
-     * Method to get Server view
-     * and @return Server view object
+     * Override Method to get Server view
+     * @return Server view object
      */
     @Override
     public ViewInterface getView() {
@@ -100,7 +100,7 @@ public class ServerController implements ControllerInterface {
     }
 
     /**
-     * Returns the set of sub controllers in case any
+     * Override Method to return set of sub controllers in case any
      *
      * @return array containing sub controllers
      */
