@@ -2,6 +2,12 @@ package ser516.project3.server.Components.Timer;
 
 import ser516.project3.interfaces.ControllerInterface;
 
+/**
+ * TimerAbstractController to define the basic
+ * functionality for Timer panel
+ *
+ * @author Adhiraj Tikku
+ */
 public abstract class TimerAbstractController implements ControllerInterface {
 
 	protected TimerModel timerModel;
