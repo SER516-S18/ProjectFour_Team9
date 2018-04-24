@@ -9,6 +9,12 @@ import javax.swing.JPanel;
 import ser516.project3.interfaces.ModelInterface;
 import ser516.project3.interfaces.ViewInterface;
 
+/**
+ * Abstract view class for expression view to define the basic
+ * functions to be implemented by all implementing classes
+ *
+ * @author Adhiraj Tikku
+ */
 public abstract class ExpressionsAbstractView extends JPanel implements ViewInterface {
 
 	protected ExpressionsModel expressionsModel;
@@ -33,8 +39,19 @@ public abstract class ExpressionsAbstractView extends JPanel implements ViewInte
 		// TODO Auto-generated method stub
 
 	}
-	
+
+    /**
+     * Adds the listener to the respective component in the view class
+     *
+     * @param eventListener the listener for the respective component
+     * @param componentName component to which the listener has to be added
+     */
 	public abstract void addListener(EventListener eventListener, String componentName);
-	
+
+    /**
+     *
+     * Changes the expressions activate button status depending on the
+     * auto-reset value in the checkbox
+     */
 	public abstract void changeActivateButtonType();
 }

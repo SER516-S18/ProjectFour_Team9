@@ -2,6 +2,12 @@ package ser516.project3.server.Components.Expressions;
 
 import ser516.project3.interfaces.ControllerInterface;
 
+/**
+ * ExpressionsAbstractController to define the basic
+ * functionality for Expressions
+ *
+ * @author Adhiraj Tikku
+ */
 public abstract class ExpressionsAbstractController implements ControllerInterface {
 
 	protected ExpressionsModel expressionsModel;
