@@ -8,6 +8,7 @@ package ser516.project3.constants;
 public class ClientConstants {
 
     public final static String ENDPOINT = "server";
+    public final static String HEALTH_SERVER_ENDPOINT = "healthserver";
     public final static String CLIENT = "Client";
 
     // Client View Constants
