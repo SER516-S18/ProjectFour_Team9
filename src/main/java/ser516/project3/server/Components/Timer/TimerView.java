@@ -29,7 +29,7 @@ public class TimerView extends TimerAbstractView {
     }
 
     /**
-     * Method to initialize the timer view panel
+     * Override Method to initialize the timer view panel
      *
      * @param subViews object of type ViewInterface
      */
@@ -43,7 +43,7 @@ public class TimerView extends TimerAbstractView {
     }
     
     /**
-     * Method to update the time stamp in the timer panel
+     * Override Method to update the time stamp in the timer panel
      */
     @Override
     public void updateView(ModelInterface model) {

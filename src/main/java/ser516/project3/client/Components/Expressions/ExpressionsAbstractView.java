@@ -5,6 +5,13 @@ import javax.swing.JPanel;
 import ser516.project3.interfaces.ModelInterface;
 import ser516.project3.interfaces.ViewInterface;
 
+/**
+ * Abstract view class for Expressions view to define the basic
+ * functions to be implemented by all implementing classes
+ *
+ * @author Adhiraj Tikku
+ */
+
 public abstract class ExpressionsAbstractView extends JPanel implements ViewInterface {
 
 	protected ExpressionsModel expressionsModel;

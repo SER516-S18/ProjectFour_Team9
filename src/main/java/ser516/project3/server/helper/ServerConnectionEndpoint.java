@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * The Web server socket end point class for the server application
  *
- * @author User
+ * @author vsriva12
  */
 @ServerEndpoint(value = "/server", encoders = {MessageEncoder.class})
 public class ServerConnectionEndpoint {
@@ -62,7 +62,7 @@ public class ServerConnectionEndpoint {
 
     /**
      * Method containing logic on what to do when message from client is received
-     *
+     * @param message from client
      * @param session web socket session
      */
     @OnMessage

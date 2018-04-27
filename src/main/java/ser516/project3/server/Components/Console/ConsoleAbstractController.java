@@ -2,6 +2,12 @@ package ser516.project3.server.Components.Console;
 
 import ser516.project3.interfaces.ControllerInterface;
 
+/**
+ * ConsoleAbstractController to define the basic
+ * functionality for Console in the server
+ *
+ * @author Adhiraj Tikku
+ */
 public abstract class ConsoleAbstractController implements ControllerInterface {
 	
 	protected ConsoleModel consoleModel;

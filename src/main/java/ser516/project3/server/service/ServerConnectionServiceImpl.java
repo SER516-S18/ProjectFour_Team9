@@ -17,7 +17,7 @@ public class ServerConnectionServiceImpl implements ServerConnectionServiceInter
     ServerContainerThread threadInstance;
 
     /**
-     * Method responsible for creating threads
+     * Override Method responsible for creating threads
      * for web socket
      */
     @Override
@@ -30,7 +30,8 @@ public class ServerConnectionServiceImpl implements ServerConnectionServiceInter
     }
 
     /**
-     * Method responsible for closing any thread instance
+     * Override Method responsible for closing any thread 
+     * instance
      */
     @Override
     public void stopServerEndpoint() {

@@ -27,7 +27,7 @@ public class EmotionsController extends EmotionsAbstractController {
     }
 
     /**
-     * Method to initialize the emotions view and to add listeners
+     * Override Method to initialize the emotions view and to add listeners
      * to the component  in the panel
      */
     @Override

@@ -129,21 +129,10 @@ public class Mouth extends Arc2D.Double implements FaceElementsInterface {
         }
 
         if (instruction.equals(SMILE)) {
-
-            double angleStartNew = START_ANGLE_SMILE - (changeValue * 30);
-            double angleExentNew = EXTENT_ANGLE_SMILE + (changeValue * 55);
-            setArc(X_POSITION, Y_POSITION, WIDTH, HEIGHT, angleStartNew, angleExentNew, OPEN);
-            if (changeValue == 0) {
-                resetPositionToDefault();
-            }
+            configureFaceForSmile(true, changeValue);
         }
         if (instruction.equals(LAUGH)) {
-            double angleStartNew = START_ANGLE_SMILE - (changeValue * 30);
-            double angleExentNew = EXTENT_ANGLE_SMILE + (changeValue * 55);
-            setArc(X_POSITION, Y_POSITION, WIDTH, HEIGHT, angleStartNew, angleExentNew, CHORD);
-            if (changeValue == 0) {
-                resetPositionToDefault();
-            }
+            configureFaceForSmile(false, changeValue);
         }
 
     }
@@ -155,5 +144,24 @@ public class Mouth extends Arc2D.Double implements FaceElementsInterface {
     public void moveElement(String instruction, boolean changeValue) {
         // intentionally blank, no use currently for this, since mouth has double
         // attributes on server.
+    }
+
+    /**
+     * Configures the face for smile and clench.
+     * If is smile is on then shows smile else clench
+     *
+     * @param isSmile boolean varaible to depict to configure for smile or clench
+     * @param changeValue the value with with the change is to be displayed
+     */
+    public void configureFaceForSmile(boolean isSmile, double changeValue) {
+
+        double angleStartNew = START_ANGLE_SMILE - (changeValue * 30);
+        double angleExentNew = EXTENT_ANGLE_SMILE + (changeValue * 55);
+        int closure = isSmile ? OPEN : CHORD;
+        setArc(X_POSITION, Y_POSITION, WIDTH, HEIGHT, angleStartNew, angleExentNew, closure);
+        if (changeValue == 0) {
+            resetPositionToDefault();
+        }
+
     }
 }

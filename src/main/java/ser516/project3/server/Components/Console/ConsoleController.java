@@ -21,7 +21,7 @@ public class ConsoleController extends ConsoleAbstractController {
     }
 
     /**
-     * Method to initialize the console view and to add listeners
+     * Override Method to initialize the console view and to add listeners
      * to the component
      */
     @Override
