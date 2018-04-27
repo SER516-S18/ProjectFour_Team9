@@ -40,9 +40,6 @@ public class HealthController extends HealthAbstractController {
                 case "BloodSugar":
                     healthModel.setBloodSugar((double) source.getValue());
                     break;
-                case "BMI":
-                    healthModel.setBmi((double) source.getValue());
-                    break;
                 case "Height":
                     healthModel.setHeight((double) source.getValue());
                     break;
