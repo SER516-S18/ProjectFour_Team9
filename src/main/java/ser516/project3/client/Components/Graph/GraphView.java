@@ -129,7 +129,7 @@ public class GraphView extends GraphAbstractView {
         XYPlot plot = chart.getXYPlot();
 
         ValueAxis range = plot.getRangeAxis();
-        if (graphModel.getNoOfChannels() == 6) {
+        if (graphModel.getNoOfChannels() >= 5) {
             range.setTickLabelPaint(Color.WHITE);
             range.setTickLabelFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, GRAPH_AXIS_FONT_SIZE));
         } else {
