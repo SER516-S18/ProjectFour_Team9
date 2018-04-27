@@ -47,7 +47,15 @@ public class ClientConstants {
     public final static String BMI_DEFAULT_COLOR_HEX= "#F86C1C";
     public final static String FOCUS_DEFAULT_COLOR_HEX = "#ADAAFF";
     public final static int DEFAULT_DISPLAY_LENGTH = 30;
-
+    
+    // Body Vitals Constants
+    public final static String BODY_VITALS = "Body Vitals";
+    public final static String PULSE = "Pulse";
+    public final static String HEART_RATE = "Heart Rate";
+    public final static String BODY_TEMPERATURE = "Body Temperature";
+    public final static String BLOOD_SUGAR = "Blood Sugar";
+    public final static String BMI = "BMI";
+    
     // Expression Constants
     public final static String EXPRESSIONS = "Expressions";
 
