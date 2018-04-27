@@ -1,9 +1,14 @@
 package ser516.project3.client.Components;
 
-import javax.swing.*;
+import static java.awt.event.KeyEvent.VK_BACK_SPACE;
+import static java.awt.event.KeyEvent.VK_DELETE;
+import static java.awt.event.KeyEvent.VK_ENTER;
+import static java.awt.event.KeyEvent.VK_LEFT;
+import static java.awt.event.KeyEvent.VK_RIGHT;
+
 import java.awt.event.KeyEvent;
 
-import static java.awt.event.KeyEvent.*;
+import javax.swing.JTextField;
 
 /**
  * The NumberTextField class is an extension of JTextField class which
