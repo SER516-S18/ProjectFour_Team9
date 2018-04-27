@@ -11,6 +11,7 @@ import javax.swing.event.ChangeListener;
 
 import ser516.project3.client.Components.Expressions.ExpressionsController;
 import ser516.project3.client.Components.Header.HeaderController;
+import ser516.project3.client.service.ClientConnectionHealthServiceImpl;
 import ser516.project3.client.service.ClientConnectionServiceImpl;
 import ser516.project3.client.service.ClientConnectionServiceInterface;
 import ser516.project3.client.view.ClientView;
@@ -41,6 +42,7 @@ import ser516.project3.server.controller.ServerControllerFactory;
  */
 public class ClientController implements ControllerInterface, CommonDataInterface {
 	private boolean connected = false;
+	private boolean healthServerConnected = false;
 	private ClientConnectionServiceInterface clientConnectionService;
 	private ClientViewFactory viewFactory;
 	private ClientView clientView;
@@ -202,6 +204,22 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 			clientConnectionService = new ClientConnectionServiceImpl();
 			clientConnectionService.createClientConnection(ipAddress, port, ClientConstants.ENDPOINT);
 			connected = true;
+		}
+	}
+	
+	/**
+	 * Method to connect to a server end point
+	 * @param ipAddress - the IP address field
+	 * @param port - the port field
+	 */
+	public void toggleConnectionToHealthServer(String ipAddress, int port) {
+		if (healthServerConnected) {
+			clientConnectionService.stopClientConnection();
+			healthServerConnected = false;
+		} else {
+			clientConnectionService = new ClientConnectionHealthServiceImpl();
+			clientConnectionService.createClientConnection(ipAddress, port, ClientConstants.HEALTH_SERVER_ENDPOINT);
+			healthServerConnected = true;
 		}
 	}
 
