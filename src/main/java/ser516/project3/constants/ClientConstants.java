@@ -39,6 +39,11 @@ public class ClientConstants {
     public final static String STRESS_DEFAULT_COLOR_HEX = "#90C340";
     public final static String RELAXATION_DEFAULT_COLOR_HEX = "#02ADFF";
     public final static String EXCITEMENT_DEFAULT_COLOR_HEX = "#F86C1C";
+    public final static String PULSE_DEFAULT_COLOR_HEX = "#F20090";
+    public final static String HEART_RATE_DEFAULT_COLOR_HEX= "#02AC9F";
+    public final static String BODY_TEMPERATURE_DEFAULT_COLOR_HEX = "#90C340";
+    public final static String BLOOD_SUGAR_DEFAULT_COLOR_HEX= "#02ADFF";
+    public final static String BMI_DEFAULT_COLOR_HEX= "#F86C1C";
     public final static String FOCUS_DEFAULT_COLOR_HEX = "#ADAAFF";
     public final static int DEFAULT_DISPLAY_LENGTH = 30;
 
