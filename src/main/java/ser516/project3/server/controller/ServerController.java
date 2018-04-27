@@ -195,7 +195,7 @@ public class ServerController implements ControllerInterface {
      */
     class ServerWindowsListener extends WindowAdapter {
         public void windowClosed(WindowEvent e) {
-            ServiceModel.getInstance().setServerStatus(false);
+            topController.stopServerConnection();
 //            serverConnectionService.stopServerEndpoint();
             logger.info(ServerConstants.SERVER_CLOSE_MESSAGE);
         }

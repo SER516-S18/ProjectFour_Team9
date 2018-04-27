@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import ser516.project3.constants.ServerConstants;
 import ser516.project3.server.Components.ServerCommonData;
 import ser516.project3.server.controller.ServerController;
+import ser516.project3.server.service.ServerConnectionServiceImpl;
 import ser516.project3.server.service.ServerConnectionServiceInterface;
 import ser516.project3.server.service.ServiceModel;
 
@@ -26,7 +27,7 @@ import ser516.project3.server.service.ServiceModel;
 public class TopController extends TopAbstractController {
     final static Logger logger = Logger.getLogger(TopController.class);
 
-//    private ServerConnectionServiceInterface serverConnectionService;
+    private ServerConnectionServiceInterface serverConnectionService;
 
     private static final String START = "Start";
     private static final String STOP = "Stop";
@@ -40,6 +41,7 @@ public class TopController extends TopAbstractController {
      */
     public TopController(TopModel topModel, TopView topView) {
         super(topModel, topView);
+        serverConnectionService = new ServerConnectionServiceImpl();
     }
 
     /**
@@ -54,6 +56,11 @@ public class TopController extends TopAbstractController {
         topView.addListener(new ServerStartStopButtonListener(), "BUTTON_SERVER");
         topView.addListener(new SendButtonListener(), "BUTTON_SEND");
         ServerCommonData.getInstance().getMessage().setInterval(topModel.getInterval());
+    }
+
+    public void stopServerConnection() {
+//                ServiceModel.getInstance().setServerStatus(false);
+        serverConnectionService.stopServerEndpoint();
     }
 
     /**
@@ -138,15 +145,15 @@ public class TopController extends TopAbstractController {
             logger.info(ServerConstants.START_STOP_PRESSED);
             boolean isStarted = topModel.isServerStarted();
             if (isStarted) {
-                ServiceModel.getInstance().setServerStatus(false);
-//                serverConnectionService.stopServerEndpoint();
+//                ServiceModel.getInstance().setServerStatus(false);
+                serverConnectionService.stopServerEndpoint();
                 topModel.setServerStarted(false);
                 topModel.setSendButtonEnabled(false);
                 topModel.setServerStartStopButtonText(ServerConstants.START_SERVER);
                 setBlinking(false);
             } else {
-                ServiceModel.getInstance().setServerStatus(true);
-//                serverConnectionService.initServerEndpoint();
+//                ServiceModel.getInstance().setServerStatus(true);
+                serverConnectionService.initServerEndpoint();
                 topModel.setServerStarted(true);
                 topModel.setSendButtonEnabled(true);
                 topModel.setServerStartStopButtonText(ServerConstants.STOP_SERVER);

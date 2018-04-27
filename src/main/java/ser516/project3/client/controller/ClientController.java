@@ -267,7 +267,7 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 	public void openServer() {
         if(serverController == null) {
             ServerControllerFactory controllerFactory = ServerControllerFactory.getInstance();
-            new ServerConnectionServiceImpl(ServiceModel.getInstance());
+//            new ServerConnectionServiceImpl(ServiceModel.getInstance());
             serverController = (ServerController) controllerFactory.getController("SERVER", null, null);
             serverController.initializeView();
         } else {
