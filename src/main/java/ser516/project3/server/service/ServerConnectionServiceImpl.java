@@ -22,7 +22,7 @@ public class ServerConnectionServiceImpl implements ServerConnectionServiceInter
      */
     @Override
     public void initServerEndpoint() {
-        threadInstance = new ServerContainerThread();
+        threadInstance = new ServerContainerThread(ServerConstants.MAIN_SERVER);
         serverContainerThread = new Thread(threadInstance);
         serverContainerThread.start();
         ServerController.getInstance().getConsoleController().getConsoleModel().
