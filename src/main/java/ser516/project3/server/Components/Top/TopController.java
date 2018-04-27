@@ -14,6 +14,7 @@ import ser516.project3.constants.ServerConstants;
 import ser516.project3.server.Components.ServerCommonData;
 import ser516.project3.server.controller.ServerController;
 import ser516.project3.server.service.ServerConnectionServiceInterface;
+import ser516.project3.server.service.ServiceModel;
 
 /**
  * Class that helps communicate between TopView and TopModel.
@@ -25,7 +26,7 @@ import ser516.project3.server.service.ServerConnectionServiceInterface;
 public class TopController extends TopAbstractController {
     final static Logger logger = Logger.getLogger(TopController.class);
 
-    private ServerConnectionServiceInterface serverConnectionService;
+//    private ServerConnectionServiceInterface serverConnectionService;
 
     private static final String START = "Start";
     private static final String STOP = "Stop";
@@ -137,13 +138,15 @@ public class TopController extends TopAbstractController {
             logger.info(ServerConstants.START_STOP_PRESSED);
             boolean isStarted = topModel.isServerStarted();
             if (isStarted) {
-                serverConnectionService.stopServerEndpoint();
+                ServiceModel.getInstance().setServerStatus(false);
+//                serverConnectionService.stopServerEndpoint();
                 topModel.setServerStarted(false);
                 topModel.setSendButtonEnabled(false);
                 topModel.setServerStartStopButtonText(ServerConstants.START_SERVER);
                 setBlinking(false);
             } else {
-                serverConnectionService.initServerEndpoint();
+                ServiceModel.getInstance().setServerStatus(true);
+//                serverConnectionService.initServerEndpoint();
                 topModel.setServerStarted(true);
                 topModel.setSendButtonEnabled(true);
                 topModel.setServerStartStopButtonText(ServerConstants.STOP_SERVER);
@@ -191,10 +194,10 @@ public class TopController extends TopAbstractController {
      * Method to set the server connection service interface
      *
      * @param serverConnectionService ServerConnectionServiceInterface object
-     */
+
     public void setServerConnectionService(ServerConnectionServiceInterface serverConnectionService) {
         this.serverConnectionService = serverConnectionService;
-    }
+    }*/
 
     /**
      * Method to set the server status indicator

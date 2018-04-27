@@ -36,6 +36,8 @@ import ser516.project3.client.Components.Header.HeaderModel;
 import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricModel;
 import ser516.project3.server.controller.ServerController;
 import ser516.project3.server.controller.ServerControllerFactory;
+import ser516.project3.server.service.ServerConnectionServiceImpl;
+import ser516.project3.server.service.ServerConnectionServiceInterface;
 
 /**
  * The Controller class to handle requests from the Client UI
@@ -264,6 +266,7 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 	public void openServer() {
         if(serverController == null) {
             ServerControllerFactory controllerFactory = ServerControllerFactory.getInstance();
+            ServerConnectionServiceInterface serverObserver = new ServerConnectionServiceImpl();
             serverController = (ServerController) controllerFactory.getController("SERVER", null, null);
             serverController.initializeView();
         } else {

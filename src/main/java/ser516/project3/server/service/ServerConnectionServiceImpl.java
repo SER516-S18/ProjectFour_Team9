@@ -5,16 +5,23 @@ import ser516.project3.constants.ServerConstants;
 import ser516.project3.server.controller.ServerController;
 import ser516.project3.server.helper.ServerContainerThread;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * This is the Service class responsible for creating threads
  * for web socket and closing of these threads
  *
  * @author vsriva12
  */
-public class ServerConnectionServiceImpl implements ServerConnectionServiceInterface {
+public class ServerConnectionServiceImpl implements ServerConnectionServiceInterface, Observer {
     final static Logger logger = Logger.getLogger(ServerConnectionServiceImpl.class);
     Thread serverContainerThread;
     ServerContainerThread threadInstance;
+
+    public ServerConnectionServiceImpl(){
+        ServiceModel.getInstance().addObserver(this);
+    }
 
     /**
      * Override Method responsible for creating threads
@@ -49,5 +56,22 @@ public class ServerConnectionServiceImpl implements ServerConnectionServiceInter
         ServerController.getInstance().getTopController().updateServerStartStopButtonText();
         ServerController.getInstance().getTopController().updateEnableDisableSendButton();
         ServerController.getInstance().getTopController().setBlinking(false);
+    }
+
+    /**
+     *
+     *
+     * @param serverStatus object of Observable
+     *
+     */
+    @Override
+    public void update(Observable serverStatus, Object observerObj) {
+        ServiceModel serviceModel = (ServiceModel) serverStatus;
+        if (serviceModel.isServerStatus()) {
+            this.initServerEndpoint();
+        } else {
+            this.stopServerEndpoint();
+        }
+
     }
 }

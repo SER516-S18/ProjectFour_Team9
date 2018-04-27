@@ -24,6 +24,7 @@ import ser516.project3.server.Components.Top.TopModel;
 import ser516.project3.server.Components.Top.TopView;
 import ser516.project3.server.service.ServerConnectionServiceImpl;
 import ser516.project3.server.service.ServerConnectionServiceInterface;
+import ser516.project3.server.service.ServiceModel;
 import ser516.project3.server.view.*;
 
 import java.awt.event.WindowAdapter;
@@ -47,7 +48,7 @@ public class ServerController implements ControllerInterface {
     private EmotionsController emotionsController;
     private ExpressionsController expressionsController;
     private ConsoleController consoleController;
-    private ServerConnectionServiceInterface serverConnectionService;
+    //private ServerConnectionServiceInterface serverConnectionService;
 
     private static ServerController instance;
 
@@ -59,7 +60,7 @@ public class ServerController implements ControllerInterface {
     public ServerController() {
         viewFactory = new ServerViewFactory();
         serverControllerFactory = ServerControllerFactory.getInstance();
-        serverConnectionService = new ServerConnectionServiceImpl();
+        //serverConnectionService = new ServerConnectionServiceImpl();
         initializeTop();
         initializeTimer();
         initializeEmotions();
@@ -124,7 +125,7 @@ public class ServerController implements ControllerInterface {
         TopModel topModel = new TopModel();
         TopView topView = (TopView) viewFactory.getView("TOP", topModel);
         topController = (TopController) serverControllerFactory.getController("TOP", topModel, topView);
-        topController.setServerConnectionService(serverConnectionService);
+//        topController.setServerConnectionService(serverConnectionService);
         topController.initializeView();
     }
 
@@ -194,7 +195,8 @@ public class ServerController implements ControllerInterface {
      */
     class ServerWindowsListener extends WindowAdapter {
         public void windowClosed(WindowEvent e) {
-            serverConnectionService.stopServerEndpoint();
+            ServiceModel.getInstance().setServerStatus(false);
+//            serverConnectionService.stopServerEndpoint();
             logger.info(ServerConstants.SERVER_CLOSE_MESSAGE);
         }
     }
