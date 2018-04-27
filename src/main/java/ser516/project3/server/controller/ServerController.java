@@ -13,6 +13,9 @@ import ser516.project3.server.Components.Emotions.EmotionsView;
 import ser516.project3.server.Components.Expressions.ExpressionsController;
 import ser516.project3.server.Components.Expressions.ExpressionsModel;
 import ser516.project3.server.Components.Expressions.ExpressionsView;
+import ser516.project3.server.Components.Health.HealthController;
+import ser516.project3.server.Components.Health.HealthModel;
+import ser516.project3.server.Components.Health.HealthView;
 import ser516.project3.server.Components.Timer.TimerController;
 import ser516.project3.server.Components.Timer.TimerModel;
 import ser516.project3.server.Components.Timer.TimerView;
@@ -39,6 +42,7 @@ public class ServerController implements ControllerInterface {
     private ServerControllerFactory serverControllerFactory;
     private ServerView serverView;
     private TopController topController;
+    private HealthController healthController;
     private TimerController timerController;
     private EmotionsController emotionsController;
     private ExpressionsController expressionsController;
@@ -59,9 +63,12 @@ public class ServerController implements ControllerInterface {
         initializeTop();
         initializeTimer();
         initializeEmotions();
+        initializeHealth();
         initializeExpressions();
         initializeConsole();
     }
+
+
 
     /**
      * Creates a singleton instance of ServerController.
@@ -119,6 +126,16 @@ public class ServerController implements ControllerInterface {
         topController = (TopController) serverControllerFactory.getController("TOP", topModel, topView);
         topController.setServerConnectionService(serverConnectionService);
         topController.initializeView();
+    }
+
+    /**
+     * Method to intialize the Health panel
+     */
+    private void initializeHealth() {
+        HealthModel healthModel = new HealthModel();
+        HealthView healthView = (HealthView) viewFactory.getView("HEALTH",healthModel);
+        healthController  = (HealthController) serverControllerFactory.getController("HEALTH",healthModel,healthView);
+        healthController.initializeView();
     }
 
     /**

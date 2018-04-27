@@ -8,6 +8,7 @@ package ser516.project3.constants;
 public class ClientConstants {
 
     public final static String ENDPOINT = "server";
+    public final static String HEALTH_SERVER_ENDPOINT = "healthserver";
     public final static String CLIENT = "Client";
 
     // Client View Constants
@@ -39,9 +40,22 @@ public class ClientConstants {
     public final static String STRESS_DEFAULT_COLOR_HEX = "#90C340";
     public final static String RELAXATION_DEFAULT_COLOR_HEX = "#02ADFF";
     public final static String EXCITEMENT_DEFAULT_COLOR_HEX = "#F86C1C";
+    public final static String PULSE_DEFAULT_COLOR_HEX = "#F20090";
+    public final static String HEART_RATE_DEFAULT_COLOR_HEX= "#02AC9F";
+    public final static String BODY_TEMPERATURE_DEFAULT_COLOR_HEX = "#90C340";
+    public final static String BLOOD_SUGAR_DEFAULT_COLOR_HEX= "#02ADFF";
+    public final static String BMI_DEFAULT_COLOR_HEX= "#F86C1C";
     public final static String FOCUS_DEFAULT_COLOR_HEX = "#ADAAFF";
     public final static int DEFAULT_DISPLAY_LENGTH = 30;
-
+    
+    // Body Vitals Constants
+    public final static String BODY_VITALS = "Body Vitals";
+    public final static String PULSE = "Pulse";
+    public final static String HEART_RATE = "Heart Rate";
+    public final static String BODY_TEMPERATURE = "Body Temperature";
+    public final static String BLOOD_SUGAR = "Blood Sugar";
+    public final static String BMI = "BMI";
+    
     // Expression Constants
     public final static String EXPRESSIONS = "Expressions";
 
