@@ -75,6 +75,8 @@ public class ServerConstants {
     public final static String CLEAR = "Clear";
     public final static String DATE_FORMAT = "dd/MM/yy HH:mm:ss";
     public final static String COLOR_CODE2 = "#616266";
+    public final static String HEALTH_SERVER = "healthServer";
+    public final static String MAIN_SERVER = "mainServer";
 
 
 }
