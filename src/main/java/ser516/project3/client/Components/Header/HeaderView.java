@@ -94,13 +94,14 @@ public class HeaderView extends HeaderAbstractView {
         // May need to update this
         if (headerModel.isConnectionStatus()) {
             connectButton.setText(ClientConstants.DISCONNECT);
-            switch(openServerChoice.getSelectedIndex()){
+            connectionEmotionStatusValueLabel.setText(ClientConstants.CONNECTED);
+            /*switch(openServerChoice.getSelectedIndex()){
                 case 1:
                     connectionEmotionStatusValueLabel.setText(ClientConstants.CONNECTED);
                     break;
                 case 2:
                     connectionHealthStatusValueLabel.setText(ClientConstants.CONNECTED);
-            }
+            }*/
 
 
         } else {
@@ -114,14 +115,15 @@ public class HeaderView extends HeaderAbstractView {
      * This method updates the time stamp on the panel.
      */
     private void updateTimeStamp() {
-        switch(openServerChoice.getSelectedIndex()){
+       timestampEmotionValueLabel.setText(String.valueOf(headerModel.getTimeStamp()));
+/*       switch(openServerChoice.getSelectedIndex()){
             case 1:
                 timestampEmotionValueLabel.setText(String.valueOf(headerModel.getTimeStamp()));
                 break;
             case 2:
                 timestampHealthValueLabel.setText(String.valueOf(headerModel.getTimeStamp()));
         }
-
+*/
 
     }
 
