@@ -25,6 +25,8 @@ import ser516.project3.constants.ClientConstants;
 import ser516.project3.interfaces.CommonDataInterface;
 import ser516.project3.interfaces.ControllerInterface;
 import ser516.project3.interfaces.ViewInterface;
+import ser516.project3.client.Components.BodyVitals.BodyVitalsModel;
+import ser516.project3.client.Components.BodyVitals.BodyVitalsView;
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpAbstractView;
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpModel;
 import ser516.project3.client.Components.Expressions.ExpressionsModel;
@@ -49,8 +51,10 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 	private ServerController serverController;
 	private HeaderController headerController;
 	private ControllerInterface performanceMetricController;
+	private ControllerInterface bodyVitalsController;
 	private ExpressionsController expressionsController;
 	private ControllerInterface performanceMetricsGraphController;
+	private ControllerInterface bodyVitalsGraphController;
 	private ControllerInterface expressionGraphController;
 	private ControllerInterface faceController;
 	private ControllerInterface connectionPopUpController;
@@ -65,6 +69,7 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 		ClientControllerFactory controllerFactory = ClientControllerFactory.getInstance();
 		initializeHeader(viewFactory, controllerFactory);
 		initializePerformanceMetrics(viewFactory, controllerFactory);
+		initializeBodyVitals(viewFactory, controllerFactory);
 		initializeExpressions(viewFactory, controllerFactory);
 	}
 
@@ -77,6 +82,7 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 		ViewInterface subViews[] = {
 				headerController.getView(),
 				performanceMetricController.getView(),
+				bodyVitalsController.getView(),
 				expressionsController.getView()};
 		clientView.initializeView(subViews);
 		clientView.addServerMenuItemListener(new ServerMenuItemListener());
@@ -101,8 +107,8 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 	 */
 	@Override
 	public ControllerInterface[] getSubControllers() {
-		ControllerInterface[] subControllers = {headerController, performanceMetricController, expressionsController,
-				performanceMetricsGraphController, expressionGraphController, faceController, connectionPopUpController, serverController};
+		ControllerInterface[] subControllers = {headerController, performanceMetricController, bodyVitalsController, expressionsController,
+				performanceMetricsGraphController, bodyVitalsGraphController, expressionGraphController, faceController, connectionPopUpController, serverController};
 		return subControllers;
 	}
 
@@ -164,7 +170,27 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 		performanceMetricController = controllerFactory.getController(ClientConstants.PERFORMANCE_METRICS, performanceMetricModel, performanceMetricView, subControllers);
 		performanceMetricController.initializeView();
 	}
+	
+	/**
+	 * Body Vitals panel is created where graph controller and body vitals
+	 * views are initialized.
+     *
+     * @param controllerFactory the factory object to create the instances of the controller classes
+     * @param viewFactory the object to create the instances of the views
+	 */
+	private void initializeBodyVitals(ClientViewFactory viewFactory, ClientControllerFactory controllerFactory) {
+		GraphModel bodyVitalsGraphModel = new GraphModel();
+		GraphView bodyVitalsGraphView = (GraphView) viewFactory.getView(ClientConstants.GRAPH, bodyVitalsGraphModel);
+		bodyVitalsGraphController = controllerFactory.getController(ClientConstants.GRAPH, bodyVitalsGraphModel, bodyVitalsGraphView, null);
+		bodyVitalsGraphController.initializeView();
 
+		ControllerInterface subControllers[] = {bodyVitalsGraphController};
+
+		BodyVitalsModel bodyVitalsModel = new BodyVitalsModel();
+		BodyVitalsView bodyVitalsView = (BodyVitalsView) viewFactory.getView(ClientConstants.BODY_VITALS, bodyVitalsModel);
+		bodyVitalsController = controllerFactory.getController(ClientConstants.BODY_VITALS, bodyVitalsModel, bodyVitalsView, subControllers);
+		bodyVitalsController.initializeView();
+	}
 	/**
 	 * Expression panel is created where expression controller graph
 	 * and expression controller views are created

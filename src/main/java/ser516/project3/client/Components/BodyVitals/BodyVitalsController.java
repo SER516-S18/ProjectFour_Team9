@@ -39,7 +39,7 @@ public class BodyVitalsController extends BodyVitalsAbstractController{
      */
 	@Override
 	public void initializeView() {
-		graphController.setNoOfChannels(6);
+		graphController.setNoOfChannels(5);
         graphController.setXLength(bodyVitalsModel.getDisplayLength());
         Color channelColors[] = {bodyVitalsModel.getPulseColor(),
         		bodyVitalsModel.getHeartRateColor(), bodyVitalsModel.getBodyTemperatureColor(),
