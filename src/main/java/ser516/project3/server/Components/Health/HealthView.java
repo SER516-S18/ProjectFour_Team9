@@ -13,7 +13,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 
-public class HealthView extends JFrame implements ViewInterface {
+public class HealthView extends HealthAbstractView {
 
     private static HealthView serverViewInstance = null;
 
@@ -23,6 +23,10 @@ public class HealthView extends JFrame implements ViewInterface {
     private ConsoleView consoleView;
 
     private static final Font FONT = new Font(ServerConstants.FONT_NAME, Font.BOLD, 17);
+
+    public HealthView(HealthModel healthModel) {
+        super(healthModel);
+    }
 
     /**
      * Method to return the ServerView instance
@@ -46,7 +50,7 @@ public class HealthView extends JFrame implements ViewInterface {
     public void initializeView(ViewInterface[] subViews) {
         topView = (TopView) subViews[0];
         timerView = (TimerView) subViews[1];
-        healthView = (ser516.project3.server.view.HealthView) subViews[2];
+        healthView = (HealthView) subViews[2];
         consoleView = (ConsoleView) subViews[3];
 
         setLayout(new BorderLayout());
@@ -54,8 +58,8 @@ public class HealthView extends JFrame implements ViewInterface {
         add(createConfigurationPanels(), BorderLayout.CENTER);
 
         setMinimumSize(new Dimension(500, 800));
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle(ServerConstants.SERVER);
+//        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+//        setTitle(ServerConstants.SERVER);
         setVisible(true);
     }
 
@@ -113,17 +117,6 @@ public class HealthView extends JFrame implements ViewInterface {
 
         configPanel.add(splitTimerPanel);
         return configPanel;
-    }
-
-    /**
-     * Method to WindowListener to the Server window
-     *
-     * @param windowAdapter
-     *            WindowAdapter object
-     *
-     */
-    public void addServerWindowListener(WindowAdapter windowAdapter) {
-        addWindowListener(windowAdapter);
     }
 }
 

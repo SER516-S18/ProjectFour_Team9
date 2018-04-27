@@ -2,6 +2,11 @@ package ser516.project3.server.Components.Health;
 
 import ser516.project3.server.Components.Expressions.ExpressionsController;
 
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.util.EventListener;
+
 public class HealthController extends HealthAbstractController {
 
     public HealthController(HealthModel healthModel, HealthView healthView) {
@@ -10,15 +15,66 @@ public class HealthController extends HealthAbstractController {
 
     public void initializeView() {
         healthView.initializeView(null);
-//        healthView.addListener(new HealthController.)
-//
-//        expressionsView.addListener(new ExpressionsController.LowerFaceComboListener(), "COMBO_LOWERFACE");
-//        expressionsView.addListener(new ExpressionsController.UpperFaceComboListener(), "COMBO_UPPERFACE");
-//        expressionsView.addListener(new ExpressionsController.EyeComboListener(), "COMBO_EYE");
-//        expressionsView.addListener(new ExpressionsController.LowerFaceSpinnerChangeListener(), "SPINNER_LOWERFACE");
-//        expressionsView.addListener(new ExpressionsController.UpperFaceSpinnerChangeListener(), "SPINNER_UPPERFACE");
-//        expressionsView.addListener(new ExpressionsController.ActivateToggleButtonItemListener(), "TOGGLE_EYE");
-//        expressionsView.addListener(new ExpressionsController.ActivateButtonChangeListener(), "BUTTON_EYE");
-//        expressionsView.addListener(new ExpressionsController.EyeCheckBoxListener(), "CHECKBOX_EYE");
+
+        healthView.addListener(new HealthController.PulseChangeListener(), "PULSE_CHANGE");
+        healthView.addListener(new HealthController.HeartRateChangeListener(), "HEART_RATE");
+        healthView.addListener(new HealthController.BodyTemperatureChangeListener(), "BODY_TEMPERATURE");
+        healthView.addListener(new HealthController.BmiChangeListener(), "BMI");
+        healthView.addListener(new HealthController.HeightChangeListener(), "HEIGHT");
+        healthView.addListener(new HealthController.WeightChangeListener(), "WEIGHT");
+    }
+
+
+    private class PulseChangeListener implements ChangeListener{
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            JSpinner jSpinner = (JSpinner) e.getSource();
+            healthModel.setPulse((Double) jSpinner.getValue());
+
+        }
+    }
+
+    private class HeartRateChangeListener implements ChangeListener {
+
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            JSpinner jSpinner = (JSpinner) e.getSource();
+            healthModel.setHeartRate((Double) jSpinner.getValue());
+        }
+    }
+
+    public class BodyTemperatureChangeListener implements ChangeListener {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            JSpinner jSpinner = (JSpinner) e.getSource();
+            healthModel.setBodyTemperature((Double) jSpinner.getValue());
+        }
+    }
+
+
+    private class BmiChangeListener implements ChangeListener {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            JSpinner jSpinner = (JSpinner) e.getSource();
+            healthModel.setBmi((Double) jSpinner.getValue());
+        }
+    }
+
+    private class HeightChangeListener implements ChangeListener {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            JSpinner jSpinner = (JSpinner) e.getSource();
+            healthModel.setHeight((Double) jSpinner.getValue());
+        }
+    }
+
+    private class WeightChangeListener implements ChangeListener {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            JSpinner jSpinner = (JSpinner) e.getSource();
+            healthModel.setWeight((Double) jSpinner.getValue());
+        }
     }
 }
+
+
