@@ -14,6 +14,7 @@ public class ServiceModel extends java.util.Observable {
 
     public void setServerStatus(boolean serverStatus) {
         this.serverStatus = serverStatus;
+        this.setChanged();
         this.notifyObservers();
     }
 

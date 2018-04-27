@@ -38,6 +38,7 @@ import ser516.project3.server.controller.ServerController;
 import ser516.project3.server.controller.ServerControllerFactory;
 import ser516.project3.server.service.ServerConnectionServiceImpl;
 import ser516.project3.server.service.ServerConnectionServiceInterface;
+import ser516.project3.server.service.ServiceModel;
 
 /**
  * The Controller class to handle requests from the Client UI
@@ -266,7 +267,7 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 	public void openServer() {
         if(serverController == null) {
             ServerControllerFactory controllerFactory = ServerControllerFactory.getInstance();
-            ServerConnectionServiceInterface serverObserver = new ServerConnectionServiceImpl();
+            new ServerConnectionServiceImpl(ServiceModel.getInstance());
             serverController = (ServerController) controllerFactory.getController("SERVER", null, null);
             serverController.initializeView();
         } else {
@@ -318,7 +319,7 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 			if (e.getSource() instanceof JTabbedPane) {
 				JTabbedPane pane = (JTabbedPane) e.getSource();
 				int selectedIndex = pane.getSelectedIndex();
-				expressionsController.setTabSelected((selectedIndex == 1) ? true : false);
+				expressionsController.setTabSelected((selectedIndex == 2) ? true : false);
 			}
 		}
 	}

@@ -18,9 +18,15 @@ public class ServerConnectionServiceImpl implements ServerConnectionServiceInter
     final static Logger logger = Logger.getLogger(ServerConnectionServiceImpl.class);
     Thread serverContainerThread;
     ServerContainerThread threadInstance;
+    Observable observable;
 
-    public ServerConnectionServiceImpl(){
-        ServiceModel.getInstance().addObserver(this);
+    public ServerConnectionServiceImpl() {
+
+    }
+
+    public ServerConnectionServiceImpl(Observable observable) {
+        this.observable = observable;
+        observable.addObserver(this);
     }
 
     /**
@@ -58,15 +64,10 @@ public class ServerConnectionServiceImpl implements ServerConnectionServiceInter
         ServerController.getInstance().getTopController().setBlinking(false);
     }
 
-    /**
-     *
-     *
-     * @param serverStatus object of Observable
-     *
-     */
+
     @Override
     public void update(Observable serverStatus, Object observerObj) {
-        ServiceModel serviceModel = (ServiceModel) serverStatus;
+        ServiceModel serviceModel = ServiceModel.getInstance();
         if (serviceModel.isServerStatus()) {
             this.initServerEndpoint();
         } else {
