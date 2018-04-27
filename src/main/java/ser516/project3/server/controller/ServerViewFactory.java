@@ -8,6 +8,8 @@ import ser516.project3.server.Components.Emotions.EmotionsModel;
 import ser516.project3.server.Components.Emotions.EmotionsView;
 import ser516.project3.server.Components.Expressions.ExpressionsModel;
 import ser516.project3.server.Components.Expressions.ExpressionsView;
+import ser516.project3.server.Components.Health.HealthModel;
+import ser516.project3.server.Components.Health.HealthView;
 import ser516.project3.server.Components.Timer.TimerModel;
 import ser516.project3.server.Components.Timer.TimerView;
 import ser516.project3.server.Components.Top.TopModel;
@@ -43,6 +45,9 @@ public class ServerViewFactory {
             return new ExpressionsView((ExpressionsModel) model);
         } else if (viewType.equalsIgnoreCase("CONSOLE")) {
             return new ConsoleView((ConsoleModel) model);
+        }
+        else if(viewType.equalsIgnoreCase("HEALTH")){
+            return new HealthView((HealthModel) model);
         }
 
         return null;
