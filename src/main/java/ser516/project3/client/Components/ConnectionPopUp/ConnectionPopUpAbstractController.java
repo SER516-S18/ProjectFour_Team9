@@ -2,6 +2,12 @@ package ser516.project3.client.Components.ConnectionPopUp;
 
 import ser516.project3.interfaces.ControllerInterface;
 
+/**
+ * ConnectionPopUpAbstractController to define the basic
+ * functionality for Connection Popup
+ *
+ * @author Adhiraj Tikku
+ */
 public abstract class ConnectionPopUpAbstractController implements ControllerInterface {
 	
 	protected ConnectionPopUpAbstractView connectionPopUpView;

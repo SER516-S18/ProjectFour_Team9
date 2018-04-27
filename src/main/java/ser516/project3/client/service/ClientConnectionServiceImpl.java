@@ -3,10 +3,12 @@ package ser516.project3.client.service;
 import org.apache.log4j.Logger;
 import ser516.project3.client.controller.ClientControllerFactory;
 import ser516.project3.client.helper.ClientConnectionThread;
+import ser516.project3.client.observers.BodyVitalsGraphObserver;
 import ser516.project3.client.observers.ExpressionsGraphObserver;
 import ser516.project3.client.observers.FaceViewObserver;
 import ser516.project3.client.observers.HeaderObserver;
 import ser516.project3.client.observers.PerformanceMetricGraphObserver;
+import ser516.project3.client.Components.BodyVitals.BodyVitalsDataObservable;
 import ser516.project3.client.Components.Expressions.ExpressionsDataObservable;
 import ser516.project3.client.Components.Face.FaceExpressionsObservable;
 import ser516.project3.client.Components.Header.HeaderObservable;
@@ -41,7 +43,10 @@ public class ClientConnectionServiceImpl implements ClientConnectionServiceInter
 
         PerformanceMetricGraphObserver performanceMetricObserver = new PerformanceMetricGraphObserver();
         PerformanceMetricDataObservable.getInstance().addObserver(performanceMetricObserver);
-
+        
+        BodyVitalsGraphObserver bodyVitalsObserver = new BodyVitalsGraphObserver();
+        BodyVitalsDataObservable.getInstance().addObserver(bodyVitalsObserver);
+        
         ExpressionsGraphObserver expressionsGraphObserver = new ExpressionsGraphObserver();
         ExpressionsDataObservable.getInstance().addObserver(expressionsGraphObserver);
 

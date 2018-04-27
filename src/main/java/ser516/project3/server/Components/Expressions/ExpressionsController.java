@@ -40,7 +40,7 @@ public class ExpressionsController extends ExpressionsAbstractController {
     }
 
     /**
-     * Method to initialize the expressions view and to add listeners
+     * Override Method to initialize the expressions view and to add listeners
      * to all the components in the panel
      */
     @Override

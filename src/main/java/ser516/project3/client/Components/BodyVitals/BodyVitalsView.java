@@ -148,27 +148,27 @@ public class BodyVitalsView extends BodyVitalsAbstractView {
 
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        pulseButton = createEmotionButton(ClientConstants.INTEREST, bodyVitalsModel.getPulseColor());
+        pulseButton = createEmotionButton(ClientConstants.PULSE, bodyVitalsModel.getPulseColor());
         mainPanel.add(pulseButton, gridBagConstraints);
 
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
-        heartrateButton = createEmotionButton(ClientConstants.ENGAGEMENT, bodyVitalsModel.getHeartRateColor());
+        heartrateButton = createEmotionButton(ClientConstants.HEART_RATE, bodyVitalsModel.getHeartRateColor());
         mainPanel.add(heartrateButton, gridBagConstraints);
 
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
-        bodytemperatureButton = createEmotionButton(ClientConstants.STRESS, bodyVitalsModel.getBodyTemperatureColor());
+        bodytemperatureButton = createEmotionButton(ClientConstants.BODY_TEMPERATURE, bodyVitalsModel.getBodyTemperatureColor());
         mainPanel.add(bodytemperatureButton, gridBagConstraints);
 
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        bloodsugarButton = createEmotionButton(ClientConstants.RELAXATION, bodyVitalsModel.getBloodSugarColor());
+        bloodsugarButton = createEmotionButton(ClientConstants.BLOOD_SUGAR, bodyVitalsModel.getBloodSugarColor());
         mainPanel.add(bloodsugarButton, gridBagConstraints);
 
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;
-        bmiButton = createEmotionButton(ClientConstants.EXCITEMENT, bodyVitalsModel.getBmiColor());
+        bmiButton = createEmotionButton(ClientConstants.BMI, bodyVitalsModel.getBmiColor());
         mainPanel.add(bmiButton, gridBagConstraints);
 
     }

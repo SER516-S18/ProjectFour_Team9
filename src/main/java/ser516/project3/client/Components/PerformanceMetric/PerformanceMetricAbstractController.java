@@ -2,6 +2,13 @@ package ser516.project3.client.Components.PerformanceMetric;
 
 import ser516.project3.interfaces.ControllerInterface;
 
+/**
+ * PerformanceMetricAbstractController to define the basic
+ * functionality for client performance metric tab classes
+ *
+ * @author Adhiraj Tikku
+ */
+
 public abstract class PerformanceMetricAbstractController implements ControllerInterface {
 
 	protected PerformanceMetricModel performanceMetricModel;

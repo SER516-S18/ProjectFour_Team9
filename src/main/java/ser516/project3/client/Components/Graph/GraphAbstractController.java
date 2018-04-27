@@ -2,6 +2,12 @@ package ser516.project3.client.Components.Graph;
 
 import ser516.project3.interfaces.ControllerInterface;
 
+/**
+ * GraphAbstractController to define the basic
+ * functionality for graph classes
+ *
+ * @author Adhiraj Tikku
+ */
 public abstract class GraphAbstractController implements ControllerInterface {
 
 	protected GraphModel graphModel;

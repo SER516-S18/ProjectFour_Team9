@@ -2,6 +2,10 @@ package ser516.project3.server.Components.Top;
 
 import ser516.project3.interfaces.ControllerInterface;
 
+/**
+ * Class that helps communicate between TopView and TopModel.
+ * @author Adhiraj Tikku
+ */
 public abstract class TopAbstractController implements ControllerInterface {
 
 	protected TopModel topModel;
@@ -19,7 +23,7 @@ public abstract class TopAbstractController implements ControllerInterface {
     }
 
     /**
-     * Method to get the TopView object
+     * Override Method to get the TopView object
      *
      * @return TopView object
      */
@@ -29,7 +33,7 @@ public abstract class TopAbstractController implements ControllerInterface {
     }
 
     /**
-     * Returns the set of sub controllers in case any
+     * Override Method to return set of sub controllers in case any
      *
      * @return array containing sub controllers
      */

@@ -11,6 +11,7 @@ import javax.swing.event.ChangeListener;
 
 import ser516.project3.client.Components.Expressions.ExpressionsController;
 import ser516.project3.client.Components.Header.HeaderController;
+import ser516.project3.client.service.ClientConnectionHealthServiceImpl;
 import ser516.project3.client.service.ClientConnectionServiceImpl;
 import ser516.project3.client.service.ClientConnectionServiceInterface;
 import ser516.project3.client.view.ClientView;
@@ -24,6 +25,8 @@ import ser516.project3.constants.ClientConstants;
 import ser516.project3.interfaces.CommonDataInterface;
 import ser516.project3.interfaces.ControllerInterface;
 import ser516.project3.interfaces.ViewInterface;
+import ser516.project3.client.Components.BodyVitals.BodyVitalsModel;
+import ser516.project3.client.Components.BodyVitals.BodyVitalsView;
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpAbstractView;
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpModel;
 import ser516.project3.client.Components.Expressions.ExpressionsModel;
@@ -41,14 +44,17 @@ import ser516.project3.server.controller.ServerControllerFactory;
  */
 public class ClientController implements ControllerInterface, CommonDataInterface {
 	private boolean connected = false;
+	private boolean healthServerConnected = false;
 	private ClientConnectionServiceInterface clientConnectionService;
 	private ClientViewFactory viewFactory;
 	private ClientView clientView;
 	private ServerController serverController;
 	private HeaderController headerController;
 	private ControllerInterface performanceMetricController;
+	private ControllerInterface bodyVitalsController;
 	private ExpressionsController expressionsController;
 	private ControllerInterface performanceMetricsGraphController;
+	private ControllerInterface bodyVitalsGraphController;
 	private ControllerInterface expressionGraphController;
 	private ControllerInterface faceController;
 	private ControllerInterface connectionPopUpController;
@@ -63,6 +69,7 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 		ClientControllerFactory controllerFactory = ClientControllerFactory.getInstance();
 		initializeHeader(viewFactory, controllerFactory);
 		initializePerformanceMetrics(viewFactory, controllerFactory);
+		initializeBodyVitals(viewFactory, controllerFactory);
 		initializeExpressions(viewFactory, controllerFactory);
 	}
 
@@ -75,6 +82,7 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 		ViewInterface subViews[] = {
 				headerController.getView(),
 				performanceMetricController.getView(),
+				bodyVitalsController.getView(),
 				expressionsController.getView()};
 		clientView.initializeView(subViews);
 		clientView.addServerMenuItemListener(new ServerMenuItemListener());
@@ -99,8 +107,8 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 	 */
 	@Override
 	public ControllerInterface[] getSubControllers() {
-		ControllerInterface[] subControllers = {headerController, performanceMetricController, expressionsController,
-				performanceMetricsGraphController, expressionGraphController, faceController, connectionPopUpController, serverController};
+		ControllerInterface[] subControllers = {headerController, performanceMetricController, bodyVitalsController, expressionsController,
+				performanceMetricsGraphController, bodyVitalsGraphController, expressionGraphController, faceController, connectionPopUpController, serverController};
 		return subControllers;
 	}
 
@@ -162,7 +170,27 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 		performanceMetricController = controllerFactory.getController(ClientConstants.PERFORMANCE_METRICS, performanceMetricModel, performanceMetricView, subControllers);
 		performanceMetricController.initializeView();
 	}
+	
+	/**
+	 * Body Vitals panel is created where graph controller and body vitals
+	 * views are initialized.
+     *
+     * @param controllerFactory the factory object to create the instances of the controller classes
+     * @param viewFactory the object to create the instances of the views
+	 */
+	private void initializeBodyVitals(ClientViewFactory viewFactory, ClientControllerFactory controllerFactory) {
+		GraphModel bodyVitalsGraphModel = new GraphModel();
+		GraphView bodyVitalsGraphView = (GraphView) viewFactory.getView(ClientConstants.GRAPH, bodyVitalsGraphModel);
+		bodyVitalsGraphController = controllerFactory.getController(ClientConstants.GRAPH, bodyVitalsGraphModel, bodyVitalsGraphView, null);
+		bodyVitalsGraphController.initializeView();
 
+		ControllerInterface subControllers[] = {bodyVitalsGraphController};
+
+		BodyVitalsModel bodyVitalsModel = new BodyVitalsModel();
+		BodyVitalsView bodyVitalsView = (BodyVitalsView) viewFactory.getView(ClientConstants.BODY_VITALS, bodyVitalsModel);
+		bodyVitalsController = controllerFactory.getController(ClientConstants.BODY_VITALS, bodyVitalsModel, bodyVitalsView, subControllers);
+		bodyVitalsController.initializeView();
+	}
 	/**
 	 * Expression panel is created where expression controller graph
 	 * and expression controller views are created
@@ -202,6 +230,22 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 			clientConnectionService = new ClientConnectionServiceImpl();
 			clientConnectionService.createClientConnection(ipAddress, port, ClientConstants.ENDPOINT);
 			connected = true;
+		}
+	}
+	
+	/**
+	 * Method to connect to a server end point
+	 * @param ipAddress - the IP address field
+	 * @param port - the port field
+	 */
+	public void toggleConnectionToHealthServer(String ipAddress, int port) {
+		if (healthServerConnected) {
+			clientConnectionService.stopClientConnection();
+			healthServerConnected = false;
+		} else {
+			clientConnectionService = new ClientConnectionHealthServiceImpl();
+			clientConnectionService.createClientConnection(ipAddress, port, ClientConstants.HEALTH_SERVER_ENDPOINT);
+			healthServerConnected = true;
 		}
 	}
 

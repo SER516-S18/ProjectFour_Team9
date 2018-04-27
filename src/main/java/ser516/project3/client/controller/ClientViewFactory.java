@@ -1,5 +1,7 @@
 package ser516.project3.client.controller;
 
+import ser516.project3.client.Components.BodyVitals.BodyVitalsModel;
+import ser516.project3.client.Components.BodyVitals.BodyVitalsView;
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpModel;
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpView;
 import ser516.project3.client.Components.Expressions.ExpressionsModel;
@@ -40,6 +42,8 @@ public class ClientViewFactory {
             return new HeaderView((HeaderModel) model);
         } else if (viewType.equalsIgnoreCase(ClientConstants.PERFORMANCE_METRICS)) {
             return new PerformanceMetricView((PerformanceMetricModel) model);
+        } else if (viewType.equalsIgnoreCase(ClientConstants.BODY_VITALS)) {
+            return new BodyVitalsView((BodyVitalsModel) model);
         } else if (viewType.equalsIgnoreCase(ClientConstants.EXPRESSIONS)) {
             return new ExpressionsView((ExpressionsModel) model);
         } else if (viewType.equalsIgnoreCase(ClientConstants.GRAPH)) {

@@ -8,8 +8,6 @@ import ser516.project3.interfaces.ViewInterface;
 import ser516.project3.server.Components.NumberTextField;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -47,7 +45,7 @@ public class TopView extends TopAbstractView {
     }
 
     /**
-     * Method to initialize the server settings panel
+     * Override Method to initialize the server settings panel
      *
      * @param subViews object of type ViewInterface
      */
@@ -64,6 +62,10 @@ public class TopView extends TopAbstractView {
         createStatusIndicator(gridBagConstraints);
     }
     
+    /**
+     * Override Method to update the view
+     * @param subViews object of type ModelInterface
+     */
     @Override
 	public void updateView(ModelInterface model) {
     	topModel = (TopModel) model;
@@ -74,6 +76,12 @@ public class TopView extends TopAbstractView {
     	intervalInputTextField.setEditable(topModel.isIntervalEditable());
 	}
     
+    /**
+     * Adds the listener to the respective component in the view class
+     *
+     * @param eventListener the listener for the respective component
+     * @param componentName component to which the listener has to be added
+     */
     @Override
 	public void addListener(EventListener eventListener, String componentName) {
 		switch(componentName) {
@@ -93,7 +101,7 @@ public class TopView extends TopAbstractView {
 	}
 
     /**
-     * Method to set the state status indicator
+     * Override Method to set the state status indicator
      *
      * @param status status of the server
      */
