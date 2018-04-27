@@ -1,18 +1,21 @@
 package ser516.project3.client.helper;
 
-import org.apache.log4j.Logger;
-import ser516.project3.client.controller.ClientControllerFactory;
-import ser516.project3.constants.ClientConstants;
-
-import javax.swing.*;
-import javax.websocket.ContainerProvider;
-import javax.websocket.DeploymentException;
-import javax.websocket.Session;
-import javax.websocket.WebSocketContainer;
 import java.io.IOException;
 import java.net.URI;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.websocket.ContainerProvider;
+import javax.websocket.DeploymentException;
+import javax.websocket.Session;
+import javax.websocket.WebSocketContainer;
+
+import org.apache.log4j.Logger;
+
+import ser516.project3.client.controller.ClientControllerFactory;
+import ser516.project3.constants.ClientConstants;
 
 /**
  * Thread class to create a client web socket end point
@@ -55,7 +58,12 @@ public class ClientConnectionThread implements Runnable {
         String uri = "ws://" + ipAddress + ":" + port + "/" + endpoint;
         logger.info("Connecting to " + uri);
         try {
-            clientSession = container.connectToServer(ClientConnectionEndpoint.class, URI.create(uri));
+        	if(endpoint.equalsIgnoreCase(ClientConstants.HEALTH_SERVER_ENDPOINT)) {
+        		clientSession = container.connectToServer(ClientHealthConnectionEndpoint.class, URI.create(uri));
+        	} else {
+        		clientSession = container.connectToServer(ClientConnectionEndpoint.class, URI.create(uri));
+        	}
+            
             messageLatch.await(0, TimeUnit.SECONDS);
             ClientControllerFactory.getInstance().getClientController().setConnectionStatus(true);
         } catch (DeploymentException | IOException | InterruptedException e) {
