@@ -1,6 +1,7 @@
 package ser516.project3.client.Components.Header;
 
 import com.alee.laf.button.WebButton;
+import com.alee.laf.combobox.WebComboBox;
 import ser516.project3.constants.ClientConstants;
 import ser516.project3.interfaces.ModelInterface;
 import ser516.project3.interfaces.ViewInterface;
@@ -19,14 +20,27 @@ import java.util.EventListener;
  */
 public class HeaderView extends HeaderAbstractView {
 
-    private JLabel connectionLabel;
-    private JLabel timeStampLabel;
-    private JLabel connectionTextLabel;
-    private JLabel timestampTextLabel;
+
+    private JLabel connectionEmotionStatusLabel;
+    private JLabel connectionHealthStatusLabel;
+    private JLabel connectionEmotionTextLabel;
+    private JLabel connectionHealthTextLabel;
+    private JLabel timestampEmotionTextLabel;
+    private JLabel timestampHealthTextLabel;
+    private JLabel connectionEmotionStatusValueLabel;
+    private JLabel connectionHealthStatusValueLabel;
+    private JLabel timestampEmotionValueLabel;
+    private JLabel timestampHealthValueLabel;
     private WebButton connectButton;
     private WebButton serverOpenButton;
+    private WebComboBox connectServerChoice;
+    private WebComboBox openServerChoice;
 
     private final static int FONT_SIZE = 15;
+    private final static String EMOTION_SERVER_LABEL = "Emotion Server";
+    private final static String HEALTH_SERVER_LABEL = "Health Server";
+
+    private String[] ServerChoice = {"Select Server", "Emotion Server", "Client Server"};
 
     /**
      * This constructor initializes the model of HeaderView
@@ -80,10 +94,10 @@ public class HeaderView extends HeaderAbstractView {
         // May need to update this
         if (headerModel.isConnectionStatus()) {
             connectButton.setText(ClientConstants.DISCONNECT);
-            connectionLabel.setText(ClientConstants.CONNECTED);
+            connectionEmotionStatusValueLabel.setText(ClientConstants.CONNECTED);
         } else {
             connectButton.setText(ClientConstants.CONNECT);
-            connectionLabel.setText(ClientConstants.DISCONNECTED);
+            connectionEmotionStatusValueLabel.setText(ClientConstants.DISCONNECTED);
         }
     }
 
@@ -91,7 +105,7 @@ public class HeaderView extends HeaderAbstractView {
      * This method updates the time stamp on the panel.
      */
     private void updateTimeStamp() {
-        timeStampLabel.setText(String.valueOf(headerModel.getTimeStamp()));
+        timestampEmotionValueLabel.setText(String.valueOf(headerModel.getTimeStamp()));
     }
 
     /**
@@ -103,41 +117,115 @@ public class HeaderView extends HeaderAbstractView {
      *                           on panel
      */
     private void createLabels(GridBagConstraints gridbagConstraints) {
-        connectionTextLabel = new JLabel(ClientConstants.STATUS);
-        connectionTextLabel.setHorizontalAlignment(JLabel.RIGHT);
-        connectionTextLabel.setVerticalTextPosition(JLabel.CENTER);
-        connectionTextLabel.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
+        connectionEmotionTextLabel = new JLabel(EMOTION_SERVER_LABEL);
+        connectionEmotionTextLabel.setHorizontalAlignment(JLabel.RIGHT);
+        connectionEmotionTextLabel.setVerticalTextPosition(JLabel.CENTER);
+        connectionEmotionTextLabel.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
         gridbagConstraints.gridx = 0;
         gridbagConstraints.gridy = 0;
-        gridbagConstraints.insets = new Insets(0, 0, 10, 10);
-        add(connectionTextLabel, gridbagConstraints);
+        gridbagConstraints.insets = new Insets(0, 0, 10, 0);
+        add(connectionEmotionTextLabel, gridbagConstraints);
 
-        connectionLabel = new JLabel(ClientConstants.DISCONNECTED);
-        connectionLabel.setHorizontalTextPosition(JLabel.LEFT);
-        connectionLabel.setVerticalTextPosition(JLabel.CENTER);
-        connectionLabel.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
-        gridbagConstraints.gridx = 1;
-        gridbagConstraints.gridy = 0;
-        gridbagConstraints.insets = new Insets(0, 0, 10, 10);
-        add(connectionLabel, gridbagConstraints);
-
-        timestampTextLabel = new JLabel(ClientConstants.TIME_STAMP);
-        timestampTextLabel.setHorizontalAlignment(JLabel.RIGHT);
-        timestampTextLabel.setVerticalTextPosition(JLabel.CENTER);
-        timestampTextLabel.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
+        connectionEmotionStatusLabel = new JLabel(ClientConstants.STATUS);
+        connectionEmotionStatusLabel.setHorizontalAlignment(JLabel.RIGHT);
+        connectionEmotionStatusLabel.setVerticalTextPosition(JLabel.CENTER);
+        connectionEmotionStatusLabel.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
         gridbagConstraints.gridx = 0;
         gridbagConstraints.gridy = 1;
-        gridbagConstraints.insets = new Insets(0, 0, 0, 10);
-        add(timestampTextLabel, gridbagConstraints);
+        gridbagConstraints.insets = new Insets(0, 0, 10, 60);
+        add(connectionEmotionStatusLabel, gridbagConstraints);
 
-        timeStampLabel = new JLabel("0.0");
-        timeStampLabel.setHorizontalTextPosition(JLabel.LEFT);
-        timeStampLabel.setVerticalTextPosition(JLabel.CENTER);
-        timeStampLabel.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
+
+        timestampEmotionTextLabel = new JLabel(ClientConstants.TIME_STAMP);
+        timestampEmotionTextLabel.setHorizontalAlignment(JLabel.RIGHT);
+        timestampEmotionTextLabel.setVerticalTextPosition(JLabel.CENTER);
+        timestampEmotionTextLabel.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
+        gridbagConstraints.gridx = 0;
+        gridbagConstraints.gridy = 2;
+        gridbagConstraints.insets = new Insets(0, 0, 10, 20);
+        add(timestampEmotionTextLabel, gridbagConstraints);
+
+        connectionEmotionStatusValueLabel = new JLabel(ClientConstants.DISCONNECTED);
+        connectionEmotionStatusValueLabel.setHorizontalAlignment(JLabel.RIGHT);
+        connectionEmotionStatusValueLabel.setVerticalTextPosition(JLabel.CENTER);
+        connectionEmotionStatusValueLabel.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
         gridbagConstraints.gridx = 1;
         gridbagConstraints.gridy = 1;
-        gridbagConstraints.insets = new Insets(0, 0, 0, 10);
-        add(timeStampLabel, gridbagConstraints);
+        gridbagConstraints.insets = new Insets(0, 0, 10, 40);
+        add(connectionEmotionStatusValueLabel, gridbagConstraints);
+
+
+        timestampEmotionValueLabel = new JLabel("0.0");
+        timestampEmotionValueLabel.setHorizontalAlignment(JLabel.RIGHT);
+        timestampEmotionValueLabel.setVerticalTextPosition(JLabel.CENTER);
+        timestampEmotionValueLabel.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
+        gridbagConstraints.gridx = 1;
+        gridbagConstraints.gridy = 2;
+        gridbagConstraints.insets = new Insets(0, 0, 10, 80);
+        add(timestampEmotionValueLabel, gridbagConstraints);
+
+        connectionHealthTextLabel = new JLabel(HEALTH_SERVER_LABEL);
+        connectionHealthTextLabel.setHorizontalAlignment(JLabel.RIGHT);
+        connectionHealthTextLabel.setVerticalTextPosition(JLabel.CENTER);
+        connectionHealthTextLabel.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
+        gridbagConstraints.gridx = 2;
+        gridbagConstraints.gridy = 0;
+        gridbagConstraints.insets = new Insets(0, 0, 10, 0);
+        add(connectionHealthTextLabel, gridbagConstraints);
+
+        connectionHealthStatusLabel = new JLabel(ClientConstants.STATUS);
+        connectionHealthStatusLabel.setHorizontalAlignment(JLabel.RIGHT);
+        connectionHealthStatusLabel.setVerticalTextPosition(JLabel.CENTER);
+        connectionHealthStatusLabel.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
+        gridbagConstraints.gridx = 2;
+        gridbagConstraints.gridy = 1;
+        gridbagConstraints.insets = new Insets(0, 20, 10, 50);
+        add(connectionHealthStatusLabel, gridbagConstraints);
+
+
+        timestampHealthTextLabel = new JLabel(ClientConstants.TIME_STAMP);
+        timestampHealthTextLabel.setHorizontalAlignment(JLabel.RIGHT);
+        timestampHealthTextLabel.setVerticalTextPosition(JLabel.CENTER);
+        timestampHealthTextLabel.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
+        gridbagConstraints.gridx = 2;
+        gridbagConstraints.gridy = 2;
+        gridbagConstraints.insets = new Insets(0, 20, 10, 10);
+        add(timestampHealthTextLabel, gridbagConstraints);
+
+        connectionHealthStatusValueLabel = new JLabel(ClientConstants.DISCONNECTED);
+        connectionHealthStatusValueLabel.setHorizontalAlignment(JLabel.RIGHT);
+        connectionHealthStatusValueLabel.setVerticalTextPosition(JLabel.CENTER);
+        connectionHealthStatusValueLabel.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
+        gridbagConstraints.gridx = 3;
+        gridbagConstraints.gridy = 1;
+        gridbagConstraints.insets = new Insets(0, 0, 10, 100);
+        add(connectionHealthStatusValueLabel, gridbagConstraints);
+
+
+        timestampHealthValueLabel = new JLabel("0.0");
+        timestampHealthValueLabel.setHorizontalAlignment(JLabel.RIGHT);
+        timestampHealthValueLabel.setVerticalTextPosition(JLabel.CENTER);
+        timestampHealthValueLabel.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
+        gridbagConstraints.gridx = 3;
+        gridbagConstraints.gridy = 2;
+        gridbagConstraints.insets = new Insets(0, 0, 10, 140);
+        add(timestampHealthValueLabel, gridbagConstraints);
+
+        // Creating Drop down
+        connectServerChoice = new WebComboBox(ServerChoice);
+        connectServerChoice.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
+        gridbagConstraints.gridx = 4;
+        gridbagConstraints.gridy = 1;
+        gridbagConstraints.insets = new Insets(0, 0, 10, 10);
+        add(connectServerChoice, gridbagConstraints);
+
+        openServerChoice = new WebComboBox(ServerChoice);
+        openServerChoice.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
+        gridbagConstraints.gridx = 4;
+        gridbagConstraints.gridy = 2;
+        gridbagConstraints.insets = new Insets(0, 0, 10, 10);
+        add(openServerChoice, gridbagConstraints);
+
     }
 
     /**
@@ -156,10 +244,10 @@ public class HeaderView extends HeaderAbstractView {
         connectButton.setForeground(Color.WHITE);
         connectButton.setDrawShade(false);
         connectButton.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
-        bagConstraints.gridx = 2;
-        bagConstraints.gridy = 0;
+        bagConstraints.gridx = 5;
+        bagConstraints.gridy = 1;
         bagConstraints.gridheight = 3;
-        bagConstraints.insets = new Insets(0, 20, 0, 20);
+        bagConstraints.insets = new Insets(0, 20, 70, 10);
         add(connectButton, bagConstraints);
     }
 
@@ -179,10 +267,11 @@ public class HeaderView extends HeaderAbstractView {
         serverOpenButton.setForeground(Color.WHITE);
         serverOpenButton.setDrawShade(false);
         serverOpenButton.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
-        bagConstraints.gridx = 3;
-        bagConstraints.gridy = 0;
+        bagConstraints.gridx = 5;
+        bagConstraints.gridy = 2;
         bagConstraints.gridheight = 3;
-        bagConstraints.insets = new Insets(0, 20, 0, 20);
+        bagConstraints.insets = new Insets(0, 20, 40, 20);
         add(serverOpenButton, bagConstraints);
+
     }
 }
