@@ -10,6 +10,7 @@ import ser516.project3.interfaces.ModelInterface;
 public class ConnectionPopUpModel implements ModelInterface {
     private String ipAddress;
     private int portNumber;
+    private boolean connectionStatus;
 
     /**
      * Constructor to create the connection to the server using initial values
@@ -17,6 +18,7 @@ public class ConnectionPopUpModel implements ModelInterface {
     public ConnectionPopUpModel() {
         ipAddress = "localhost";
         portNumber = 1516;
+        connectionStatus = false;
     }
 
     /**
@@ -54,4 +56,22 @@ public class ConnectionPopUpModel implements ModelInterface {
     public void setPortNumber(int portNumber) {
         this.portNumber = portNumber;
     }
+
+    /**
+     * Returns the connection status in the model from the view
+     *
+     * @return if the connection to server is true or not
+     */
+	public boolean isConnectionStatus() {
+		return connectionStatus;
+	}
+
+	/**
+     * Updates the connection status in the model from the view
+     *
+     * @param connectionStatus if the connection to server is true or not
+     */
+	public void setConnectionStatus(boolean connectionStatus) {
+		this.connectionStatus = connectionStatus;
+	}
 }

@@ -89,7 +89,6 @@ public class TopModel implements ModelInterface {
      */
     public void setShouldSendData(boolean shouldSendData) {
         this.shouldSendData = shouldSendData;
-        ServerCommonData.getInstance().setShouldSendData(shouldSendData);
     }
 
     /**
@@ -132,7 +131,6 @@ public class TopModel implements ModelInterface {
      */
     public void setAutoRepeatEnabled(boolean autoRepeatEnabled) {
         this.autoRepeatEnabled = autoRepeatEnabled;
-        ServerCommonData.getInstance().setShouldRepeat(autoRepeatEnabled);
     }
 
     /**

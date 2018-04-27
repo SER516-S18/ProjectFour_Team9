@@ -1,6 +1,12 @@
 package ser516.project3.server.controller;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Observable;
+import java.util.Observer;
+
 import org.apache.log4j.Logger;
+
 import ser516.project3.constants.ServerConstants;
 import ser516.project3.interfaces.ControllerInterface;
 import ser516.project3.interfaces.ViewInterface;
@@ -19,12 +25,8 @@ import ser516.project3.server.Components.Top.TopView;
 import ser516.project3.server.helper.ServiceHelperModel;
 import ser516.project3.server.service.ServerConnectionServiceImpl;
 import ser516.project3.server.service.ServerConnectionServiceInterface;
-import ser516.project3.server.view.*;
-
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.Observable;
-import java.util.Observer;
+import ser516.project3.server.view.ServerView;
+import ser516.project3.server.view.ServerViewFactory;
 
 /**
  * The ServerController class is the main controller class for the server
@@ -35,6 +37,9 @@ import java.util.Observer;
  */
 public class ServerController implements ControllerInterface, Observer {
     final static Logger logger = Logger.getLogger(ServerView.class);
+    
+    public boolean serverOpen;
+    
     private ServerViewFactory viewFactory;
     private ServerControllerFactory serverControllerFactory;
     private ServerView serverView;
@@ -44,7 +49,7 @@ public class ServerController implements ControllerInterface, Observer {
     private EmotionsController emotionsController;
     private ExpressionsController expressionsController;
     private ConsoleController consoleController;
-    //private ServerConnectionServiceInterface serverConnectionService;
+    private ServerConnectionServiceInterface serverConnectionService;
 
     /**
      * Constructor to initialize all components in the
@@ -54,7 +59,7 @@ public class ServerController implements ControllerInterface, Observer {
     public ServerController() {
         viewFactory = new ServerViewFactory();
         serverControllerFactory = ServerControllerFactory.getInstance();
-        //serverConnectionService = new ServerConnectionServiceImpl();
+        serverConnectionService = new ServerConnectionServiceImpl();
         initializeConsole();
         initializeTop();
         initializeTimer();
@@ -80,6 +85,11 @@ public class ServerController implements ControllerInterface, Observer {
                 consoleController.getView(), healthController.getView()};
         serverView.initializeView(subViews);
         serverView.addServerWindowListener(new ServerWindowsListener());
+        serverOpen = true;
+    }
+    
+    public boolean isServerOpen() {
+    	return serverOpen;
     }
 
     /**
@@ -182,7 +192,8 @@ public class ServerController implements ControllerInterface, Observer {
     class ServerWindowsListener extends WindowAdapter {
         public void windowClosed(WindowEvent e) {
             topController.stopServerConnection();
-//            serverConnectionService.stopServerEndpoint();
+            serverOpen = false;
+            serverConnectionService.stopServerEndpoint();
             logger.info(ServerConstants.SERVER_CLOSE_MESSAGE);
         }
     }
@@ -224,8 +235,6 @@ public class ServerController implements ControllerInterface, Observer {
 			consoleController.getConsoleModel().logMessage(ServerConstants.ERROR_CLIENT_CONNECTION);
 		}
     	timerController.updateTimeStamp(helperModel.getTimeElapsed());
-    	topController.getTopModel().setShouldSendData(helperModel.isShouldSendData());
-		topController.getTopModel().setServerStarted(helperModel.isServerStartedStatus());
 		if (helperModel.isServerError()) {
 			consoleController.getConsoleModel().logMessage(ServerConstants.ERROR_SERVER_START);
 			helperModel.setServerError(false);

@@ -22,10 +22,13 @@ import ser516.project3.client.Components.Header.HeaderView;
 import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricController;
 import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricModel;
 import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricView;
+import ser516.project3.client.service.ClientConnectionServiceImpl;
+import ser516.project3.client.service.ClientConnectionServiceInterface;
 import ser516.project3.constants.ClientConstants;
 import ser516.project3.interfaces.ControllerInterface;
 import ser516.project3.interfaces.ModelInterface;
 import ser516.project3.interfaces.ViewInterface;
+import ser516.project3.server.controller.ServerController;
 
 /**
  * The ControllerFactory class is a factory class that handles creation of
@@ -66,7 +69,7 @@ public class ClientControllerFactory {
      * @return the controller object
      */
     public ControllerInterface getController(String controllerType, ModelInterface model, ViewInterface view,
-                                             ControllerInterface subControllers[]) {
+                                             ControllerInterface subControllers[], ClientConnectionServiceInterface service) {
         if (controllerType == null) {
             return null;
         }
@@ -75,7 +78,7 @@ public class ClientControllerFactory {
             return clientController;
         } else if (controllerType.equalsIgnoreCase(ClientConstants.HEADER)) {
             headerController = new HeaderController((HeaderModel) model, (HeaderView) view,
-                    (ConnectionPopUpController) subControllers[0]);
+                    (ConnectionPopUpController) subControllers[0], (ServerController)subControllers[1], (ClientConnectionServiceImpl)service);
             return headerController;
         } else if (controllerType.equalsIgnoreCase(ClientConstants.PERFORMANCE_METRICS)) {
             performanceMetricGraphController = (GraphController) subControllers[0];

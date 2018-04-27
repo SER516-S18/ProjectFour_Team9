@@ -11,12 +11,10 @@ import javax.swing.text.BadLocationException;
 import org.apache.log4j.Logger;
 
 import ser516.project3.constants.ServerConstants;
-import ser516.project3.interfaces.ControllerInterface;
 import ser516.project3.server.Components.ServerCommonData;
 import ser516.project3.server.Components.Top.TopAbstractController;
 import ser516.project3.server.Components.Top.TopModel;
 import ser516.project3.server.Components.Top.TopView;
-import ser516.project3.server.helper.ServiceHelperModel;
 import ser516.project3.server.service.ServerConnectionServiceImpl;
 import ser516.project3.server.service.ServerConnectionServiceInterface;
 
@@ -192,13 +190,17 @@ public class TopController extends TopAbstractController {
                         consoleController.getConsoleModel().logMessage(ServerConstants.DATA_STOPPED_SENDING);
                     }
                     topModel.setAutoRepeatEnabled(!topModel.isAutoRepeatEnabled());
+                    ServerCommonData.getInstance().setShouldRepeat(true);
                     topModel.setIntervalEditable(!topModel.isIntervalEditable());
                     topView.updateView(topModel);
-                }
+                } else
+                	ServerCommonData.getInstance().setShouldRepeat(false);
                 if (topModel.isShouldSendData()) {
                     topModel.setShouldSendData(false);
+                    ServerCommonData.getInstance().setShouldSendData(false);
                 } else {
                     topModel.setShouldSendData(true);
+                    ServerCommonData.getInstance().setShouldSendData(true);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, ServerConstants.INVALID_INTERVAL);

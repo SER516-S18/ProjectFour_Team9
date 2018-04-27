@@ -1,6 +1,7 @@
 package ser516.project3.client.helper;
 
 import org.apache.log4j.Logger;
+
 import ser516.project3.client.controller.ClientControllerFactory;
 import ser516.project3.constants.ClientConstants;
 
