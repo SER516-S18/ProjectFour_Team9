@@ -10,8 +10,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
+import com.alee.extended.panel.WebButtonGroup;
 import com.alee.laf.button.WebButton;
 
+import com.alee.laf.radiobutton.WebRadioButton;
 import ser516.project3.constants.ClientConstants;
 import ser516.project3.interfaces.ModelInterface;
 import ser516.project3.interfaces.ViewInterface;
@@ -25,6 +27,10 @@ public abstract class ConnectionPopUpAbstractView extends JDialog implements Vie
 	protected JTextField ipAddressTextField;
 	protected JTextField portNumberTextField;
 	protected WebButton okButton;
+	protected WebRadioButton serverHealtRadioButton;
+	protected WebRadioButton serverEmotionsRadioButton;
+	protected WebButtonGroup selectServerButtonGroup;
+
 	
 	/**
      * This constructor initializes the instance of connection PopUp dialog.

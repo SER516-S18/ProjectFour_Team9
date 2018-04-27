@@ -4,7 +4,7 @@ import ser516.project3.interfaces.ControllerInterface;
 
 public abstract class ConnectionPopUpAbstractController implements ControllerInterface {
 	
-	protected ConnectionPopUpAbstractView connectionPopUpView;
+	protected ConnectionPopUpAbstractView connectionPopUpView ;
 	protected ConnectionPopUpModel connectionPopUpModel;
 	
 	/**
