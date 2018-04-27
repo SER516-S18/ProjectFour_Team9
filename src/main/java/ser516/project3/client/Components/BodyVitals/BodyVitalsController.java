@@ -5,12 +5,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JColorChooser;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
+import ser516.project3.client.Components.Graph.CoordinatesModel;
 import ser516.project3.client.Components.Graph.GraphController;
 import ser516.project3.constants.ClientConstants;
 import ser516.project3.interfaces.ControllerInterface;
