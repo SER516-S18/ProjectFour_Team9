@@ -47,7 +47,7 @@ public class HealthView extends HealthAbstractView {
         double min = 0.0;
         double max = 100.0;
         double step = 1.0;
-        jspinner = new JSpinner[6];
+        jspinner = new JSpinner[7];
 
         for (HealthPanel hm : HealthPanel.values()) {
             JLabel interest_label = new JLabel(hm.name());
@@ -70,9 +70,9 @@ public class HealthView extends HealthAbstractView {
      * Enumeration for setting constants for all the emotion options
      */
     public enum HealthPanel {
-        Pulse(0, 1, 0, 2, 0, "Pulse"), Heartrate(1, 3, 0, 4, 0, "HeartRate"),
-        Temperature(2, 1, 1, 2, 1, "Temperature"), Bloodsugar(3, 3, 1, 4, 1, "BloodSugar"),
-        Bmi(4, 1, 2, 2, 2, "BMI"), Height(5, 3, 2, 4, 2, "Height"),  Weight(6, 4, 1, 5, 1, "Weight");
+        Pulse(0, 1, 0, 2, 0, "Pulse"), HeartRate(1, 3, 0, 4, 0, "HeartRate"),
+        Temperature(2, 1, 1, 2, 1, "Temperature"), BloodSugar(3, 3, 1, 4, 1, "BloodSugar"),
+        Bmi(4, 1, 2, 2, 2, "Bmi"), Height(5, 3, 2, 4, 2, "Height"),  Weight(6, 4, 1, 5, 1, "Weight");
         int id, gbc_x, gbc_y, spinner_x, spinner_y;
         String name;
 

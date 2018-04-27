@@ -17,11 +17,9 @@ public class HealthController extends HealthAbstractController {
     }
 
     public void initializeView() {
-
-
-        for (int i = 0; i < 6; i++) {
-            healthView.addListener(new HealthController.SpinnerChangeListener(), "SPINNER_HEALTH");
-        }
+        healthView.initializeView(null);
+        healthView.addListener(new HealthController.SpinnerChangeListener(),
+                "SPINNER_HEALTH");
     }
 
 
