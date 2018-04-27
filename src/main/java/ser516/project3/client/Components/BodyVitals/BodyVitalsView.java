@@ -166,7 +166,7 @@ public class BodyVitalsView extends BodyVitalsAbstractView {
         bloodsugarButton = createEmotionButton(ClientConstants.RELAXATION, bodyVitalsModel.getBloodSugarColor());
         mainPanel.add(bloodsugarButton, gridBagConstraints);
 
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;
         bmiButton = createEmotionButton(ClientConstants.EXCITEMENT, bodyVitalsModel.getBmiColor());
         mainPanel.add(bmiButton, gridBagConstraints);

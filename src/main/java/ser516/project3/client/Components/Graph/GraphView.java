@@ -67,7 +67,7 @@ public class GraphView extends GraphAbstractView {
 	public void updateView(ModelInterface model) {
     	this.graphModel = (GraphModel)model;
         legendDisplay = true;
-        if (graphModel.getNoOfChannels() == 6)
+        if (graphModel.getNoOfChannels() >= 5)
             legendDisplay = false;
         remove(chartPanel);
         XYDataset dataSet = createDataSet();

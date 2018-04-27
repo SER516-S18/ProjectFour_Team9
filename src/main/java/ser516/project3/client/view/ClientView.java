@@ -1,5 +1,6 @@
 package ser516.project3.client.view;
 
+import ser516.project3.client.Components.BodyVitals.BodyVitalsView;
 import ser516.project3.client.Components.Expressions.ExpressionsView;
 import ser516.project3.client.Components.Header.HeaderView;
 import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricView;
@@ -33,6 +34,7 @@ public class ClientView extends JFrame implements ViewInterface {
 
     private HeaderView headerView;
     private PerformanceMetricView performanceMetricView;
+    private BodyVitalsView bodyVitalsView;
     private ExpressionsView expressionsView;
 
     private final static int FONT_SIZE = 15;
@@ -61,7 +63,8 @@ public class ClientView extends JFrame implements ViewInterface {
     public void initializeView(ViewInterface subviews[]) {
         headerView = (HeaderView) subviews[0];
         performanceMetricView = (PerformanceMetricView) subviews[1];
-        expressionsView = (ExpressionsView) subviews[2];
+        bodyVitalsView = (BodyVitalsView) subviews[2];
+        expressionsView = (ExpressionsView) subviews[3];
 
         createMenuBar();
         createTabs();
@@ -100,6 +103,7 @@ public class ClientView extends JFrame implements ViewInterface {
     private void createTabs() {
         expressionsEmotionsCombinedTab = new JTabbedPane();
         expressionsEmotionsCombinedTab.addTab(ClientConstants.PERFORMANCE_METRICS, performanceMetricView);
+        expressionsEmotionsCombinedTab.addTab(ClientConstants.BODY_VITALS, bodyVitalsView);
         expressionsEmotionsCombinedTab.addTab(ClientConstants.EXPRESSIONS, expressionsView);
         expressionsEmotionsCombinedTab.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
     }

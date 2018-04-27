@@ -1,5 +1,8 @@
 package ser516.project3.client.controller;
 
+import ser516.project3.client.Components.BodyVitals.BodyVitalsController;
+import ser516.project3.client.Components.BodyVitals.BodyVitalsModel;
+import ser516.project3.client.Components.BodyVitals.BodyVitalsView;
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpAbstractView;
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpController;
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpModel;
@@ -35,6 +38,7 @@ public class ClientControllerFactory {
     private HeaderController headerController;
     private FaceController faceController;
     private GraphController performanceMetricGraphController;
+    private GraphController bodyVitalsGraphController;
     private GraphController expressionsGraphController;
 
     private static ClientControllerFactory instance;
@@ -77,7 +81,11 @@ public class ClientControllerFactory {
             performanceMetricGraphController = (GraphController) subControllers[0];
             return new PerformanceMetricController((PerformanceMetricModel) model, (PerformanceMetricView) view,
                     performanceMetricGraphController);
-        } else if (controllerType.equalsIgnoreCase(ClientConstants.EXPRESSIONS)) {
+        } else if (controllerType.equalsIgnoreCase(ClientConstants.BODY_VITALS)) {
+            bodyVitalsGraphController = (GraphController) subControllers[0];
+            return new BodyVitalsController((BodyVitalsModel) model, (BodyVitalsView) view,
+                    bodyVitalsGraphController);
+        }else if (controllerType.equalsIgnoreCase(ClientConstants.EXPRESSIONS)) {
             expressionsGraphController = (GraphController) subControllers[0];
             return new ExpressionsController((ExpressionsModel) model, (ExpressionsView) view,
                     expressionsGraphController, (FaceController) subControllers[1]);
@@ -120,6 +128,14 @@ public class ClientControllerFactory {
     public GraphController getPerformanceMetricGraphController() {
         return performanceMetricGraphController;
     }
+    
+    /**
+     * @return returns the instance of the Graph body vitals controller
+     */
+    public GraphController getBodyVitalsGraphController() {
+        return bodyVitalsGraphController;
+    }
+
 
     /**
      * @return returns the instance of the Graph expressions Controller
