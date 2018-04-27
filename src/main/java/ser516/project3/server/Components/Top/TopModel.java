@@ -1,6 +1,7 @@
 package ser516.project3.server.Components.Top;
 
 import ser516.project3.interfaces.ModelInterface;
+import ser516.project3.server.Components.ServerCommonData;
 
 /**
  * Stores data for the top view of the server view like connection states.
@@ -88,6 +89,7 @@ public class TopModel implements ModelInterface {
      */
     public void setShouldSendData(boolean shouldSendData) {
         this.shouldSendData = shouldSendData;
+        ServerCommonData.getInstance().setShouldSendData(shouldSendData);
     }
 
     /**
@@ -130,6 +132,7 @@ public class TopModel implements ModelInterface {
      */
     public void setAutoRepeatEnabled(boolean autoRepeatEnabled) {
         this.autoRepeatEnabled = autoRepeatEnabled;
+        ServerCommonData.getInstance().setShouldRepeat(autoRepeatEnabled);
     }
 
     /**

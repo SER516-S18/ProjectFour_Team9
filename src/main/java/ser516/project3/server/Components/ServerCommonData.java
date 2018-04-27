@@ -12,6 +12,8 @@ public class ServerCommonData {
 
     private static ServerCommonData instance = null;
     private static MessageModel messageModel;
+    private boolean shouldSendData;
+    private boolean shouldRepeat;
 
     /**
      * Empty constructor to allow only single instance of the class
@@ -50,4 +52,28 @@ public class ServerCommonData {
     public MessageModel getMessage() {
         return messageModel;
     }
+
+	public boolean isShouldSendData() {
+		return shouldSendData;
+	}
+
+	public void setShouldSendData(boolean shouldSendData) {
+		this.shouldSendData = shouldSendData;
+	}
+
+	/**
+	 * @return the shouldRepeat
+	 */
+	public boolean isShouldRepeat() {
+		return shouldRepeat;
+	}
+
+	/**
+	 * @param shouldRepeat the shouldRepeat to set
+	 */
+	public void setShouldRepeat(boolean shouldRepeat) {
+		this.shouldRepeat = shouldRepeat;
+	}
+	
+    
 }

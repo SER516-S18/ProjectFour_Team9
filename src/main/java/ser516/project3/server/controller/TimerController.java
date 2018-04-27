@@ -1,4 +1,8 @@
-package ser516.project3.server.Components.Timer;
+package ser516.project3.server.controller;
+
+import ser516.project3.server.Components.Timer.TimerAbstractController;
+import ser516.project3.server.Components.Timer.TimerModel;
+import ser516.project3.server.Components.Timer.TimerView;
 
 /**
  * Class that helps communicate between TimerView and TimerModel.

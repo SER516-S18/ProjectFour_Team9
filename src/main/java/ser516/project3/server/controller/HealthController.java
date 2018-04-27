@@ -1,9 +1,10 @@
-package ser516.project3.server.Components.Health;
+package ser516.project3.server.controller;
 
 import ser516.project3.constants.ServerConstants;
-import ser516.project3.server.Components.Emotions.EmotionsController;
-import ser516.project3.server.Components.Expressions.ExpressionsController;
 import ser516.project3.server.Components.ServerCommonData;
+import ser516.project3.server.Components.Health.HealthAbstractController;
+import ser516.project3.server.Components.Health.HealthModel;
+import ser516.project3.server.Components.Health.HealthView;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

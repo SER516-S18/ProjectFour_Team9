@@ -11,7 +11,6 @@ import javax.swing.event.ChangeListener;
 
 import ser516.project3.client.Components.Expressions.ExpressionsController;
 import ser516.project3.client.Components.Header.HeaderController;
-import ser516.project3.client.service.ClientConnectionHealthServiceImpl;
 import ser516.project3.client.service.ClientConnectionServiceImpl;
 import ser516.project3.client.service.ClientConnectionServiceInterface;
 import ser516.project3.client.view.ClientView;
@@ -36,9 +35,9 @@ import ser516.project3.client.Components.Header.HeaderModel;
 import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricModel;
 import ser516.project3.server.controller.ServerController;
 import ser516.project3.server.controller.ServerControllerFactory;
+import ser516.project3.server.helper.ServiceHelperModel;
 import ser516.project3.server.service.ServerConnectionServiceImpl;
 import ser516.project3.server.service.ServerConnectionServiceInterface;
-import ser516.project3.server.service.ServiceModel;
 
 /**
  * The Controller class to handle requests from the Client UI
@@ -246,7 +245,7 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 			clientConnectionService.stopClientConnection();
 			healthServerConnected = false;
 		} else {
-			clientConnectionService = new ClientConnectionHealthServiceImpl();
+			//clientConnectionService = new ClientConnectionHealthServiceImpl();
 			clientConnectionService.createClientConnection(ipAddress, port, ClientConstants.HEALTH_SERVER_ENDPOINT);
 			healthServerConnected = true;
 		}
@@ -266,10 +265,12 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 	 */
 	public void openServer() {
         if(serverController == null) {
-            ServerControllerFactory controllerFactory = ServerControllerFactory.getInstance();
+//            ServerControllerFactory controllerFactory = ServerControllerFactory.getInstance();
 //            new ServerConnectionServiceImpl(ServiceModel.getInstance());
-            serverController = (ServerController) controllerFactory.getController("SERVER", null, null);
+            
+            serverController = new ServerController(ServiceHelperModel.getInstance());//(ServerController) controllerFactory.getController("SERVER", null, null, null);
             serverController.initializeView();
+            
         } else {
             serverController.showServer();
         }

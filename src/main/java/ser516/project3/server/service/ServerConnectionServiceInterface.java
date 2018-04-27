@@ -16,6 +16,6 @@ public interface ServerConnectionServiceInterface {
     /**
      * Stops the server web-socket end-point
      */
-    void stopServerEndpoint();
+    boolean stopServerEndpoint();
 
 }

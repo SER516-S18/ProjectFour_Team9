@@ -36,20 +36,16 @@ public class ServerContainerThread implements Runnable {
 		}
 		try {
 			server.start();
-			ServerController.getInstance().getTopController().getTopModel()
-					.setServerStarted(true);
+			ServiceHelperModel.getInstance().setServerStartedStatus(true);
 			BufferedReader reader = new BufferedReader(
 					new InputStreamReader(System.in));
 			reader.readLine();
 		} catch (Exception e) {
 			logger.error(ServerConstants.ERROR_SERVER_START + e.getMessage());
-			ServerController.getInstance().getConsoleController()
-					.getConsoleModel()
-					.logMessage(ServerConstants.ERROR_SERVER_START);
+			ServiceHelperModel.getInstance().setServerError(true);
 		} finally {
 			server.stop();
-			ServerController.getInstance().getTopController().getTopModel()
-					.setServerStarted(false);
+			ServiceHelperModel.getInstance().setServerStartedStatus(false);
 		}
 	}
 

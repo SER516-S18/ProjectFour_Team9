@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import ser516.project3.constants.ServerConstants;
 import ser516.project3.server.Components.ServerCommonData;
 import ser516.project3.server.controller.ServerController;
-
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
@@ -29,14 +28,11 @@ public class ServerConnectionEndpoint {
     public void onOpen(final Session session) throws IOException {
         try {
             logger.info(ServerConstants.CLIENT_CONNECTED + session.getBasicRemote());
-            ServerController.getInstance().getConsoleController().getConsoleModel().
-                    logMessage(ServerConstants.CLIENT_CONNECTED);
+            ServiceHelperModel.getInstance().setServerStatus(true);
             ServerCommonData serverCommonDataObject = ServerCommonData.getInstance();
             while (true) {
-                boolean isShouldSend = ServerController.getInstance().getTopController().
-                        getTopModel().isShouldSendData();
-                boolean isAutoRepeat = ServerController.getInstance().getTopController().
-                        getTopModel().isAutoRepeatCheckBoxChecked();
+                boolean isShouldSend =serverCommonDataObject.isShouldSendData();
+                boolean isAutoRepeat = serverCommonDataObject.isShouldRepeat();
                 if (isShouldSend) {
                     session.getBasicRemote().sendObject(serverCommonDataObject.getMessage());
                     double timeElapsed = ServerCommonData.getInstance().getMessage().
@@ -45,17 +41,16 @@ public class ServerConnectionEndpoint {
                             getInterval();
                     ServerCommonData.getInstance().getMessage().setTimeStamp(
                             timeElapsed + dataInterval);
-                    ServerController.getInstance().getTimerController().updateTimeStamp(timeElapsed);
+                    ServiceHelperModel.getInstance().setTimeElapsed(timeElapsed);
                     if (!isAutoRepeat)
-                        ServerController.getInstance().getTopController().getTopModel().setShouldSendData(false);
+                    	ServiceHelperModel.getInstance().setShouldSendData(false);
                 }
                 Thread.sleep((long) (serverCommonDataObject.getMessage().getInterval() * 1000));
             }
 
         } catch (IOException | EncodeException | InterruptedException e) {
             logger.error(ServerConstants.ERROR_CLIENT_CONNECTION + e.getMessage());
-            ServerController.getInstance().getConsoleController().getConsoleModel().
-                    logMessage(ServerConstants.ERROR_CLIENT_CONNECTION);
+            ServiceHelperModel.getInstance().setServerStatus(false);
         }
     }
 

@@ -1,7 +1,11 @@
-package ser516.project3.server.Components.Console;
+package ser516.project3.server.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import ser516.project3.server.Components.Console.ConsoleAbstractController;
+import ser516.project3.server.Components.Console.ConsoleModel;
+import ser516.project3.server.Components.Console.ConsoleView;
 
 /**
  * Class that controls the console on the server which
