@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import ser516.project3.constants.ServerConstants;
 import ser516.project3.server.controller.ServerController;
 import ser516.project3.server.helper.ServerContainerThread;
-import ser516.project4.server.service.HealthServerConnectionServiceInterface;
+import ser516.project3.server.service.HealthServerConnectionServiceInterface;
 
 public class HealthServerConnectionServiceImpl
 		implements HealthServerConnectionServiceInterface {
