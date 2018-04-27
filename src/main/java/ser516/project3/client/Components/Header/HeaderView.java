@@ -40,7 +40,7 @@ public class HeaderView extends HeaderAbstractView {
     private final static String EMOTION_SERVER_LABEL = "Emotion Server";
     private final static String HEALTH_SERVER_LABEL = "Health Server";
 
-    private String[] ServerChoice = {"Select Server", "Emotion Server", "Client Server"};
+    private String[] ServerChoice = {"Select Server", "Emotion Server", "Health Server"};
 
     /**
      * This constructor initializes the model of HeaderView
@@ -94,10 +94,19 @@ public class HeaderView extends HeaderAbstractView {
         // May need to update this
         if (headerModel.isConnectionStatus()) {
             connectButton.setText(ClientConstants.DISCONNECT);
-            connectionEmotionStatusValueLabel.setText(ClientConstants.CONNECTED);
+            switch(openServerChoice.getSelectedIndex()){
+                case 1:
+                    connectionEmotionStatusValueLabel.setText(ClientConstants.CONNECTED);
+                    break;
+                case 2:
+                    connectionHealthStatusValueLabel.setText(ClientConstants.CONNECTED);
+            }
+
+
         } else {
             connectButton.setText(ClientConstants.CONNECT);
             connectionEmotionStatusValueLabel.setText(ClientConstants.DISCONNECTED);
+            connectionHealthStatusValueLabel.setText(ClientConstants.DISCONNECTED);
         }
     }
 
@@ -105,7 +114,15 @@ public class HeaderView extends HeaderAbstractView {
      * This method updates the time stamp on the panel.
      */
     private void updateTimeStamp() {
-        timestampEmotionValueLabel.setText(String.valueOf(headerModel.getTimeStamp()));
+        switch(openServerChoice.getSelectedIndex()){
+            case 1:
+                timestampEmotionValueLabel.setText(String.valueOf(headerModel.getTimeStamp()));
+                break;
+            case 2:
+                timestampHealthValueLabel.setText(String.valueOf(headerModel.getTimeStamp()));
+        }
+
+
     }
 
     /**
