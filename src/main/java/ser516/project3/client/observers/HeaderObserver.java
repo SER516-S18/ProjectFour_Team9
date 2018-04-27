@@ -1,8 +1,8 @@
 package ser516.project3.client.observers;
 
-import ser516.project3.client.controller.ClientControllerFactory;
 import ser516.project3.client.Components.Header.HeaderController;
 import ser516.project3.client.Components.Header.HeaderObservable;
+import ser516.project3.client.controller.ClientControllerFactory;
 
 import java.util.Observable;
 import java.util.Observer;

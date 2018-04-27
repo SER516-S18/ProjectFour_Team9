@@ -1,6 +1,7 @@
 package ser516.project3.client.Components.ConnectionPopUp;
 
 import ser516.project3.interfaces.ControllerInterface;
+import ser516.project3.interfaces.ModelInterface;
 
 /**
  * ConnectionPopUpAbstractController to define the basic

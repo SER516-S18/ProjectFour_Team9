@@ -9,36 +9,32 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import ser516.project3.client.Components.Expressions.ExpressionsController;
-import ser516.project3.client.Components.Header.HeaderController;
-import ser516.project3.client.service.ClientConnectionHealthServiceImpl;
-import ser516.project3.client.service.ClientConnectionServiceImpl;
-import ser516.project3.client.service.ClientConnectionServiceInterface;
-import ser516.project3.client.view.ClientView;
-import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpView;
-import ser516.project3.client.Components.Expressions.ExpressionsView;
-import ser516.project3.client.Components.Face.FaceView;
-import ser516.project3.client.Components.Graph.GraphView;
-import ser516.project3.client.Components.Header.HeaderView;
-import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricView;
-import ser516.project3.constants.ClientConstants;
-import ser516.project3.interfaces.CommonDataInterface;
-import ser516.project3.interfaces.ControllerInterface;
-import ser516.project3.interfaces.ViewInterface;
 import ser516.project3.client.Components.BodyVitals.BodyVitalsModel;
 import ser516.project3.client.Components.BodyVitals.BodyVitalsView;
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpAbstractView;
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpModel;
+import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpView;
+import ser516.project3.client.Components.Expressions.ExpressionsController;
 import ser516.project3.client.Components.Expressions.ExpressionsModel;
+import ser516.project3.client.Components.Expressions.ExpressionsView;
 import ser516.project3.client.Components.Face.FaceModel;
+import ser516.project3.client.Components.Face.FaceView;
 import ser516.project3.client.Components.Graph.GraphModel;
+import ser516.project3.client.Components.Graph.GraphView;
+import ser516.project3.client.Components.Header.HeaderController;
 import ser516.project3.client.Components.Header.HeaderModel;
+import ser516.project3.client.Components.Header.HeaderView;
 import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricModel;
+import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricView;
+import ser516.project3.client.service.ClientConnectionServiceImpl;
+import ser516.project3.client.service.ClientConnectionServiceInterface;
+import ser516.project3.client.view.ClientView;
+import ser516.project3.constants.ClientConstants;
+import ser516.project3.interfaces.CommonDataInterface;
+import ser516.project3.interfaces.ControllerInterface;
+import ser516.project3.interfaces.ViewInterface;
 import ser516.project3.server.controller.ServerController;
-import ser516.project3.server.controller.ServerControllerFactory;
-import ser516.project3.server.service.ServerConnectionServiceImpl;
-import ser516.project3.server.service.ServerConnectionServiceInterface;
-import ser516.project3.server.service.ServiceModel;
+import ser516.project3.server.helper.ServiceHelperModel;
 
 /**
  * The Controller class to handle requests from the Client UI
@@ -46,8 +42,6 @@ import ser516.project3.server.service.ServiceModel;
  *
  */
 public class ClientController implements ControllerInterface, CommonDataInterface {
-	private boolean connected = false;
-	private boolean healthServerConnected = false;
 	private ClientConnectionServiceInterface clientConnectionService;
 	private ClientViewFactory viewFactory;
 	private ClientView clientView;
@@ -122,7 +116,6 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
      */
 	@Override
 	public void setConnectionStatus(boolean connectionStatus) {
-		connected = connectionStatus;
 		headerController.setConnectionStatus(connectionStatus);
 	}
 
@@ -142,15 +135,18 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
      * @param viewFactory the object to create the instances of the views
 	 */
 	private void initializeHeader(ClientViewFactory viewFactory, ClientControllerFactory controllerFactory) {
+		serverController = new ServerController(ServiceHelperModel.getInstance());
+		clientConnectionService = new ClientConnectionServiceImpl();
+		
 		ConnectionPopUpModel connectionPopUpModel = new ConnectionPopUpModel();
 		ConnectionPopUpAbstractView connectionPopUpView = (ConnectionPopUpView) viewFactory.getView(ClientConstants.CONNECTION_POP_UP, connectionPopUpModel);
-		connectionPopUpController = controllerFactory.getController(ClientConstants.CONNECTION_POP_UP, connectionPopUpModel, connectionPopUpView, null);
+		connectionPopUpController = controllerFactory.getController(ClientConstants.CONNECTION_POP_UP, connectionPopUpModel, connectionPopUpView, null, null);
 
-		ControllerInterface subControllers[] = {connectionPopUpController};
+		ControllerInterface subControllers[] = {connectionPopUpController, serverController};
 
 		HeaderModel headerModel = new HeaderModel();
 		HeaderView headerView = (HeaderView) viewFactory.getView(ClientConstants.HEADER, headerModel);
-		headerController = (HeaderController) controllerFactory.getController(ClientConstants.HEADER, headerModel, headerView, subControllers);
+		headerController = (HeaderController) controllerFactory.getController(ClientConstants.HEADER, headerModel, headerView, subControllers, clientConnectionService);
 		headerController.initializeView();
 	}
 	/**
@@ -163,14 +159,14 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 	private void initializePerformanceMetrics(ClientViewFactory viewFactory, ClientControllerFactory controllerFactory) {
 		GraphModel performanceMetricGraphModel = new GraphModel();
 		GraphView performanceMetricGraphView = (GraphView) viewFactory.getView(ClientConstants.GRAPH, performanceMetricGraphModel);
-		performanceMetricsGraphController = controllerFactory.getController(ClientConstants.GRAPH, performanceMetricGraphModel, performanceMetricGraphView, null);
+		performanceMetricsGraphController = controllerFactory.getController(ClientConstants.GRAPH, performanceMetricGraphModel, performanceMetricGraphView, null, null);
 		performanceMetricsGraphController.initializeView();
 
 		ControllerInterface subControllers[] = {performanceMetricsGraphController};
 
 		PerformanceMetricModel performanceMetricModel = new PerformanceMetricModel();
 		PerformanceMetricView performanceMetricView = (PerformanceMetricView) viewFactory.getView(ClientConstants.PERFORMANCE_METRICS, performanceMetricModel);
-		performanceMetricController = controllerFactory.getController(ClientConstants.PERFORMANCE_METRICS, performanceMetricModel, performanceMetricView, subControllers);
+		performanceMetricController = controllerFactory.getController(ClientConstants.PERFORMANCE_METRICS, performanceMetricModel, performanceMetricView, subControllers, null);
 		performanceMetricController.initializeView();
 	}
 	
@@ -184,14 +180,14 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 	private void initializeBodyVitals(ClientViewFactory viewFactory, ClientControllerFactory controllerFactory) {
 		GraphModel bodyVitalsGraphModel = new GraphModel();
 		GraphView bodyVitalsGraphView = (GraphView) viewFactory.getView(ClientConstants.GRAPH, bodyVitalsGraphModel);
-		bodyVitalsGraphController = controllerFactory.getController(ClientConstants.GRAPH, bodyVitalsGraphModel, bodyVitalsGraphView, null);
+		bodyVitalsGraphController = controllerFactory.getController(ClientConstants.GRAPH, bodyVitalsGraphModel, bodyVitalsGraphView, null, null);
 		bodyVitalsGraphController.initializeView();
 
 		ControllerInterface subControllers[] = {bodyVitalsGraphController};
 
 		BodyVitalsModel bodyVitalsModel = new BodyVitalsModel();
 		BodyVitalsView bodyVitalsView = (BodyVitalsView) viewFactory.getView(ClientConstants.BODY_VITALS, bodyVitalsModel);
-		bodyVitalsController = controllerFactory.getController(ClientConstants.BODY_VITALS, bodyVitalsModel, bodyVitalsView, subControllers);
+		bodyVitalsController = controllerFactory.getController(ClientConstants.BODY_VITALS, bodyVitalsModel, bodyVitalsView, subControllers, null);
 		bodyVitalsController.initializeView();
 	}
 	/**
@@ -204,52 +200,19 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 	private void initializeExpressions(ClientViewFactory viewFactory, ClientControllerFactory controllerFactory) {
 		GraphModel expressionsGraphModel = new GraphModel();
 		GraphView expressionsGraphView = (GraphView) viewFactory.getView(ClientConstants.GRAPH, expressionsGraphModel);
-		expressionGraphController = controllerFactory.getController(ClientConstants.GRAPH, expressionsGraphModel, expressionsGraphView, null);
+		expressionGraphController = controllerFactory.getController(ClientConstants.GRAPH, expressionsGraphModel, expressionsGraphView, null, null);
 		expressionGraphController.initializeView();
 
 		FaceModel faceModel = new FaceModel();
 		FaceView faceView = (FaceView) viewFactory.getView(ClientConstants.FACE, faceModel);
-		faceController = controllerFactory.getController(ClientConstants.FACE, faceModel, faceView, null);
+		faceController = controllerFactory.getController(ClientConstants.FACE, faceModel, faceView, null, null);
 		faceController.initializeView();
 
 		ControllerInterface subControllers[] = {expressionGraphController, faceController};
 		ExpressionsModel expressionsModel = new ExpressionsModel();
 		ExpressionsView expressionsView = (ExpressionsView) viewFactory.getView(ClientConstants.EXPRESSIONS, expressionsModel);
-		expressionsController = (ExpressionsController) controllerFactory.getController(ClientConstants.EXPRESSIONS, expressionsModel, expressionsView, subControllers);
+		expressionsController = (ExpressionsController) controllerFactory.getController(ClientConstants.EXPRESSIONS, expressionsModel, expressionsView, subControllers, null);
 		expressionsController.initializeView();
-	}
-
-	/**
-	 * Method to connect to a server end point
-	 * @param ipAddress - the IP address field
-	 * @param port - the port field
-	 */
-	public void toggleConnectionToServer(String ipAddress, int port) {
-		if (connected) {
-			clientConnectionService.stopClientConnection();
-			connected = false;
-			// TODO: Find a way to stop the client container
-		} else {
-			clientConnectionService = new ClientConnectionServiceImpl();
-			clientConnectionService.createClientConnection(ipAddress, port, ClientConstants.ENDPOINT);
-			connected = true;
-		}
-	}
-	
-	/**
-	 * Method to connect to a server end point
-	 * @param ipAddress - the IP address field
-	 * @param port - the port field
-	 */
-	public void toggleConnectionToHealthServer(String ipAddress, int port) {
-		if (healthServerConnected) {
-			clientConnectionService.stopClientConnection();
-			healthServerConnected = false;
-		} else {
-			clientConnectionService = new ClientConnectionHealthServiceImpl();
-			clientConnectionService.createClientConnection(ipAddress, port, ClientConstants.HEALTH_SERVER_ENDPOINT);
-			healthServerConnected = true;
-		}
 	}
 
 	/**
@@ -258,22 +221,9 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 	public void stopClientConnector() {
 		if(clientConnectionService != null)
 			clientConnectionService.stopClientConnection();
-		connected = false;
+		headerController.setConnectionStatus(false);
 	}
-
-	/**
-	 * Method to display server view if its not open
-	 */
-	public void openServer() {
-        if(serverController == null) {
-            ServerControllerFactory controllerFactory = ServerControllerFactory.getInstance();
-//            new ServerConnectionServiceImpl(ServiceModel.getInstance());
-            serverController = (ServerController) controllerFactory.getController("SERVER", null, null);
-            serverController.initializeView();
-        } else {
-            serverController.showServer();
-        }
-    }
+	
 	/**
 	 *
 	 * Class implemented to handle action listener of all server menu item components
@@ -282,7 +232,7 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 	class ServerMenuItemListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			openServer();
+			headerController.openServer();
 		}
 	}
 	/**

@@ -14,7 +14,7 @@ import java.util.Observer;
  *
  * @author vsriva12
  */
-public class ServerConnectionServiceImpl implements ServerConnectionServiceInterface, Observer {
+public class ServerConnectionServiceImpl implements ServerConnectionServiceInterface {
     final static Logger logger = Logger.getLogger(ServerConnectionServiceImpl.class);
     Thread serverContainerThread;
     ServerContainerThread threadInstance;
@@ -22,11 +22,6 @@ public class ServerConnectionServiceImpl implements ServerConnectionServiceInter
 
     public ServerConnectionServiceImpl() {
 
-    }
-
-    public ServerConnectionServiceImpl(Observable observable) {
-        this.observable = observable;
-        observable.addObserver(this);
     }
 
     /**
@@ -38,8 +33,7 @@ public class ServerConnectionServiceImpl implements ServerConnectionServiceInter
         threadInstance = new ServerContainerThread(ServerConstants.MAIN_SERVER);
         serverContainerThread = new Thread(threadInstance);
         serverContainerThread.start();
-        ServerController.getInstance().getConsoleController().getConsoleModel().
-                logMessage(ServerConstants.SERVER_STARTED);
+        
     }
 
     /**
@@ -47,32 +41,12 @@ public class ServerConnectionServiceImpl implements ServerConnectionServiceInter
      * instance
      */
     @Override
-    public void stopServerEndpoint() {
+    public boolean stopServerEndpoint() {
         if (threadInstance != null || serverContainerThread != null) {
             threadInstance.getServer().stop();
-            ServerController.getInstance().getConsoleController().getConsoleModel().
-                    logMessage(ServerConstants.SERVER_STOPPED);
             serverContainerThread.interrupt();
+            return true;
         }
-        ServerController.getInstance().getTopController().getTopModel().setServerStarted(false);
-        ServerController.getInstance().getTopController().getTopModel().
-                setSendButtonEnabled(false);
-        ServerController.getInstance().getTopController().getTopModel().
-                setServerStartStopButtonText(ServerConstants.START_SERVER);
-        ServerController.getInstance().getTopController().updateServerStartStopButtonText();
-        ServerController.getInstance().getTopController().updateEnableDisableSendButton();
-        ServerController.getInstance().getTopController().setBlinking(false);
-    }
-
-
-    @Override
-    public void update(Observable serverStatus, Object observerObj) {
-        ServiceModel serviceModel = ServiceModel.getInstance();
-        if (serviceModel.isServerStatus()) {
-            this.initServerEndpoint();
-        } else {
-            this.stopServerEndpoint();
-        }
-
+        return false;
     }
 }

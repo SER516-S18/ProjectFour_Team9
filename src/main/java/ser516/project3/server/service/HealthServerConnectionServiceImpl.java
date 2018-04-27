@@ -23,8 +23,8 @@ public class HealthServerConnectionServiceImpl
 		threadInstance = new ServerContainerThread(ServerConstants.HEALTH_SERVER);
 		serverContainerThread = new Thread(threadInstance);
 		serverContainerThread.start();
-		ServerController.getInstance().getConsoleController().getConsoleModel()
-				.logMessage(ServerConstants.SERVER_STARTED);
+//		ServerController.getInstance().getConsoleController().getConsoleModel()
+//				.logMessage(ServerConstants.SERVER_STARTED);
 	}
 
 	/**
@@ -34,9 +34,9 @@ public class HealthServerConnectionServiceImpl
 	public void stopServerEndpoint() {
 		if (threadInstance != null || serverContainerThread != null) {
 			threadInstance.getServer().stop();
-			ServerController.getInstance().getConsoleController()
-					.getConsoleModel()
-					.logMessage(ServerConstants.SERVER_STOPPED);
+//			ServerController.getInstance().getConsoleController()
+//					.getConsoleModel()
+//					.logMessage(ServerConstants.SERVER_STOPPED);
 			serverContainerThread.interrupt();
 		}
 		/*ServerController.getInstance().getTopController().getTopModel()

@@ -5,6 +5,11 @@ import java.net.URI;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
+
+import ser516.project3.client.controller.ClientControllerFactory;
+import ser516.project3.constants.ClientConstants;
+
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.websocket.ContainerProvider;
@@ -12,10 +17,6 @@ import javax.websocket.DeploymentException;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
-import org.apache.log4j.Logger;
-
-import ser516.project3.client.controller.ClientControllerFactory;
-import ser516.project3.constants.ClientConstants;
 
 /**
  * Thread class to create a client web socket end point

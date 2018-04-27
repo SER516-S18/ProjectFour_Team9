@@ -1,6 +1,7 @@
 package ser516.project3.server.Components.Top;
 
 import ser516.project3.interfaces.ModelInterface;
+import ser516.project3.server.Components.ServerCommonData;
 
 /**
  * Stores data for the top view of the server view like connection states.

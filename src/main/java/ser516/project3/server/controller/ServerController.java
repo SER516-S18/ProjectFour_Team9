@@ -1,34 +1,32 @@
 package ser516.project3.server.controller;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Observable;
+import java.util.Observer;
+
 import org.apache.log4j.Logger;
+
 import ser516.project3.constants.ServerConstants;
 import ser516.project3.interfaces.ControllerInterface;
 import ser516.project3.interfaces.ViewInterface;
-import ser516.project3.server.Components.Console.ConsoleController;
 import ser516.project3.server.Components.Console.ConsoleModel;
 import ser516.project3.server.Components.Console.ConsoleView;
-import ser516.project3.server.Components.Emotions.EmotionsController;
 import ser516.project3.server.Components.Emotions.EmotionsModel;
 import ser516.project3.server.Components.Emotions.EmotionsView;
-import ser516.project3.server.Components.Expressions.ExpressionsController;
 import ser516.project3.server.Components.Expressions.ExpressionsModel;
 import ser516.project3.server.Components.Expressions.ExpressionsView;
-import ser516.project3.server.Components.Health.HealthController;
 import ser516.project3.server.Components.Health.HealthModel;
 import ser516.project3.server.Components.Health.HealthView;
-import ser516.project3.server.Components.Timer.TimerController;
 import ser516.project3.server.Components.Timer.TimerModel;
 import ser516.project3.server.Components.Timer.TimerView;
-import ser516.project3.server.Components.Top.TopController;
 import ser516.project3.server.Components.Top.TopModel;
 import ser516.project3.server.Components.Top.TopView;
+import ser516.project3.server.helper.ServiceHelperModel;
 import ser516.project3.server.service.ServerConnectionServiceImpl;
 import ser516.project3.server.service.ServerConnectionServiceInterface;
-import ser516.project3.server.service.ServiceModel;
-import ser516.project3.server.view.*;
-
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import ser516.project3.server.view.ServerView;
+import ser516.project3.server.view.ServerViewFactory;
 
 /**
  * The ServerController class is the main controller class for the server
@@ -37,8 +35,11 @@ import java.awt.event.WindowEvent;
  *
  * @author vsriva12
  */
-public class ServerController implements ControllerInterface {
+public class ServerController implements ControllerInterface, Observer {
     final static Logger logger = Logger.getLogger(ServerView.class);
+    
+    public boolean serverOpen;
+    
     private ServerViewFactory viewFactory;
     private ServerControllerFactory serverControllerFactory;
     private ServerView serverView;
@@ -48,9 +49,7 @@ public class ServerController implements ControllerInterface {
     private EmotionsController emotionsController;
     private ExpressionsController expressionsController;
     private ConsoleController consoleController;
-    //private ServerConnectionServiceInterface serverConnectionService;
-
-    private static ServerController instance;
+    private ServerConnectionServiceInterface serverConnectionService;
 
     /**
      * Constructor to initialize all components in the
@@ -60,28 +59,18 @@ public class ServerController implements ControllerInterface {
     public ServerController() {
         viewFactory = new ServerViewFactory();
         serverControllerFactory = ServerControllerFactory.getInstance();
-        //serverConnectionService = new ServerConnectionServiceImpl();
+        serverConnectionService = new ServerConnectionServiceImpl();
+        initializeConsole();
         initializeTop();
         initializeTimer();
         initializeEmotions();
         initializeHealth();
         initializeExpressions();
-        initializeConsole();
     }
-
-
-
-    /**
-     * Creates a singleton instance of ServerController.
-     * If exists, returns it, else creates it.
-     *
-     * @return instance of the ServerController
-     */
-    public static ServerController getInstance() {
-        if (instance == null) {
-            instance = new ServerController();
-        }
-        return instance;
+    
+    public ServerController(Observable observable) {
+    	this();
+    	observable.addObserver(this);
     }
 
     /**
@@ -96,6 +85,11 @@ public class ServerController implements ControllerInterface {
                 consoleController.getView(), healthController.getView()};
         serverView.initializeView(subViews);
         serverView.addServerWindowListener(new ServerWindowsListener());
+        serverOpen = true;
+    }
+    
+    public boolean isServerOpen() {
+    	return serverOpen;
     }
 
     /**
@@ -124,7 +118,8 @@ public class ServerController implements ControllerInterface {
     private void initializeTop() {
         TopModel topModel = new TopModel();
         TopView topView = (TopView) viewFactory.getView("TOP", topModel);
-        topController = (TopController) serverControllerFactory.getController("TOP", topModel, topView);
+        ControllerInterface subControllers[] = {consoleController};
+        topController = (TopController) serverControllerFactory.getController("TOP", topModel, topView, subControllers);
 //        topController.setServerConnectionService(serverConnectionService);
         topController.initializeView();
     }
@@ -135,7 +130,7 @@ public class ServerController implements ControllerInterface {
     private void initializeHealth() {
         HealthModel healthModel = new HealthModel();
         HealthView healthView = (HealthView) viewFactory.getView("HEALTH",healthModel);
-        healthController  = (HealthController) serverControllerFactory.getController("HEALTH",healthModel,healthView);
+        healthController  = (HealthController) serverControllerFactory.getController("HEALTH",healthModel,healthView, null);
         healthController.initializeView();
     }
 
@@ -145,7 +140,7 @@ public class ServerController implements ControllerInterface {
     private void initializeTimer() {
         TimerModel timerModel = new TimerModel();
         TimerView timerView = (TimerView) viewFactory.getView("TIMER", timerModel);
-        timerController = (TimerController) serverControllerFactory.getController("TIMER", timerModel, timerView);
+        timerController = (TimerController) serverControllerFactory.getController("TIMER", timerModel, timerView, null);
         timerController.initializeView();
     }
 
@@ -156,7 +151,7 @@ public class ServerController implements ControllerInterface {
         EmotionsModel emotionsModel = new EmotionsModel();
         EmotionsView emotionsView = (EmotionsView) viewFactory.getView("EMOTIONS", emotionsModel);
         emotionsController = (EmotionsController) serverControllerFactory.getController("EMOTIONS", emotionsModel,
-                emotionsView);
+                emotionsView, null);
         emotionsController.initializeView();
     }
 
@@ -167,8 +162,9 @@ public class ServerController implements ControllerInterface {
         ExpressionsModel expressionsModel = new ExpressionsModel();
         ExpressionsView expressionsView = (ExpressionsView) viewFactory.getView(
                 "SERVER_EXPRESSIONS", expressionsModel);
+        ControllerInterface subControllers[] = {topController};
         expressionsController = (ExpressionsController) serverControllerFactory.getController(
-                "SERVER_EXPRESSIONS", expressionsModel, expressionsView);
+                "SERVER_EXPRESSIONS", expressionsModel, expressionsView, subControllers);
         expressionsController.initializeView();
     }
 
@@ -179,7 +175,7 @@ public class ServerController implements ControllerInterface {
         ConsoleModel consoleModel = new ConsoleModel();
         ConsoleView consoleView = (ConsoleView) viewFactory.getView("CONSOLE", consoleModel);
         consoleController = (ConsoleController) serverControllerFactory.getController("CONSOLE",
-                consoleModel, consoleView);
+                consoleModel, consoleView, null);
         consoleController.initializeView();
     }
 
@@ -196,7 +192,8 @@ public class ServerController implements ControllerInterface {
     class ServerWindowsListener extends WindowAdapter {
         public void windowClosed(WindowEvent e) {
             topController.stopServerConnection();
-//            serverConnectionService.stopServerEndpoint();
+            serverOpen = false;
+            serverConnectionService.stopServerEndpoint();
             logger.info(ServerConstants.SERVER_CLOSE_MESSAGE);
         }
     }
@@ -226,5 +223,21 @@ public class ServerController implements ControllerInterface {
      */
     public ConsoleController getConsoleController() {
         return consoleController;
+    }
+    
+    @Override
+    public void update(Observable o, Object arg) {
+    	// TODO Auto-generated method stub
+    	ServiceHelperModel helperModel = (ServiceHelperModel)o;
+    	if (helperModel.isServerStatus()) {
+    		consoleController.getConsoleModel().logMessage(ServerConstants.CLIENT_CONNECTED);
+		} else {
+			consoleController.getConsoleModel().logMessage(ServerConstants.ERROR_CLIENT_CONNECTION);
+		}
+    	timerController.updateTimeStamp(helperModel.getTimeElapsed());
+		if (helperModel.isServerError()) {
+			consoleController.getConsoleModel().logMessage(ServerConstants.ERROR_SERVER_START);
+			helperModel.setServerError(false);
+		}
     }
 }

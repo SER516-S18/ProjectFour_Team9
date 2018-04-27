@@ -37,6 +37,7 @@ public class HealthServerConnectionEndpoint {
 	 */
 	@OnOpen
 	public void onOpen(final Session session) throws IOException {
+		/*
 		try {
 			logger.info(ServerConstants.CLIENT_CONNECTED
 					+ session.getBasicRemote());
@@ -76,7 +77,7 @@ public class HealthServerConnectionEndpoint {
 			ServerController.getInstance().getConsoleController()
 					.getConsoleModel()
 					.logMessage(ServerConstants.ERROR_CLIENT_CONNECTION);
-		}
+		}*/
 	}
 
 	/**

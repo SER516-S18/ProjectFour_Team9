@@ -9,7 +9,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
-import ser516.project3.client.controller.ClientControllerFactory;
+import ser516.project3.client.service.ClientConnectionServiceImpl;
+import ser516.project3.client.service.ClientConnectionServiceInterface;
 import ser516.project3.constants.ClientConstants;
 
 /**
@@ -22,6 +23,7 @@ import ser516.project3.constants.ClientConstants;
 
 public class ConnectionPopUpController extends ConnectionPopUpAbstractController {
 
+	private ClientConnectionServiceInterface clientConnectionService;
     /**
      * Constructor to add popup model and view in
      * Connection popup controller
@@ -42,6 +44,18 @@ public class ConnectionPopUpController extends ConnectionPopUpAbstractController
         connectionPopUpView.addListener(new IPDocumentListener(), "TEXTFIELD_IP");
         connectionPopUpView.addListener(new PortDocumentListener(), "TEXTFIELD_PORT");
     }
+    
+    public void setConnectionData(ClientConnectionServiceInterface clientConnectionService) {
+    	this.clientConnectionService = clientConnectionService;
+    }
+    
+    public void setConnectionStatus(boolean status) {
+    	connectionPopUpModel.setConnectionStatus(status);
+    }
+    
+    public boolean getConnectionStatus() {
+    	return connectionPopUpModel.isConnectionStatus();
+    }
 
     /**
      * Inner class to control click on ok button in Pop up
@@ -60,7 +74,9 @@ public class ConnectionPopUpController extends ConnectionPopUpAbstractController
                 dialog.setAlwaysOnTop(true);
                 JOptionPane.showMessageDialog(dialog, ClientConstants.NO_PORT_NO_MESSAGE);
             } else {
-                ClientControllerFactory.getInstance().getClientController().toggleConnectionToServer(connectionPopUpModel.getIpAddress(), connectionPopUpModel.getPortNumber());
+    			clientConnectionService = new ClientConnectionServiceImpl();
+    			clientConnectionService.createClientConnection(connectionPopUpModel.getIpAddress(), connectionPopUpModel.getPortNumber(), ClientConstants.ENDPOINT);
+    			connectionPopUpModel.setConnectionStatus(true);
                 connectionPopUpView.dispose();
             }
         }

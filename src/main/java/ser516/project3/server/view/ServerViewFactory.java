@@ -1,4 +1,4 @@
-package ser516.project3.server.controller;
+package ser516.project3.server.view;
 
 import ser516.project3.interfaces.ModelInterface;
 import ser516.project3.interfaces.ViewInterface;

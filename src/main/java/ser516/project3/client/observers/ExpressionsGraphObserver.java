@@ -1,8 +1,8 @@
 package ser516.project3.client.observers;
 
-import ser516.project3.client.controller.ClientControllerFactory;
 import ser516.project3.client.Components.Expressions.ExpressionsDataObservable;
 import ser516.project3.client.Components.Graph.GraphController;
+import ser516.project3.client.controller.ClientControllerFactory;
 
 import java.util.Observable;
 import java.util.Observer;

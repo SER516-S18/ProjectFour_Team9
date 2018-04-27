@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpController;
-import ser516.project3.client.controller.ClientControllerFactory;
+import ser516.project3.client.service.ClientConnectionServiceImpl;
+import ser516.project3.client.service.ClientConnectionServiceInterface;
+import ser516.project3.constants.ClientConstants;
 import ser516.project3.interfaces.ControllerInterface;
+import ser516.project3.server.controller.ServerController;
 
 /**
  * This class controls the UI for the header view on client which helps in
@@ -16,7 +19,9 @@ import ser516.project3.interfaces.ControllerInterface;
 
 public class HeaderController extends HeaderAbstractController {
 
-    private ControllerInterface connectionPopUpController;
+    private ConnectionPopUpController connectionPopUpController;
+    private ServerController serverController;
+    private ClientConnectionServiceInterface clientConnectionService;
     private boolean tabSelected;
 
     /**
@@ -24,11 +29,15 @@ public class HeaderController extends HeaderAbstractController {
      *
      * @param headerModel
      * @param headerView
+     * @param clientConnectionService 
+     * @param subControllers 
      */
     public HeaderController(HeaderModel headerModel, HeaderView headerView,
-                            ConnectionPopUpController connectionPopUpController) {
+                            ConnectionPopUpController connectionPopUpController, ServerController serverController, ClientConnectionServiceImpl clientConnectionService) {
         super(headerModel, headerView);
         this.connectionPopUpController = connectionPopUpController;
+        this.serverController = serverController;
+        this.connectionPopUpController.setConnectionData(clientConnectionService);
     }
 
     /**
@@ -94,7 +103,11 @@ public class HeaderController extends HeaderAbstractController {
     class ServerOpenListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            ClientControllerFactory.getInstance().getClientController().openServer();
+        	if(serverController.isServerOpen()) {
+        		serverController.showServer();
+        	}
+        	else
+        		serverController.initializeView();
         }
     }
 
@@ -105,11 +118,37 @@ public class HeaderController extends HeaderAbstractController {
     class ConnectListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (headerModel.isConnectionStatus()) {
-                ClientControllerFactory.getInstance().getClientController().toggleConnectionToServer(null, 0);
-            } else {
-                connectionPopUpController.initializeView();
-            }
+        	openServer();
         }
     }
+    
+    public void openServer() {
+    	if (headerModel.isConnectionStatus()) {
+			clientConnectionService.stopClientConnection();
+			headerModel.setConnectionStatus(false);
+			headerView.updateView(headerModel);
+			connectionPopUpController.setConnectionStatus(false);
+		} else {
+			connectionPopUpController.initializeView();
+			//clientConnectionService.createClientConnection(null, 0, ClientConstants.ENDPOINT);
+			headerModel.setConnectionStatus(connectionPopUpController.getConnectionStatus());
+		}
+    }
+    
+    /**
+	 * Method to connect to a server end point
+	 * @param ipAddress - the IP address field
+	 * @param port - the port field
+	 */
+	public void toggleConnectionToServer(String ipAddress, int port) {
+		if (headerModel.isConnectionStatus()) {
+			clientConnectionService.stopClientConnection();
+			headerModel.setConnectionStatus(false);
+			// TODO: Find a way to stop the client container
+		} else {
+			clientConnectionService = new ClientConnectionServiceImpl();
+			clientConnectionService.createClientConnection(ipAddress, port, ClientConstants.ENDPOINT);
+			headerModel.setConnectionStatus(true);
+		}
+	}
 }
