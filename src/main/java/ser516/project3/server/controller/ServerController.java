@@ -62,7 +62,7 @@ public class ServerController implements ControllerInterface {
         serverConnectionService = new ServerConnectionServiceImpl();
         initializeTop();
         initializeTimer();
-        initializeEmotions();
+        //initializeEmotions();
         initializeHealth();
         initializeExpressions();
         initializeConsole();

@@ -8,10 +8,23 @@ public class HealthModel implements ModelInterface {
     private double pulse;
     private double heartRate;
     private double bodyTemperature;
+
+
+
+
+    private double bloodSugar;
     private double bmi;
     private double height;
     private double weight;
 
+
+    public double getBloodSugar() {
+        return bloodSugar;
+    }
+
+    public void setBloodSugar(double bloodSugar) {
+        this.bloodSugar = bloodSugar;
+    }
     /**
      * Gets the pulse in  <code>HealthModel</code>.
      *

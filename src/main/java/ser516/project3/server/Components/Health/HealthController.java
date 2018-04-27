@@ -1,6 +1,9 @@
 package ser516.project3.server.Components.Health;
 
+import ser516.project3.constants.ServerConstants;
+import ser516.project3.server.Components.Emotions.EmotionsController;
 import ser516.project3.server.Components.Expressions.ExpressionsController;
+import ser516.project3.server.Components.ServerCommonData;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -10,69 +13,47 @@ import java.util.EventListener;
 public class HealthController extends HealthAbstractController {
 
     public HealthController(HealthModel healthModel, HealthView healthView) {
-        super(healthModel,healthView);
+        super(healthModel, healthView);
     }
 
     public void initializeView() {
-        healthView.initializeView(null);
-
-        healthView.addListener(new HealthController.PulseChangeListener(), "PULSE_CHANGE");
-        healthView.addListener(new HealthController.HeartRateChangeListener(), "HEART_RATE");
-        healthView.addListener(new HealthController.BodyTemperatureChangeListener(), "BODY_TEMPERATURE");
-        healthView.addListener(new HealthController.BmiChangeListener(), "BMI");
-        healthView.addListener(new HealthController.HeightChangeListener(), "HEIGHT");
-        healthView.addListener(new HealthController.WeightChangeListener(), "WEIGHT");
-    }
 
 
-    private class PulseChangeListener implements ChangeListener{
-        @Override
-        public void stateChanged(ChangeEvent e) {
-            JSpinner jSpinner = (JSpinner) e.getSource();
-            healthModel.setPulse((Double) jSpinner.getValue());
-
-        }
-    }
-
-    private class HeartRateChangeListener implements ChangeListener {
-
-        @Override
-        public void stateChanged(ChangeEvent e) {
-            JSpinner jSpinner = (JSpinner) e.getSource();
-            healthModel.setHeartRate((Double) jSpinner.getValue());
-        }
-    }
-
-    public class BodyTemperatureChangeListener implements ChangeListener {
-        @Override
-        public void stateChanged(ChangeEvent e) {
-            JSpinner jSpinner = (JSpinner) e.getSource();
-            healthModel.setBodyTemperature((Double) jSpinner.getValue());
+        for (int i = 0; i < 6; i++) {
+            healthView.addListener(new HealthController.SpinnerChangeListener(), "SPINNER_HEALTH");
         }
     }
 
 
-    private class BmiChangeListener implements ChangeListener {
+    class SpinnerChangeListener implements ChangeListener {
         @Override
         public void stateChanged(ChangeEvent e) {
-            JSpinner jSpinner = (JSpinner) e.getSource();
-            healthModel.setBmi((Double) jSpinner.getValue());
-        }
-    }
-
-    private class HeightChangeListener implements ChangeListener {
-        @Override
-        public void stateChanged(ChangeEvent e) {
-            JSpinner jSpinner = (JSpinner) e.getSource();
-            healthModel.setHeight((Double) jSpinner.getValue());
-        }
-    }
-
-    private class WeightChangeListener implements ChangeListener {
-        @Override
-        public void stateChanged(ChangeEvent e) {
-            JSpinner jSpinner = (JSpinner) e.getSource();
-            healthModel.setWeight((Double) jSpinner.getValue());
+            JSpinner source = (JSpinner) e.getSource();
+            switch (source.getName()) {
+                case "Pulse":
+                    healthModel.setPulse((double) source.getValue());
+                    break;
+                case "HeartRate":
+                    healthModel.setHeartRate((double) source.getValue());
+                    break;
+                case "Temperature":
+                    healthModel.setBodyTemperature((double) source.getValue());
+                    break;
+                case "BloodSugar":
+                    healthModel.setBloodSugar((double) source.getValue());
+                    break;
+                case "BMI":
+                    healthModel.setBmi((double) source.getValue());
+                    break;
+                case "Height":
+                    healthModel.setHeight((double) source.getValue());
+                    break;
+                case "Weight":
+                    healthModel.setWeight((double) source.getValue());
+                    break;
+            }
+            ServerCommonData.getInstance().getMessage().setEmotion(source.getName(),
+                    (Double) source.getValue());
         }
     }
 }

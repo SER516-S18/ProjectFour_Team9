@@ -4,119 +4,100 @@ import ser516.project3.constants.ServerConstants;
 import ser516.project3.interfaces.ModelInterface;
 import ser516.project3.interfaces.ViewInterface;
 import ser516.project3.server.Components.Console.ConsoleView;
+import ser516.project3.server.Components.Emotions.EmotionsAbstractView;
+import ser516.project3.server.Components.Emotions.EmotionsModel;
 import ser516.project3.server.Components.Timer.TimerView;
 import ser516.project3.server.Components.Top.TopView;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
+import java.util.EventListener;
 
 public class HealthView extends HealthAbstractView {
+    //private JPanel mainPanel;
+    private JSpinner jspinner[];
 
-    private static HealthView serverViewInstance = null;
+    private static final Font SUBFONT = new Font(ServerConstants.FONT_NAME, Font.BOLD, 14);
 
-    private TopView topView;
-    private TimerView timerView;
-    private HealthView healthView;
-    private ConsoleView consoleView;
-
-    private static final Font FONT = new Font(ServerConstants.FONT_NAME, Font.BOLD, 17);
-
+    /**
+     * Method to set emotion model
+     *
+     * @param healthModel object containing required health data.
+     */
     public HealthView(HealthModel healthModel) {
         super(healthModel);
     }
 
     /**
-     * Method to return the ServerView instance
+     * Method to initialize the emotions view panel
      *
-     */
-    public static HealthView getServerView() {
-        if (serverViewInstance == null) {
-            serverViewInstance = new HealthView();
-        }
-        return serverViewInstance;
-    }
-
-    /**
-     * Method to initialize the expressions view panel
-     *
-     * @param subViews
-     *            object of type ViewInterface
-     *
+     * @param subViews object of type ViewInterface
      */
     @Override
     public void initializeView(ViewInterface[] subViews) {
-        topView = (TopView) subViews[0];
-        timerView = (TimerView) subViews[1];
-        healthView = (HealthView) subViews[2];
-        consoleView = (ConsoleView) subViews[3];
+        setBorder(new TitledBorder(null, "Health", TitledBorder.LEADING,
+                TitledBorder.TOP, SUBFONT, null));
+        setBackground(Color.decode(ServerConstants.COLOR_CODE));
+        Dimension spinnerDimension = new Dimension(65, 30);
+        double current = 0.0;
+        double min = 0.0;
+        double max = 100.0;
+        double step = 1.0;
+        jspinner = new JSpinner[6];
 
-        setLayout(new BorderLayout());
-        add(topView, BorderLayout.PAGE_START);
-        add(createConfigurationPanels(), BorderLayout.CENTER);
-
-        setMinimumSize(new Dimension(500, 800));
-//        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-//        setTitle(ServerConstants.SERVER);
-        setVisible(true);
-    }
-
-    @Override
-    public void updateView(ModelInterface model) {
-        // TODO Auto-generated method stub
-
+        for (HealthPanel hm : HealthPanel.values()) {
+            JLabel interest_label = new JLabel(hm.name());
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = hm.gbc_x;
+            gbc.gridy = hm.gbc_y;
+            add(interest_label, gbc);
+            SpinnerModel spinner = new SpinnerNumberModel(current, min, max, step);
+            jspinner[hm.id] = new JSpinner(spinner);
+            jspinner[hm.id].setPreferredSize(spinnerDimension);
+            jspinner[hm.id].setName(hm.name);
+            GridBagConstraints spinnerGbc = new GridBagConstraints();
+            spinnerGbc.gridx = hm.spinner_x;
+            spinnerGbc.gridy = hm.spinner_y;
+            add(jspinner[hm.id], spinnerGbc);
+        }
     }
 
     /**
-     * This method will initialize the second sub panel of the Server window
-     *
-     * @return the second sub-panel
+     * Enumeration for setting constants for all the emotion options
      */
-    private Component createConfigurationPanels() {
-        JPanel configPanel = new JPanel();
-        JPanel timerPanel = timerView;
-        JPanel healthPanel = healthView;
-        JPanel consolePanel = consoleView;
+    public enum HealthPanel {
+        Pulse(0, 1, 0, 2, 0, "Pulse"), Heartrate(1, 3, 0, 4, 0, "HeartRate"),
+        Temperature(2, 1, 1, 2, 1, "Temperature"), Bloodsugar(3, 3, 1, 4, 1, "BloodSugar"),
+        Bmi(4, 1, 2, 2, 2, "BMI"), Height(5, 3, 2, 4, 2, "Height"),  Weight(6, 4, 1, 5, 1, "Weight");
+        int id, gbc_x, gbc_y, spinner_x, spinner_y;
+        String name;
 
-        JSplitPane splitTimerPanel = new JSplitPane();
-        JSplitPane splitHealthPanel = new JSplitPane();
+        HealthPanel(int id, int gbc_x, int gbc_y, int spinner_x, int spinner_y, String name) {
+            this.id = id;
+            this.gbc_x = gbc_x;
+            this.gbc_y = gbc_y;
+            this.spinner_x = spinner_x;
+            this.spinner_y = spinner_y;
+            this.name = name;
+        }
+    }
 
-
-        configPanel.setOpaque(false);
-
-        configPanel.add(timerPanel);
-        configPanel.add(healthPanel);
-        configPanel.add(consolePanel);
-
-        Border titledBorder = new TitledBorder(null, "Configuration", TitledBorder.LEADING,
-                TitledBorder.TOP, FONT, null);
-        Border marginBorder = BorderFactory.createEmptyBorder(30, 10, 30, 10);
-
-        Border compound = BorderFactory.createCompoundBorder(marginBorder, titledBorder);
-        configPanel.setBorder(compound);
-
-        configPanel.setLayout(new BorderLayout(0, 0));
-
-
-
-        splitHealthPanel.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        splitHealthPanel.setDividerLocation(150);
-        splitHealthPanel.setTopComponent(healthPanel);
-        splitHealthPanel.setBottomComponent(consolePanel);
-        splitHealthPanel.setDividerSize(0);
-        splitHealthPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
-
-        splitTimerPanel.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        splitTimerPanel.setDividerLocation(50);
-        splitTimerPanel.setTopComponent(timerPanel);
-        splitTimerPanel.setBottomComponent(splitHealthPanel);
-        splitTimerPanel.setDividerSize(0);
-        splitTimerPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
-
-        configPanel.add(splitTimerPanel);
-        return configPanel;
+    /**
+     * Method to listener to every spinner in the emotions panel
+     *
+     * @param eventListener object of ChangeListener
+     */
+    @Override
+    public void addListener(EventListener eventListener, String componentName) {
+        if(componentName.equals("SPINNER_HEALTH")) {
+            for(HealthPanel healthPanel: HealthPanel.values()) {
+                jspinner[healthPanel.id].addChangeListener((ChangeListener)eventListener);
+            }
+        }
     }
 }
 
