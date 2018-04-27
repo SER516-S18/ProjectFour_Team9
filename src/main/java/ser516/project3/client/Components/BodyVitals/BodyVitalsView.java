@@ -87,19 +87,19 @@ public class BodyVitalsView extends BodyVitalsAbstractView {
 	@Override
 	public void updateView(ModelInterface model) {
 		this.bodyVitalsModel = (BodyVitalsModel)model;
-		pulseButton.setBottomBgColor(this.bodyVitalsModel.getInterestColor());
-		heartrateButton.setBottomBgColor(this.bodyVitalsModel.getEngagementColor());
-		bodytemperatureButton.setBottomBgColor(this.bodyVitalsModel.getStressColor());
-		bloodsugarButton.setBottomBgColor(this.bodyVitalsModel.getRelaxationColor());
-		bmiButton.setBottomBgColor(this.bodyVitalsModel.getInterestColor());
+		pulseButton.setBottomBgColor(this.bodyVitalsModel.getPulseColor());
+		heartrateButton.setBottomBgColor(this.bodyVitalsModel.getHeartRateColor());
+		bodytemperatureButton.setBottomBgColor(this.bodyVitalsModel.getBodyTemperatureColor());
+		bloodsugarButton.setBottomBgColor(this.bodyVitalsModel.getBloodSugarColor());
+		bmiButton.setBottomBgColor(this.bodyVitalsModel.getBmiColor());
         displayLengthField.setText("" + this.bodyVitalsModel.getDisplayLength());
         
 
-        pulseButton.setTopSelectedBgColor(this.bodyVitalsModel.getInterestColor());
-        heartrateButton.setTopSelectedBgColor(this.bodyVitalsModel.getEngagementColor());
-        bodytemperatureButton.setTopSelectedBgColor(this.bodyVitalsModel.getStressColor());
-        bloodsugarButton.setTopSelectedBgColor(this.bodyVitalsModel.getRelaxationColor());
-        bmiButton.setBottomBgColor(this.bodyVitalsModel.getInterestColor());
+        pulseButton.setTopSelectedBgColor(this.bodyVitalsModel.getPulseColor());
+        heartrateButton.setTopSelectedBgColor(this.bodyVitalsModel.getHeartRateColor());
+        bodytemperatureButton.setTopSelectedBgColor(this.bodyVitalsModel.getBodyTemperatureColor());
+        bloodsugarButton.setTopSelectedBgColor(this.bodyVitalsModel.getBloodSugarColor());
+        bmiButton.setBottomBgColor(this.bodyVitalsModel.getBmiColor());
         displayLengthField.setText("" + this.bodyVitalsModel.getDisplayLength());
 		
 	}
@@ -148,27 +148,27 @@ public class BodyVitalsView extends BodyVitalsAbstractView {
 
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        pulseButton = createEmotionButton(ClientConstants.INTEREST, bodyVitalsModel.getInterestColor());
+        pulseButton = createEmotionButton(ClientConstants.INTEREST, bodyVitalsModel.getPulseColor());
         mainPanel.add(pulseButton, gridBagConstraints);
 
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
-        heartrateButton = createEmotionButton(ClientConstants.ENGAGEMENT, bodyVitalsModel.getEngagementColor());
+        heartrateButton = createEmotionButton(ClientConstants.ENGAGEMENT, bodyVitalsModel.getHeartRateColor());
         mainPanel.add(heartrateButton, gridBagConstraints);
 
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
-        bodytemperatureButton = createEmotionButton(ClientConstants.STRESS, bodyVitalsModel.getStressColor());
+        bodytemperatureButton = createEmotionButton(ClientConstants.STRESS, bodyVitalsModel.getBodyTemperatureColor());
         mainPanel.add(bodytemperatureButton, gridBagConstraints);
 
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        bloodsugarButton = createEmotionButton(ClientConstants.RELAXATION, bodyVitalsModel.getRelaxationColor());
+        bloodsugarButton = createEmotionButton(ClientConstants.RELAXATION, bodyVitalsModel.getBloodSugarColor());
         mainPanel.add(bloodsugarButton, gridBagConstraints);
 
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
-        bmiButton = createEmotionButton(ClientConstants.EXCITEMENT, bodyVitalsModel.getExcitementColor());
+        bmiButton = createEmotionButton(ClientConstants.EXCITEMENT, bodyVitalsModel.getBmiColor());
         mainPanel.add(bmiButton, gridBagConstraints);
 
     }

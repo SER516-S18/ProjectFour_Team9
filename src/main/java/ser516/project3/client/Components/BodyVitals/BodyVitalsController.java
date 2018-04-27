@@ -12,9 +12,6 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
 import ser516.project3.client.Components.Graph.GraphController;
-import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricController.DisplayLengthDocumentListener;
-import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricController.DisplayLengthKeyListener;
-import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricController.EmotionButtonsListener;
 import ser516.project3.constants.ClientConstants;
 import ser516.project3.interfaces.ControllerInterface;
 import ser516.project3.interfaces.ViewInterface;
@@ -46,7 +43,7 @@ public class BodyVitalsController extends BodyVitalsAbstractController{
         graphController.setXLength(bodyVitalsModel.getDisplayLength());
         Color channelColors[] = {bodyVitalsModel.getPulseColor(),
         		bodyVitalsModel.getHeartRateColor(), bodyVitalsModel.getBodyTemperatureColor(),
-        		bodyVitalsModel.getBloodSugarColor(), bodyVitalsModel.getBMIColor()
+        		bodyVitalsModel.getBloodSugarColor(), bodyVitalsModel.getBmiColor()
         		};
         graphController.setChannelColors(channelColors);
         graphController.updateView();
@@ -112,18 +109,18 @@ public class BodyVitalsController extends BodyVitalsAbstractController{
                     }
                     break;
                 case ClientConstants.BMI:
-                    initialBackground = bodyVitalsModel.getBMIColor();
+                    initialBackground = bodyVitalsModel.getBmiColor();
                     newBackground = JColorChooser.showDialog(null, "Change " + ClientConstants.BMI + " Color",
                             initialBackground);
                     if (newBackground != null) {
-                    	bodyVitalsModel.getBMIColor(newBackground);
+                    	bodyVitalsModel.setBmiColor(newBackground);
                     }
                     break;
             }
 
             Color channelColors[] = {bodyVitalsModel.getPulseColor(),
             		bodyVitalsModel.getHeartRateColor(), bodyVitalsModel.getBodyTemperatureColor(),
-            		bodyVitalsModel.getBloodSugarColor(), bodyVitalsModel.getBMIColor() };
+            		bodyVitalsModel.getBloodSugarColor(), bodyVitalsModel.getBmiColor() };
             graphController.setChannelColors(channelColors);
             graphController.updateView();
             bodyVitalsView.revalidate();
