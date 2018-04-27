@@ -2,6 +2,7 @@ package ser516.project3.client.helper;
 
 import org.apache.log4j.Logger;
 
+import ser516.project3.client.Components.BodyVitals.BodyVitalsDataObservable;
 import ser516.project3.client.Components.Expressions.ExpressionsDataObservable;
 import ser516.project3.client.Components.Face.FaceExpressionsObservable;
 import ser516.project3.client.Components.Header.HeaderObservable;
@@ -41,6 +42,7 @@ public class ClientConnectionEndpoint {
     public void processMessage(MessageModel messageModelBean, Session session) {
         logger.info("Received data:::: " + messageModelBean);
         PerformanceMetricDataObservable.getInstance().addToListValues(MessageFormatConverter.convertMessageToPeformanceMetrics(messageModelBean));
+        BodyVitalsDataObservable.getInstance().addToListValues(MessageFormatConverter.convertMessageToPeformanceMetrics(messageModelBean));
         ExpressionsDataObservable.getInstance().addToListValues(MessageFormatConverter.convertMessageToExpressionsData(messageModelBean));
         FaceExpressionsObservable.getInstance().setMessageBean(messageModelBean);
         HeaderObservable.getInstance().setHeaderData(messageModelBean.getTimeStamp(), messageModelBean.getInterval());
