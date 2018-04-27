@@ -21,6 +21,7 @@ import ser516.project3.interfaces.ViewInterface;
 import ser516.project3.server.Components.Console.ConsoleView;
 import ser516.project3.server.Components.Emotions.EmotionsView;
 import ser516.project3.server.Components.Expressions.ExpressionsView;
+import ser516.project3.server.Components.Health.HealthView;
 import ser516.project3.server.Components.Timer.TimerView;
 import ser516.project3.server.Components.Top.TopView;
 
@@ -37,6 +38,7 @@ public class ServerView extends JFrame implements ViewInterface {
     private EmotionsView emotionsView;
     private ExpressionsView expressionsView;
     private ConsoleView consoleView;
+    private HealthView healthView;
 
     private static final Font FONT = new Font(ServerConstants.FONT_NAME, Font.BOLD, 17);
 
@@ -61,6 +63,7 @@ public class ServerView extends JFrame implements ViewInterface {
 		emotionsView = (EmotionsView) subViews[2];
 		expressionsView = (ExpressionsView) subViews[3];
 		consoleView = (ConsoleView) subViews[4];
+		healthView = (HealthView) subViews[5];
 
 		setLayout(new BorderLayout());
 		add(topView, BorderLayout.PAGE_START);
@@ -94,10 +97,12 @@ public class ServerView extends JFrame implements ViewInterface {
 		JPanel emotionsPanel = emotionsView;
 		JPanel expressionPanel = expressionsView;
 		JPanel consolePanel = consoleView;
+		JPanel healthPanel = healthView;
 
 		JSplitPane splitTimerPanel = new JSplitPane();
 		JSplitPane splitEmotionsPanel = new JSplitPane();
 		JSplitPane splitExpressionPanel = new JSplitPane();
+		JSplitPane splitHealthPanel = new JSplitPane();
 
 		configPanel.setOpaque(false);
 
@@ -105,6 +110,7 @@ public class ServerView extends JFrame implements ViewInterface {
 		configPanel.add(emotionsPanel);
 		configPanel.add(expressionPanel);
 		configPanel.add(consolePanel);
+		configPanel.add(healthPanel);
 
 		Border titledBorder = new TitledBorder(null, "Configuration", TitledBorder.LEADING, 
 				TitledBorder.TOP, FONT, null);
@@ -118,7 +124,7 @@ public class ServerView extends JFrame implements ViewInterface {
 		splitExpressionPanel.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		splitExpressionPanel.setDividerLocation(150);
 		splitExpressionPanel.setTopComponent(expressionPanel);
-		splitExpressionPanel.setBottomComponent(consolePanel);
+		splitExpressionPanel.setBottomComponent(splitHealthPanel);
 		splitExpressionPanel.setDividerSize(0);
 		splitExpressionPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
 
@@ -128,6 +134,14 @@ public class ServerView extends JFrame implements ViewInterface {
 		splitEmotionsPanel.setBottomComponent(splitExpressionPanel);
 		splitEmotionsPanel.setDividerSize(0);
 		splitEmotionsPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
+
+
+		splitHealthPanel.setOrientation(JSplitPane.VERTICAL_SPLIT);
+		splitHealthPanel.setDividerLocation(150);
+		splitHealthPanel.setTopComponent(healthPanel);
+		splitHealthPanel.setBottomComponent(consolePanel);
+		splitHealthPanel.setDividerSize(0);
+		splitHealthPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
 
 		splitTimerPanel.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		splitTimerPanel.setDividerLocation(50);

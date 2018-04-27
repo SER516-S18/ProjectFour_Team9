@@ -1,5 +1,6 @@
 package ser516.project3.server.controller;
 
+import ser516.project3.client.Components.Header.HeaderController;
 import ser516.project3.interfaces.ControllerInterface;
 import ser516.project3.interfaces.ModelInterface;
 import ser516.project3.interfaces.ViewInterface;
@@ -10,6 +11,9 @@ import ser516.project3.server.Components.Emotions.EmotionsModel;
 import ser516.project3.server.Components.Expressions.ExpressionsController;
 import ser516.project3.server.Components.Expressions.ExpressionsModel;
 import ser516.project3.server.Components.Expressions.ExpressionsView;
+import ser516.project3.server.Components.Health.HealthController;
+import ser516.project3.server.Components.Health.HealthModel;
+import ser516.project3.server.Components.Health.HealthView;
 import ser516.project3.server.Components.Timer.TimerController;
 import ser516.project3.server.Components.Timer.TimerModel;
 import ser516.project3.server.Components.Top.TopController;
@@ -67,6 +71,8 @@ public class ServerControllerFactory {
                     (ExpressionsView) view);
         } else if (controllerType.equalsIgnoreCase("CONSOLE")) {
             return new ConsoleController((ConsoleModel) model, (ConsoleView) view);
+        } else if(controllerType.equalsIgnoreCase("HEALTH")){
+            return new HealthController((HealthModel) model,(HealthView) view);
         }
 
         return null;
