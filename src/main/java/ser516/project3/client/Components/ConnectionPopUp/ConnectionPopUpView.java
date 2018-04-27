@@ -1,9 +1,7 @@
 package ser516.project3.client.Components.ConnectionPopUp;
 
-import com.alee.extended.panel.WebButtonGroup;
 import com.alee.laf.button.WebButton;
 
-import com.alee.laf.radiobutton.WebRadioButton;
 import ser516.project3.client.Components.NumberTextField;
 import ser516.project3.constants.ClientConstants;
 import ser516.project3.interfaces.ViewInterface;
@@ -26,8 +24,6 @@ import java.util.EventListener;
 public class ConnectionPopUpView extends ConnectionPopUpAbstractView {
 
     private final static int FONT_SIZE = 15;
-    private final static String CONNECT_EMOTION = "Emotions";
-    private final static String CONNECT_HEALTH = "HEALTH";
 
     /**
      * This constructor initializes the instance of connection PopUp dialog.
@@ -54,9 +50,6 @@ public class ConnectionPopUpView extends ConnectionPopUpAbstractView {
         createMainPanel();
         createLabels(bagConstraints);
         createTextFields(bagConstraints);
-        createRadioButtonEmotions();
-        createRadioButtonHealth();
-        createRadioButtonGroup(bagConstraints);
         createOkButton(bagConstraints);
 
         add(mainPanel);
@@ -81,7 +74,6 @@ public class ConnectionPopUpView extends ConnectionPopUpAbstractView {
 			case "TEXTFIELD_PORT":
 				portNumberTextField.getDocument().addDocumentListener((DocumentListener)eventListener);
 				break;
-			case ""
 		}
 	}
 
@@ -166,66 +158,4 @@ public class ConnectionPopUpView extends ConnectionPopUpAbstractView {
         bagConstraints.insets = new Insets(20, 20, 0, 20);
         mainPanel.add(okButton, bagConstraints);
     }
-
-    /**
-     * This method creates radio button for selecting Emotion Server.
-     *
-     * @param bagConstraints an object of GridBagConstraints
-     */
-    private void createRadioButtonEmotions(GridBagConstraints bagConstraints) {
-        serverEmotionsRadioButton new WebRadioButton(CONNECT_EMOTION);
-        serverEmotionsRadioButton.setPreferredSize(new Dimension(120, 35));
-        serverEmotionsRadioButton.setBackground(Color.decode(ClientConstants.PANEL_COLOR_HEX));
-        serverEmotionsRadioButton.setBottomBgColor(Color.BLACK);
-        serverEmotionsRadioButton.setTopBgColor(Color.BLACK);
-        serverEmotionsRadioButton.setBottomSelectedBgColor(Color.WHITE);
-        serverEmotionsRadioButton.setTopSelectedBgColor(Color.WHITE);
-        serverEmotionsRadioButton.setForeground(Color.WHITE);
-        serverEmotionsRadioButton.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
-        bagConstraints.gridx = 0;
-        bagConstraints.gridy = 2;
-        bagConstraints.gridwidth = 2;
-        bagConstraints.insets = new Insets(20, 20, 0, 20);
-
-    }
-
-    /**
-     * This method creates radio button to connect Health server.
-     *
-     * @param bagConstraints an object of GridBagConstraints
-     */
-    private void createRadioButtonHealth(GridBagConstraints bagConstraints) {
-        serverHealtRadioButton = new WebRadioButton(CONNECT_HEALTH);
-        serverHealtRadioButton.setPreferredSize(new Dimension(120, 35));
-        serverHealtRadioButton.setBackground(Color.decode(ClientConstants.PANEL_COLOR_HEX));
-        serverHealtRadioButton.setBottomBgColor(Color.BLACK);
-        serverHealtRadioButton.setTopBgColor(Color.BLACK);
-        serverHealtRadioButton.setBottomSelectedBgColor(Color.WHITE);
-        serverHealtRadioButton.setTopSelectedBgColor(Color.WHITE);
-        serverHealtRadioButton.setForeground(Color.WHITE);
-        serverHealtRadioButton.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
-        bagConstraints.gridx = 0;
-        bagConstraints.gridy = 2;
-        bagConstraints.gridwidth = 2;
-        bagConstraints.insets = new Insets(20, 20, 0, 20);
-
-    }
-
-    /**
-     * This method creates radio button group on connection PopUp dailog.
-     *
-     * @param bagConstraints an object of GridBagConstraints
-     */
-    private void createRadioButtonGroup(GridBagConstraints bagConstraints) {
-        selectServerButtonGroup = new WebButtonGroup();
-        selectServerButtonGroup.add(serverEmotionsRadioButton);
-        selectServerButtonGroup.add(serverHealtRadioButton);
-        selectServerButtonGroup.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
-        bagConstraints.gridx = 0;
-        bagConstraints.gridy = 2;
-        bagConstraints.gridwidth = 2;
-        bagConstraints.insets = new Insets(20, 20, 0, 20);
-        mainPanel.add(selectServerButtonGroup, bagConstraints);
-    }
-
 }
