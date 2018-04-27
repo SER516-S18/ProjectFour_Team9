@@ -93,7 +93,7 @@ public class ServerController implements ControllerInterface {
         serverView = ServerView.getServerView();
         ViewInterface subViews[] = {topController.getView(), timerController.getView(),
                 emotionsController.getView(), expressionsController.getView(),
-                consoleController.getView()};
+                consoleController.getView(), healthController.getView()};
         serverView.initializeView(subViews);
         serverView.addServerWindowListener(new ServerWindowsListener());
     }
