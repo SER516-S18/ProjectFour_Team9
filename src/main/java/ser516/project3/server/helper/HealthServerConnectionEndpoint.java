@@ -22,7 +22,7 @@ import ser516.project3.server.controller.ServerController;
  *
  * @author User
  */
-@ServerEndpoint(value = "/healthserver", encoders = { HealthMessageEncoder.class })
+@ServerEndpoint(value = "/healthserver", encoders = { BodyMessageModelEncoder.class })
 public class HealthServerConnectionEndpoint {
 	final static Logger logger = Logger
 			.getLogger(HealthServerConnectionEndpoint.class);

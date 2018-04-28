@@ -26,7 +26,7 @@ import ser516.project3.server.Components.ServerCommonData;
  *
  * @author Varun Srivastava
  */
-@ClientEndpoint(decoders = {BodyVitalsModelDecoder.class})
+@ClientEndpoint(decoders = {BodyMessageModelDecoder.class})
 public class ClientHealthConnectionEndpoint {
 
     final static Logger logger = Logger.getLogger(ClientHealthConnectionEndpoint.class);
