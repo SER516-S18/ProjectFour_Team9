@@ -1,5 +1,11 @@
 package ser516.project3.constants;
 
+/**
+ * Helper class to store the client constants
+ * 
+ * @author vsriva
+ *
+ */
 public class ClientConstantsHelper {
 	// Body Vitals Constants
 	public final static String BODY_VITALS = "Body Vitals";

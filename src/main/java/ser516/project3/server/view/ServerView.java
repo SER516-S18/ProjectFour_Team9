@@ -84,7 +84,11 @@ public class ServerView extends JFrame implements ViewInterface {
 		// TODO Auto-generated method stub
 		
 	}
-	
+	/**
+	 * Setter method to set the selected server
+	 * 
+	 * @param selectedServer the name of the server selected
+	 */
 	public void setSelectedServer(String selectedServer) {
 		this.selectedServer = selectedServer;
 	}

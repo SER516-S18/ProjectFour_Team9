@@ -17,6 +17,12 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.util.EventListener;
 
+/**
+ * View to show the panel on the UI for health control data
+ * 
+ * @author abhinab, garv
+ *
+ */
 public class HealthView extends HealthAbstractView {
     //private JPanel mainPanel;
     private JSpinner jspinner[];

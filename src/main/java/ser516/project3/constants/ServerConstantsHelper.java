@@ -1,5 +1,10 @@
 package ser516.project3.constants;
-
+/**
+ * Helper class to store all the server constants
+ * 
+ * @author vsriva
+ *
+ */
 public class ServerConstantsHelper {
 	// Message constants for logger
 	public final static String REMOVED_VALUE_INTERVAL = "Removed value of interval";
