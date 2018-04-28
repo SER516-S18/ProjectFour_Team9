@@ -3,7 +3,14 @@ package ser516.project3.client.Components.Header;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JDialog;
+
+import org.apache.maven.settings.Server;
+
+import com.alee.laf.combobox.WebComboBox;
+
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpController;
+import ser516.project3.client.Components.Header.HeaderModel.SelectedServer;
 import ser516.project3.client.service.ClientConnectionServiceImpl;
 import ser516.project3.client.service.ClientConnectionServiceInterface;
 import ser516.project3.constants.ClientConstants;
@@ -21,6 +28,7 @@ public class HeaderController extends HeaderAbstractController {
 
     private ConnectionPopUpController connectionPopUpController;
     private ServerController serverController;
+    private ServerController healthServerController;
     private ClientConnectionServiceInterface clientConnectionService;
     private boolean tabSelected;
 
@@ -33,11 +41,17 @@ public class HeaderController extends HeaderAbstractController {
      * @param subControllers 
      */
     public HeaderController(HeaderModel headerModel, HeaderView headerView,
-                            ConnectionPopUpController connectionPopUpController, ServerController serverController, ClientConnectionServiceImpl clientConnectionService) {
+                            ConnectionPopUpController connectionPopUpController, 
+                            ServerController serverController,
+                            ServerController healthServerController,
+                            ClientConnectionServiceImpl clientConnectionService) {
         super(headerModel, headerView);
         this.connectionPopUpController = connectionPopUpController;
         this.serverController = serverController;
+        this.healthServerController = healthServerController;
         this.connectionPopUpController.setConnectionData(clientConnectionService);
+        headerModel.setConnectDropdown(SelectedServer.NO_SERVER_SELECTED);
+        headerModel.setOpenDropdown(SelectedServer.NO_SERVER_SELECTED);
     }
 
     /**
@@ -48,6 +62,8 @@ public class HeaderController extends HeaderAbstractController {
         headerView.initializeView(null);
         headerView.addListener(new ConnectListener(), "BUTTON_CONNECT");
         headerView.addListener(new ServerOpenListener(), "BUTTON_OPENSERVER");
+        headerView.addListener(new OpenDropdownListener(), "OPEN_DROPDOWN");
+        headerView.addListener(new ConnectDropdownListener(), "CONNECT_DROPDOWN");
     }
 
     /**
@@ -103,11 +119,26 @@ public class HeaderController extends HeaderAbstractController {
     class ServerOpenListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-        	if(serverController.isServerOpen()) {
-        		serverController.showServer();
+        	
+        	switch(headerModel.getOpenDropdown()) {
+        	case NO_SERVER_SELECTED:
+        		
+        		break;
+        	case HEALTH_SERVER:
+        		if(healthServerController.isServerOpen()) {
+        			healthServerController.showServer();
+            	}
+            	else
+            		healthServerController.initializeView();
+        		break;
+        	case EMOTIONS_SERVER:
+        		if(serverController.isServerOpen()) {
+            		serverController.showServer();
+            	}
+            	else
+            		serverController.initializeView();
+        		break;
         	}
-        	else
-        		serverController.initializeView();
         }
     }
 
@@ -120,6 +151,65 @@ public class HeaderController extends HeaderAbstractController {
         public void actionPerformed(ActionEvent e) {
         	openServer();
         }
+    }
+    
+    /**
+     * Class to handle the selection in the dropdown for 
+     * the connect button
+     *
+     */
+    class ConnectDropdownListener implements ActionListener {
+    	@Override
+    	public void actionPerformed(ActionEvent e) {
+    		WebComboBox comboBox = (WebComboBox) e.getSource();
+    		String selectedItem = comboBox.getSelectedItem().toString();
+    		switch (selectedItem) {
+			case "Select Server":
+				headerModel.setConnectDropdown(SelectedServer.NO_SERVER_SELECTED);
+				break;
+		
+			case "Emotion Server":
+				headerModel.setConnectDropdown(SelectedServer.EMOTIONS_SERVER);
+				break;
+			
+			case "Health Server":
+				headerModel.setConnectDropdown(SelectedServer.HEALTH_SERVER);
+				break;
+
+			default:
+				break;
+			}
+    	}
+    }
+    
+    /**
+     * Class to handle the selection in the dropdown for 
+     * the open server button
+     *
+     */
+    class OpenDropdownListener implements ActionListener {
+    	@Override
+    	public void actionPerformed(ActionEvent e) {
+    		WebComboBox comboBox = (WebComboBox) e.getSource();
+    		String selectedItem = comboBox.getSelectedItem().toString();
+    		switch (selectedItem) {
+			case "Select Server":
+				headerModel.setOpenDropdown(SelectedServer.NO_SERVER_SELECTED);
+				break;
+		
+			case "Emotion Server":
+				headerModel.setOpenDropdown(SelectedServer.EMOTIONS_SERVER);
+				break;
+			
+			case "Health Server":
+				headerModel.setOpenDropdown(SelectedServer.HEALTH_SERVER);
+				break;
+
+			default:
+				break;
+			}
+    	}
+    	
     }
     
     public void openServer() {

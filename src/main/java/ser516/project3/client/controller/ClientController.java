@@ -46,6 +46,7 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 	private ClientViewFactory viewFactory;
 	private ClientView clientView;
 	private ServerController serverController;
+	private ServerController healthServerController;
 	private HeaderController headerController;
 	private ControllerInterface performanceMetricController;
 	private ControllerInterface bodyVitalsController;
@@ -135,14 +136,15 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
      * @param viewFactory the object to create the instances of the views
 	 */
 	private void initializeHeader(ClientViewFactory viewFactory, ClientControllerFactory controllerFactory) {
-		serverController = new ServerController(ServiceHelperModel.getInstance());
+		serverController = new ServerController(ServiceHelperModel.getInstance(), "EMOTIONS_SERVER");
+		healthServerController = new ServerController(ServiceHelperModel.getInstance(), "HEALTH_SERVER");
 		clientConnectionService = new ClientConnectionServiceImpl();
 		
 		ConnectionPopUpModel connectionPopUpModel = new ConnectionPopUpModel();
 		ConnectionPopUpAbstractView connectionPopUpView = (ConnectionPopUpView) viewFactory.getView(ClientConstants.CONNECTION_POP_UP, connectionPopUpModel);
 		connectionPopUpController = controllerFactory.getController(ClientConstants.CONNECTION_POP_UP, connectionPopUpModel, connectionPopUpView, null, null);
 
-		ControllerInterface subControllers[] = {connectionPopUpController, serverController};
+		ControllerInterface subControllers[] = {connectionPopUpController, serverController, healthServerController};
 
 		HeaderModel headerModel = new HeaderModel();
 		HeaderView headerView = (HeaderView) viewFactory.getView(ClientConstants.HEADER, headerModel);

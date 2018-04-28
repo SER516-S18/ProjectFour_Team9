@@ -78,7 +78,8 @@ public class ClientControllerFactory {
             return clientController;
         } else if (controllerType.equalsIgnoreCase(ClientConstants.HEADER)) {
             headerController = new HeaderController((HeaderModel) model, (HeaderView) view,
-                    (ConnectionPopUpController) subControllers[0], (ServerController)subControllers[1], (ClientConnectionServiceImpl)service);
+                    (ConnectionPopUpController) subControllers[0], (ServerController)subControllers[1], 
+                    (ServerController)subControllers[2], (ClientConnectionServiceImpl)service);
             return headerController;
         } else if (controllerType.equalsIgnoreCase(ClientConstants.PERFORMANCE_METRICS)) {
             performanceMetricGraphController = (GraphController) subControllers[0];

@@ -67,12 +67,12 @@ public class ServerController implements ControllerInterface, Observer {
         initializeTimer();
     }
     
-    public ServerController(Observable observable, SelectedServer selectedServer) {
+    public ServerController(Observable observable, String selectedServer) {
     	this();
-        if(selectedServer == SelectedServer.EMOTIONS_SERVER) {
+        if(selectedServer.equals("EMOTIONS_SERVER")) {
         	initializeEmotions();
         	initializeExpressions();
-        } else if (selectedServer == SelectedServer.HEALTH_SERVER){
+        } else if (selectedServer.equals("HEALTH_SERVER")){
         	initializeHealth();
         }
     	observable.addObserver(this);

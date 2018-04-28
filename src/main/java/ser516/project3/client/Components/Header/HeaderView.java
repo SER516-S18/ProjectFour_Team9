@@ -84,6 +84,12 @@ public class HeaderView extends HeaderAbstractView {
 			case "BUTTON_OPENSERVER":
 				serverOpenButton.addActionListener((ActionListener)eventListener);
 				break;
+			case "OPEN_DROPDOWN":
+				openServerChoice.addActionListener((ActionListener)eventListener);
+				break;
+			case "CONNECT_DROPDOWN":
+				connectServerChoice.addActionListener((ActionListener)eventListener);
+				break;
 		}
 	}
     
