@@ -1,6 +1,8 @@
 package ser516.project3.client.helper;
 
 import ser516.project3.client.Components.Graph.CoordinatesModel;
+import ser516.project3.model.BodyMessageModel;
+import ser516.project3.model.BodyMessageModel.BodyVitals;
 import ser516.project3.model.MessageModel;
 import ser516.project3.model.MessageModel.AbstractExpression;
 import ser516.project3.model.MessageModel.ConcreteExpression;
@@ -60,5 +62,23 @@ public class MessageFormatConverter {
 			yAxis = yAxis - 2;
 		}
 		return resultExpressionsCoordinateModel;
+	}
+	
+	
+	/**
+	 * Converts message bean into list of coordinate object with time stamp and
+	 * expressions
+	 * 
+	 * @param messageModel
+	 * @return ArrayList of coordinates for populating expressions graph
+	 */
+	public static ArrayList<CoordinatesModel> convertMessageToHealthVitalsData(BodyMessageModel bodyMessageModel) {
+		ArrayList<CoordinatesModel> resultBodyVitalsCoordinateModel = new ArrayList<CoordinatesModel>();
+		for(BodyVitals bodyVitals : BodyVitals.values()) {
+			CoordinatesModel currentCoordModel = new CoordinatesModel(bodyMessageModel.getTimeStamp(),
+				bodyMessageModel.getBodyVitalsMap(bodyVitals.name()));
+			resultBodyVitalsCoordinateModel.add(currentCoordModel);
+		}
+		return resultBodyVitalsCoordinateModel;
 	}
 }

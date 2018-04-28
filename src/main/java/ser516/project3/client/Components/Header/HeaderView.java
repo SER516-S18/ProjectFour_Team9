@@ -70,6 +70,9 @@ public class HeaderView extends HeaderAbstractView {
         createServerOpenButton(bagConstraints, "HEALTH", 5, 2, serverOpenButtonHealth,0,20,70,0);
     }
     
+    /**
+     * this method updates connection status on the header section of client
+     */
     @Override
 	public void updateView(ModelInterface model) {
     	this.headerModel = (HeaderModel)model;
@@ -77,6 +80,9 @@ public class HeaderView extends HeaderAbstractView {
     	updateTimeStamp();
 	}
 
+    /**
+     * This method handles events on buttons present on header section
+     */
 	@Override
 	public void addListener(EventListener eventListener, String componentName) {
 		switch(componentName) {
