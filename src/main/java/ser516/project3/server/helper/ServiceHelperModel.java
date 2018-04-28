@@ -120,6 +120,9 @@ public class ServiceHelperModel extends java.util.Observable {
 		this.logMessage = logMessage;
 	}
 
+	/**
+	 * method to notify all the observers to update according to the change
+	 */
 	public void notifyAllObservers() {
 		this.setChanged();
         this.notifyObservers();
