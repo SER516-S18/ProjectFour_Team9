@@ -61,14 +61,17 @@ public class ServerController implements ControllerInterface, Observer {
         viewFactory = new ServerViewFactory();
         serverControllerFactory = ServerControllerFactory.getInstance();
         serverConnectionService = new ServerConnectionServiceImpl();
-        initializeConsole();
-        initializeTop();
-        initializeTimer();
+        
     }
     
     public ServerController(Observable observable, String selectedServer) {
     	this();
     	this.selectedServer = selectedServer;
+    	
+    	initializeConsole();
+        initializeTop();
+        initializeTimer();
+        
         if(selectedServer.equals("EMOTIONS_SERVER")) {
         	initializeEmotions();
         	initializeExpressions();
@@ -131,6 +134,7 @@ public class ServerController implements ControllerInterface, Observer {
         TopView topView = (TopView) viewFactory.getView("TOP", topModel);
         ControllerInterface subControllers[] = {consoleController};
         topController = (TopController) serverControllerFactory.getController("TOP", topModel, topView, subControllers);
+        topController.setServerType(selectedServer);
         topController.initializeView();
     }
 

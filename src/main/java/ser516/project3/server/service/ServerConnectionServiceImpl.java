@@ -19,18 +19,40 @@ public class ServerConnectionServiceImpl implements ServerConnectionServiceInter
     Thread serverContainerThread;
     ServerContainerThread threadInstance;
     Observable observable;
-
+    private String serverType;
     public ServerConnectionServiceImpl() {
 
     }
+    
 
     /**
+	 * @return the serverType
+	 */
+	public String getServerType() {
+		return serverType;
+	}
+
+
+	/**
+	 * @param serverType the serverType to set
+	 */
+	public void setServerType(String serverType) {
+		this.serverType = serverType;
+	}
+
+
+	/**
      * Override Method responsible for creating threads
      * for web socket
      */
     @Override
     public void initServerEndpoint() {
-        threadInstance = new ServerContainerThread(ServerConstants.MAIN_SERVER);
+    	if(serverType.equalsIgnoreCase("EMOTIONS_SERVER")) {
+    		threadInstance = new ServerContainerThread(ServerConstants.MAIN_SERVER);
+    	} else {
+    		threadInstance = new ServerContainerThread(ServerConstants.HEALTH_SERVER);
+    	}
+        
         serverContainerThread = new Thread(threadInstance);
         serverContainerThread.start();
         

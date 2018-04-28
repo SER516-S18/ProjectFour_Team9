@@ -13,6 +13,11 @@ public class BodyMessageModel extends AbstractBodyMessageModel{
 	    
 	    private HashMap<String, Double> bodyVitalsMap = new HashMap<String, Double>();
 	    
+	    public BodyMessageModel(){
+	    	interval = 1;
+	    	timeStamp = 0;
+	    }
+	    
 
 
 	    /**
@@ -92,7 +97,7 @@ public class BodyMessageModel extends AbstractBodyMessageModel{
 	     * Enum to standardize the kind of body vitals
 	     */
 	    public enum BodyVitals {
-	    		pulse,heartRate,bodyTemperature,bloodSugar,bmi
+	    		pulse,heartrate,bodytemperature,bloodsugar,bmi
 	    }
 
 

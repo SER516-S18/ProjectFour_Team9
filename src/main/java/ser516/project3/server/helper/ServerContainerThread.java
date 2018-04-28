@@ -29,15 +29,19 @@ public class ServerContainerThread implements Runnable {
 
 	@Override
 	public void run() {
-		if (serverType.equalsIgnoreCase(ServerConstants.HEALTH_SERVER)) {
-			healthServer = new Server(ServerConstants.LOCALHOST, HEALTH_PORT, "", null,
-					HealthServerConnectionEndpoint.class);
-		} else if(serverType.equalsIgnoreCase(ServerConstants.MAIN_SERVER)){
-			server = new Server(ServerConstants.LOCALHOST, PORT, "", null,
-					ServerConnectionEndpoint.class);
-		}
 		try {
-			server.start();
+			if (serverType.equalsIgnoreCase(ServerConstants.HEALTH_SERVER)) {
+				healthServer = new Server(ServerConstants.LOCALHOST,
+						HEALTH_PORT, "", null,
+						HealthServerConnectionEndpoint.class);
+				healthServer.start();
+			} else if (serverType
+					.equalsIgnoreCase(ServerConstants.MAIN_SERVER)) {
+				server = new Server(ServerConstants.LOCALHOST, PORT, "", null,
+						ServerConnectionEndpoint.class);
+				server.start();
+			}
+
 			ServiceHelperModel.getInstance().setServerStartedStatus(true);
 			BufferedReader reader = new BufferedReader(
 					new InputStreamReader(System.in));
@@ -50,7 +54,6 @@ public class ServerContainerThread implements Runnable {
 			ServiceHelperModel.getInstance().setServerStartedStatus(false);
 		}
 	}
-	
 
 	/**
 	 * @return the healthServer
@@ -60,7 +63,8 @@ public class ServerContainerThread implements Runnable {
 	}
 
 	/**
-	 * @param healthServer the healthServer to set
+	 * @param healthServer
+	 *            the healthServer to set
 	 */
 	public void setHealthServer(Server healthServer) {
 		this.healthServer = healthServer;

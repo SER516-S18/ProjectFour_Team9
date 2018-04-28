@@ -61,7 +61,12 @@ public class ClientConnectionThread implements Runnable {
 		String uri = "ws://" + ipAddress + ":" + port + "/" + endpoint;
 		logger.info("Connecting to " + uri);
 		try {
-			clientSession = container.connectToServer(ClientConnectionEndpoint.class, URI.create(uri));
+			if(endpoint.equalsIgnoreCase(ClientConstants.HEALTH_SERVER_ENDPOINT)) {
+				clientSession = container.connectToServer(ClientHealthConnectionEndpoint.class, URI.create(uri));
+			} else {
+				clientSession = container.connectToServer(ClientConnectionEndpoint.class, URI.create(uri));
+			}
+				
 			/*
 			 * if(endpoint.equalsIgnoreCase(ClientConstants.HEALTH_SERVER_ENDPOINT)) {
 			 * clientSession =

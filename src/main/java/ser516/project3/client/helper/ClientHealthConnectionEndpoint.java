@@ -44,7 +44,7 @@ public class ClientHealthConnectionEndpoint {
 
     @OnMessage
     public void processMessage(BodyMessageModel bodyMessageModel, Session session) {
-        logger.info("Received data:::: " + bodyMessageModel);
+        System.out.println("Received data:::: " + bodyMessageModel);
         BodyVitalsDataObservable.getInstance().addToListValues(MessageFormatConverter.convertMessageToHealthVitalsData(bodyMessageModel));
     }
 
