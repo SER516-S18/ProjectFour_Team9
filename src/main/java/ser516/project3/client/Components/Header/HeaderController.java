@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import com.alee.laf.combobox.WebComboBox;
 
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpController;
+import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpView;
 import ser516.project3.client.Components.Header.HeaderModel.SelectedServer;
 import ser516.project3.client.service.ClientConnectionServiceImpl;
 import ser516.project3.client.service.ClientConnectionServiceInterface;
@@ -56,7 +57,6 @@ public class HeaderController extends HeaderAbstractController {
     @Override
     public void initializeView() {
         headerView.initializeView(null);
-        //BUTTON_CONNECT_EMOTION BUTTON_OPENSERVER_EMOTION BUTTON_CONNECT_HEALTH BUTTON_OPENSERVER_HEALTH
         headerView.addListener(new ConnectListener(), "BUTTON_CONNECT_EMOTION");
         headerView.addListener(new ServerOpenListener(), "BUTTON_OPENSERVER_EMOTION");
         headerView.addListener(new HealthConnectListener(), "BUTTON_CONNECT_HEALTH");
@@ -172,8 +172,8 @@ public class HeaderController extends HeaderAbstractController {
 			headerView.updateView(headerModel);
 			connectionPopUpController.setConnectionStatus(false);
 		} else {
+			connectionPopUpController.setServerType("EMOTIONS");
 			connectionPopUpController.initializeView();
-			//clientConnectionService.createClientConnection(null, 0, ClientConstants.ENDPOINT);
 			headerModel.setHealthConnectionStatus(connectionPopUpController.getConnectionStatus());
 		}
     }
@@ -189,7 +189,6 @@ public class HeaderController extends HeaderAbstractController {
 			connectionPopUpController.setConnectionStatus(false);
 		} else {
 			connectionPopUpController.initializeView();
-//			clientConnectionService.createClientConnection(null, 0, ClientConstants.ENDPOINT);
 			headerModel.setConnectionStatus(connectionPopUpController.getConnectionStatus());
 		}
     }

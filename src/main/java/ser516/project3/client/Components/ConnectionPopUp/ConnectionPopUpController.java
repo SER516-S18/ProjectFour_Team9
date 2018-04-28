@@ -12,6 +12,7 @@ import javax.swing.text.BadLocationException;
 import ser516.project3.client.service.ClientConnectionServiceImpl;
 import ser516.project3.client.service.ClientConnectionServiceInterface;
 import ser516.project3.constants.ClientConstants;
+import ser516.project3.constants.ServerConstants;
 
 /**
  * It controls the flow of Connection Details pop up to
@@ -24,12 +25,22 @@ import ser516.project3.constants.ClientConstants;
 public class ConnectionPopUpController extends ConnectionPopUpAbstractController {
 
 	private ClientConnectionServiceInterface clientConnectionService;
+	private String serverType;
     /**
      * Constructor to add popup model and view in
      * Connection popup controller
      */
     public ConnectionPopUpController(ConnectionPopUpModel connectionPopUpModel, ConnectionPopUpAbstractView connectionPopUpView) {
         super(connectionPopUpModel, connectionPopUpView);
+    }
+    
+    /**
+     * Sets the type of server.
+     * 
+     * @param serverType Type of server being called
+     */
+    public void setServerType(String serverType) {
+    	this.serverType = serverType;
     }
 
     /**
@@ -87,7 +98,11 @@ public class ConnectionPopUpController extends ConnectionPopUpAbstractController
                 JOptionPane.showMessageDialog(dialog, ClientConstants.NO_PORT_NO_MESSAGE);
             } else {
     			clientConnectionService = new ClientConnectionServiceImpl();
-    			clientConnectionService.createClientConnection(connectionPopUpModel.getIpAddress(), connectionPopUpModel.getPortNumber(), ClientConstants.ENDPOINT);
+    			if(serverType.equals("EMOTIONS")) {
+    				clientConnectionService.createClientConnection(connectionPopUpModel.getIpAddress(), connectionPopUpModel.getPortNumber(), ClientConstants.ENDPOINT);
+    			} else {
+    				clientConnectionService.createClientConnection(connectionPopUpModel.getIpAddress(), connectionPopUpModel.getPortNumber(), ClientConstants.HEALTH_SERVER_ENDPOINT);
+    			}
     			connectionPopUpModel.setConnectionStatus(true);
                 connectionPopUpView.dispose();
             }
