@@ -22,7 +22,7 @@ import ser516.project3.server.Components.Utility.ServerCommonData;
  * @author vsriva12
  */
 @ServerEndpoint(value = "/server", encoders = {MessageEncoder.class})
-public class ServerConnectionEndpoint {
+public class ServerConnectionEndpoint extends AbstractEndpoint {
     final static Logger logger = Logger.getLogger(ServerConnectionEndpoint.class);
 
     /**

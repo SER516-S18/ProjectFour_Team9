@@ -11,7 +11,7 @@ import java.util.HashMap;
  * {@link MessageDecoder} marshal and unmarshal instances of this class,
  * respectively.
  */
-public class MessageModel {
+public class MessageModel extends AbstractMessageModel{
 
     private double interval;
     private double timeStamp;
@@ -195,4 +195,14 @@ public class MessageModel {
     public enum SelectedCriteria {
         upperFace, lowerFace, eye
     }
+    
+    /**
+     * Sets the initial message data.
+     */
+	@Override
+	public void setInitialData() {
+		interval = 0;
+	    timeStamp = 0;
+	    selectionFlagMap = null;
+	}
 }

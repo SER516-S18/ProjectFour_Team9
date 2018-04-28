@@ -3,7 +3,6 @@ package ser516.project3.server.helper;
 import java.io.IOException;
 
 import javax.websocket.CloseReason;
-import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -14,8 +13,6 @@ import javax.websocket.server.ServerEndpoint;
 import org.apache.log4j.Logger;
 
 import ser516.project3.constants.ServerConstants;
-import ser516.project3.server.Components.Utility.ServerCommonData;
-import ser516.project3.server.controller.ServerController;
 
 /**
  * The Web server socket end point class for the health server application
@@ -23,7 +20,7 @@ import ser516.project3.server.controller.ServerController;
  * @author User
  */
 @ServerEndpoint(value = "/healthserver", encoders = { BodyMessageModelEncoder.class })
-public class HealthServerConnectionEndpoint {
+public class HealthServerConnectionEndpoint extends AbstractEndpoint {
 	final static Logger logger = Logger
 			.getLogger(HealthServerConnectionEndpoint.class);
 

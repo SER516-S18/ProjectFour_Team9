@@ -7,7 +7,7 @@ import java.util.HashMap;
  * {@link BodyMessageModelEncoder} marshal and unmarshal instances of this class,
  * respectively.
  */
-public class BodyMessageModel {
+public class BodyMessageModel extends AbstractBodyMessageModel{
 	 	private double interval;
 	    private double timeStamp;
 	    
@@ -94,5 +94,15 @@ public class BodyMessageModel {
 	    public enum BodyVitals {
 	    		pulse,heartRate,bodyTemperature,bloodSugar,bmi
 	    }
+
+
+	    /**
+	     * Sets the initial message data.
+	     */
+		@Override
+		public void setInitialData() {
+			interval = 0;
+		    timeStamp = 0;
+		}
 
 }

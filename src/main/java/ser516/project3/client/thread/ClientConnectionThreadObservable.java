@@ -6,7 +6,7 @@ import java.util.Observable;
  * This class helps in forming connection between server and client
  */
 
-public class ClientConnectionThreadObservable extends Observable {
+public class ClientConnectionThreadObservable extends Observable implements ClientConnectionThreadObservableInterface {
 	private String ipAddress;
 	private int port;
 	private String endpoint;

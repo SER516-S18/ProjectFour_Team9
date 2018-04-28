@@ -9,7 +9,7 @@ import ser516.project3.model.MessageModel;
  *
  * @author vsriva12
  */
-public class ServerCommonData {
+public class ServerCommonData extends AbstractCommonData{
 
     private static ServerCommonData instance = null;
     private static MessageModel messageModel;
@@ -95,6 +95,12 @@ public class ServerCommonData {
 	 */
 	public void setShouldRepeat(boolean shouldRepeat) {
 		this.shouldRepeat = shouldRepeat;
+	}
+
+	@Override
+	public void setInitialData() {
+		shouldSendData = false;
+		shouldRepeat = false;
 	}
 	
     
