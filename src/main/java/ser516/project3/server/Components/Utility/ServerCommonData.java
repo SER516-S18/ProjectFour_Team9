@@ -1,5 +1,6 @@
-package ser516.project3.server.Components;
+package ser516.project3.server.Components.Utility;
 
+import ser516.project3.model.BodyMessageModel;
 import ser516.project3.model.MessageModel;
 
 /**
@@ -12,6 +13,7 @@ public class ServerCommonData {
 
     private static ServerCommonData instance = null;
     private static MessageModel messageModel;
+    private static BodyMessageModel bodyMessageModel;
     private boolean shouldSendData;
     private boolean shouldRepeat;
 
@@ -31,6 +33,7 @@ public class ServerCommonData {
         if (instance == null) {
             instance = new ServerCommonData();
             messageModel = new MessageModel();
+            bodyMessageModel=new BodyMessageModel();
         }
         return instance;
     }
@@ -43,6 +46,15 @@ public class ServerCommonData {
     public static void setMessageModel(MessageModel messageModel) {
         ServerCommonData.messageModel = messageModel;
     }
+    
+    /**
+     * The setter function of BodyMessageModel class
+     *
+     * @param messageModel the bodyMessageModel to set
+     */
+    public static void setBodyMessageModel(BodyMessageModel bodyMessageModel) {
+        ServerCommonData.bodyMessageModel = bodyMessageModel;
+    }
 
     /**
      * The getter function of MessageModel
@@ -52,6 +64,16 @@ public class ServerCommonData {
     public MessageModel getMessage() {
         return messageModel;
     }
+    
+    /**
+     * The getter function of BodyMessageModel
+     *
+     * @return the bodyMessageModel to get
+     */
+    public BodyMessageModel getBodyMessage() {
+        return bodyMessageModel;
+    }
+    
 
 	public boolean isShouldSendData() {
 		return shouldSendData;

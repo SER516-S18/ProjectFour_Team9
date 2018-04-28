@@ -15,6 +15,9 @@ public class ExpressionsDataObservable extends Observable {
     private static ExpressionsDataObservable instance;
     private ArrayList<ArrayList<CoordinatesModel>> expressionsData;
 
+    /**
+     * Constructor initializing ExpressionsDataObservable instance
+     */
     private ExpressionsDataObservable() {
         expressionsData = new ArrayList<ArrayList<CoordinatesModel>>();
     }

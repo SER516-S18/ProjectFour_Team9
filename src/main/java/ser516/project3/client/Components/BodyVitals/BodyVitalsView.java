@@ -18,9 +18,9 @@ import javax.swing.event.DocumentListener;
 
 import com.alee.laf.button.WebButton;
 
-import ser516.project3.client.Components.NumberTextField;
 import ser516.project3.client.Components.Graph.GraphView;
 import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricModel;
+import ser516.project3.client.Components.Utility.NumberTextField;
 import ser516.project3.constants.ClientConstants;
 import ser516.project3.interfaces.ModelInterface;
 import ser516.project3.interfaces.ViewInterface;
@@ -103,7 +103,10 @@ public class BodyVitalsView extends BodyVitalsAbstractView {
         displayLengthField.setText("" + this.bodyVitalsModel.getDisplayLength());
 		
 	}
-
+	
+	/**
+	 * This handles events on the components on body vitals view.
+	 */
 	@Override
 	public void addListener(EventListener eventListener, String listenerType, String componentName) {
 		switch(componentName) {

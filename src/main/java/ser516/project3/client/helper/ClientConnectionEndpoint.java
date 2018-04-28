@@ -10,7 +10,7 @@ import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricData
 import ser516.project3.client.controller.ClientControllerFactory;
 import ser516.project3.constants.ClientConstants;
 import ser516.project3.model.*;
-import ser516.project3.server.Components.ServerCommonData;
+import ser516.project3.server.Components.Utility.ServerCommonData;
 
 import javax.swing.*;
 import javax.websocket.*;

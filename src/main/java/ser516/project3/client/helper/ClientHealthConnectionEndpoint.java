@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 import ser516.project3.client.Components.BodyVitals.BodyVitalsModel;
 import ser516.project3.client.controller.ClientControllerFactory;
 import ser516.project3.constants.ClientConstants;
-import ser516.project3.server.Components.ServerCommonData;
+import ser516.project3.server.Components.Utility.ServerCommonData;
 
 /**
  * This class acts as an end point of the connection and provides the message
@@ -26,7 +26,7 @@ import ser516.project3.server.Components.ServerCommonData;
  *
  * @author Varun Srivastava
  */
-@ClientEndpoint(decoders = {BodyVitalsModelDecoder.class})
+@ClientEndpoint(decoders = {BodyMessageModelDecoder.class})
 public class ClientHealthConnectionEndpoint {
 
     final static Logger logger = Logger.getLogger(ClientHealthConnectionEndpoint.class);

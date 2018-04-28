@@ -29,6 +29,10 @@ public abstract class HeaderAbstractView extends JPanel implements ViewInterface
         this.headerModel = headerModel;
     }
 	
+    /**
+     * This method intializes the view and configures it
+     * @param subViews an array of ViewInterfaces
+     */
 	@Override
 	public void initializeView(ViewInterface[] subViews) {
 		setBorder(null);

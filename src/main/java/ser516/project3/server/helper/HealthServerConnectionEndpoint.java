@@ -14,7 +14,7 @@ import javax.websocket.server.ServerEndpoint;
 import org.apache.log4j.Logger;
 
 import ser516.project3.constants.ServerConstants;
-import ser516.project3.server.Components.ServerCommonData;
+import ser516.project3.server.Components.Utility.ServerCommonData;
 import ser516.project3.server.controller.ServerController;
 
 /**
@@ -22,7 +22,7 @@ import ser516.project3.server.controller.ServerController;
  *
  * @author User
  */
-@ServerEndpoint(value = "/healthserver", encoders = { HealthMessageEncoder.class })
+@ServerEndpoint(value = "/healthserver", encoders = { BodyMessageModelEncoder.class })
 public class HealthServerConnectionEndpoint {
 	final static Logger logger = Logger
 			.getLogger(HealthServerConnectionEndpoint.class);
