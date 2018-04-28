@@ -103,7 +103,10 @@ public class BodyVitalsView extends BodyVitalsAbstractView {
         displayLengthField.setText("" + this.bodyVitalsModel.getDisplayLength());
 		
 	}
-
+	
+	/**
+	 * This handles events on the components on body vitals view.
+	 */
 	@Override
 	public void addListener(EventListener eventListener, String listenerType, String componentName) {
 		switch(componentName) {
