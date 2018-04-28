@@ -50,6 +50,8 @@ public class ServerController implements ControllerInterface, Observer {
     private ExpressionsController expressionsController;
     private ConsoleController consoleController;
     private ServerConnectionServiceInterface serverConnectionService;
+    
+    private enum SelectedServer {EMOTIONS_SERVER, HEALTH_SERVER};
 
     /**
      * Constructor to initialize all components in the
@@ -63,13 +65,16 @@ public class ServerController implements ControllerInterface, Observer {
         initializeConsole();
         initializeTop();
         initializeTimer();
-        initializeEmotions();
-        initializeHealth();
-        initializeExpressions();
     }
     
-    public ServerController(Observable observable) {
+    public ServerController(Observable observable, SelectedServer selectedServer) {
     	this();
+        if(selectedServer == SelectedServer.EMOTIONS_SERVER) {
+        	initializeEmotions();
+        	initializeExpressions();
+        } else if (selectedServer == SelectedServer.HEALTH_SERVER){
+        	initializeHealth();
+        }
     	observable.addObserver(this);
     }
 
