@@ -60,10 +60,11 @@ public class HeaderController extends HeaderAbstractController {
     @Override
     public void initializeView() {
         headerView.initializeView(null);
-        headerView.addListener(new ConnectListener(), "BUTTON_CONNECT");
-        headerView.addListener(new ServerOpenListener(), "BUTTON_OPENSERVER");
-        headerView.addListener(new OpenDropdownListener(), "OPEN_DROPDOWN");
-        headerView.addListener(new ConnectDropdownListener(), "CONNECT_DROPDOWN");
+        //BUTTON_CONNECT_EMOTION BUTTON_OPENSERVER_EMOTION BUTTON_CONNECT_HEALTH BUTTON_OPENSERVER_HEALTH
+        headerView.addListener(new ConnectListener(), "BUTTON_CONNECT_EMOTION");
+        headerView.addListener(new ServerOpenListener(), "BUTTON_OPENSERVER_EMOTION");
+        headerView.addListener(new HealthConnectListener(), "BUTTON_CONNECT_HEALTH");
+        headerView.addListener(new HealthServerOpenListener(), "BUTTON_OPENSERVER_HEALTH");
     }
 
     /**
@@ -114,39 +115,36 @@ public class HeaderController extends HeaderAbstractController {
 
     /**
      * Class implemented to handle action listener
-     * of server open button
+     * of server open button for Emotion server
      */
     class ServerOpenListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-        	
-        	switch(headerModel.getOpenDropdown()) {
-        	case NO_SERVER_SELECTED:
-        		
-        		break;
-        	case HEALTH_SERVER:
-        		if(healthServerController.isServerOpen()) {
-        			healthServerController.showServer();
-            	}
-            	else
-            		healthServerController.initializeView();
-        		break;
-        	case EMOTIONS_SERVER:
-        		if(serverController.isServerOpen()) {
-            		serverController.showServer();
-            	}
-            	else
-            		serverController.initializeView();
-        		break;
-        	}
+        	if(serverController.isServerOpen()) {
+            	serverController.showServer();
+            }
+            else
+            	serverController.initializeView();
         }
     }
 
     /**
      * Class implemented to handle action listener
-     * of Connect to server button
+     * of Connect to server button for Emotion Server
      */
     class ConnectListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        	connectToEmotionServer();
+        }
+    }
+    
+    /**
+     * Class implemented to handle action listener
+     * of Connect to server button for health server
+     *
+     */
+    class HealthConnectListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
         	connectToHealthServer();
@@ -154,65 +152,23 @@ public class HeaderController extends HeaderAbstractController {
     }
     
     /**
-     * Class to handle the selection in the dropdown for 
-     * the connect button
-     *
+     * Class implemented to handle action listener
+     * of server open button for Health server
      */
-    class ConnectDropdownListener implements ActionListener {
-    	@Override
-    	public void actionPerformed(ActionEvent e) {
-    		WebComboBox comboBox = (WebComboBox) e.getSource();
-    		String selectedItem = comboBox.getSelectedItem().toString();
-    		switch (selectedItem) {
-			case "Select Server":
-				headerModel.setConnectDropdown(SelectedServer.NO_SERVER_SELECTED);
-				break;
-		
-			case "Emotion Server":
-				headerModel.setConnectDropdown(SelectedServer.EMOTIONS_SERVER);
-				break;
-			
-			case "Health Server":
-				headerModel.setConnectDropdown(SelectedServer.HEALTH_SERVER);
-				break;
-
-			default:
-				break;
-			}
-    		headerView.updateView(headerModel);
-    	}
+    class HealthServerOpenListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        	if(healthServerController.isServerOpen()) {
+        		healthServerController.showServer();
+            }
+            else
+            	healthServerController.initializeView();
+        }
     }
     
     /**
-     * Class to handle the selection in the dropdown for 
-     * the open server button
-     *
+     * Method to handle the connection to the health server
      */
-    class OpenDropdownListener implements ActionListener {
-    	@Override
-    	public void actionPerformed(ActionEvent e) {
-    		WebComboBox comboBox = (WebComboBox) e.getSource();
-    		String selectedItem = comboBox.getSelectedItem().toString();
-    		switch (selectedItem) {
-			case "Select Server":
-				headerModel.setOpenDropdown(SelectedServer.NO_SERVER_SELECTED);
-				break;
-		
-			case "Emotion Server":
-				headerModel.setOpenDropdown(SelectedServer.EMOTIONS_SERVER);
-				break;
-			
-			case "Health Server":
-				headerModel.setOpenDropdown(SelectedServer.HEALTH_SERVER);
-				break;
-
-			default:
-				break;
-			}
-    	}
-    	
-    }
-    
     public void connectToHealthServer() {
     	if (headerModel.isHealthConnectionStatus()) {
 			clientConnectionService.stopClientConnection();
@@ -226,6 +182,9 @@ public class HeaderController extends HeaderAbstractController {
 		}
     }
     
+    /**
+     * Method to handle the connection to the emotion server
+     */
     public void connectToEmotionServer() {
     	if (headerModel.isConnectionStatus()) {
 			clientConnectionService.stopClientConnection();
@@ -234,7 +193,7 @@ public class HeaderController extends HeaderAbstractController {
 			connectionPopUpController.setConnectionStatus(false);
 		} else {
 			connectionPopUpController.initializeView();
-			//clientConnectionService.createClientConnection(null, 0, ClientConstants.ENDPOINT);
+//			clientConnectionService.createClientConnection(null, 0, ClientConstants.ENDPOINT);
 			headerModel.setConnectionStatus(connectionPopUpController.getConnectionStatus());
 		}
     }
