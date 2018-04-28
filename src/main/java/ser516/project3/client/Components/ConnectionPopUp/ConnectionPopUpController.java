@@ -9,8 +9,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
-import ser516.project3.client.controller.ClientControllerFactory;
+import ser516.project3.client.service.ClientConnectionServiceImpl;
+import ser516.project3.client.service.ClientConnectionServiceInterface;
 import ser516.project3.constants.ClientConstants;
+import ser516.project3.constants.ServerConstants;
 
 /**
  * It controls the flow of Connection Details pop up to
@@ -22,12 +24,23 @@ import ser516.project3.constants.ClientConstants;
 
 public class ConnectionPopUpController extends ConnectionPopUpAbstractController {
 
+	private ClientConnectionServiceInterface clientConnectionService;
+	private String serverType;
     /**
      * Constructor to add popup model and view in
      * Connection popup controller
      */
     public ConnectionPopUpController(ConnectionPopUpModel connectionPopUpModel, ConnectionPopUpAbstractView connectionPopUpView) {
         super(connectionPopUpModel, connectionPopUpView);
+    }
+    
+    /**
+     * Sets the type of server.
+     * 
+     * @param serverType Type of server being called
+     */
+    public void setServerType(String serverType) {
+    	this.serverType = serverType;
     }
 
     /**
@@ -41,6 +54,30 @@ public class ConnectionPopUpController extends ConnectionPopUpAbstractController
         connectionPopUpView.addListener(new ConnectListener(), "BUTTON_OK");
         connectionPopUpView.addListener(new IPDocumentListener(), "TEXTFIELD_IP");
         connectionPopUpView.addListener(new PortDocumentListener(), "TEXTFIELD_PORT");
+    }
+    
+    /**
+     * Sets service for connection
+     * @param clientConnectionService an instance of ClientConnectionServiceInterface
+     */
+    public void setConnectionData(ClientConnectionServiceInterface clientConnectionService) {
+    	this.clientConnectionService = clientConnectionService;
+    }
+    
+    /**
+     * sets the connection status on client
+     * @param status boolean value
+     */
+    public void setConnectionStatus(boolean status) {
+    	connectionPopUpModel.setConnectionStatus(status);
+    }
+    
+    /**
+     * gets connection status 
+     * @return boolean indicating status of connection
+     */
+    public boolean getConnectionStatus() {
+    	return connectionPopUpModel.isConnectionStatus();
     }
 
     /**
@@ -60,7 +97,13 @@ public class ConnectionPopUpController extends ConnectionPopUpAbstractController
                 dialog.setAlwaysOnTop(true);
                 JOptionPane.showMessageDialog(dialog, ClientConstants.NO_PORT_NO_MESSAGE);
             } else {
-                ClientControllerFactory.getInstance().getClientController().toggleConnectionToServer(connectionPopUpModel.getIpAddress(), connectionPopUpModel.getPortNumber());
+    			clientConnectionService = new ClientConnectionServiceImpl();
+    			if(serverType.equals("EMOTIONS")) {
+    				clientConnectionService.createClientConnection(connectionPopUpModel.getIpAddress(), connectionPopUpModel.getPortNumber(), ClientConstants.ENDPOINT);
+    			} else {
+    				clientConnectionService.createClientConnection(connectionPopUpModel.getIpAddress(), connectionPopUpModel.getPortNumber(), ClientConstants.HEALTH_SERVER_ENDPOINT);
+    			}
+    			connectionPopUpModel.setConnectionStatus(true);
                 connectionPopUpView.dispose();
             }
         }
@@ -90,7 +133,9 @@ public class ConnectionPopUpController extends ConnectionPopUpAbstractController
                 System.out.println(ex);
             }
         }
-
+        /**
+         * Intentionally left empty
+         */
         @Override
         public void changedUpdate(DocumentEvent e) {
         }

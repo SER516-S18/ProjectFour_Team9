@@ -2,6 +2,12 @@ package ser516.project3.server.Components.Health;
 
 import ser516.project3.interfaces.ModelInterface;
 
+/**
+ * Model for health view which controls the flow of data
+ * 
+ * @author abhinab, garv
+ *
+ */
 public class HealthModel implements ModelInterface {
 
 
@@ -17,11 +23,20 @@ public class HealthModel implements ModelInterface {
     private double height;
     private double weight;
 
-
+    /**
+     * Gets the bloodSugar in  <code>HealthModel</code>.
+	 *
+     * @return the bloodSugar value
+     */
     public double getBloodSugar() {
         return bloodSugar;
     }
 
+    /**
+     * Sets the bloodSugar in <code>HealthModel</code>.
+     * 
+     * @param bloodSugar value of bloodSugar
+     */
     public void setBloodSugar(double bloodSugar) {
         this.bloodSugar = bloodSugar;
     }

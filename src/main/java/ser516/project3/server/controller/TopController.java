@@ -1,4 +1,4 @@
-package ser516.project3.server.Components.Top;
+package ser516.project3.server.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,8 +11,11 @@ import javax.swing.text.BadLocationException;
 import org.apache.log4j.Logger;
 
 import ser516.project3.constants.ServerConstants;
-import ser516.project3.server.Components.ServerCommonData;
-import ser516.project3.server.controller.ServerController;
+import ser516.project3.server.Components.Top.TopAbstractController;
+import ser516.project3.server.Components.Top.TopModel;
+import ser516.project3.server.Components.Top.TopView;
+import ser516.project3.server.Components.Utility.ServerCommonData;
+import ser516.project3.server.service.ServerConnectionServiceImpl;
 import ser516.project3.server.service.ServerConnectionServiceInterface;
 
 /**
@@ -25,7 +28,9 @@ import ser516.project3.server.service.ServerConnectionServiceInterface;
 public class TopController extends TopAbstractController {
     final static Logger logger = Logger.getLogger(TopController.class);
 
-    private ServerConnectionServiceInterface serverConnectionService;
+    private ServerConnectionServiceImpl serverConnectionService;
+    private ConsoleController consoleController;
+    private String serverType;
 
     private static final String START = "Start";
     private static final String STOP = "Stop";
@@ -37,12 +42,14 @@ public class TopController extends TopAbstractController {
      * @param topModel TopModel object
      * @param topView  TopView object
      */
-    public TopController(TopModel topModel, TopView topView) {
+    public TopController(TopModel topModel, TopView topView, ConsoleController consoleController) {
         super(topModel, topView);
+        serverConnectionService = new ServerConnectionServiceImpl();
+        this.consoleController = consoleController;
     }
 
     /**
-     * Method to initialize the top view and to add listeners
+     * Override Method to initialize the top view and to add listeners
      * to all the components in the panel
      */
     @Override
@@ -54,6 +61,24 @@ public class TopController extends TopAbstractController {
         topView.addListener(new SendButtonListener(), "BUTTON_SEND");
         ServerCommonData.getInstance().getMessage().setInterval(topModel.getInterval());
     }
+    
+    public void setServerType(String serverType) {
+    	this.serverType = serverType;
+    }
+
+    public void stopServerConnection() {
+//                ServiceModel.getInstance().setServerStatus(false);
+        boolean status = serverConnectionService.stopServerEndpoint();
+        topModel.setServerStarted(false);
+    	topModel.setSendButtonEnabled(false);
+    	topModel.setServerStartStopButtonText(ServerConstants.START_SERVER);
+    	setBlinking(false);
+    	updateServerStartStopButtonText();
+    	updateEnableDisableSendButton();
+        if(status) {
+        	 consoleController.getConsoleModel().logMessage(ServerConstants.SERVER_STOPPED);
+        }
+    }
 
     /**
      * Inner class to add document listener to timer interval
@@ -62,7 +87,7 @@ public class TopController extends TopAbstractController {
     class IntervalDocumentListener implements DocumentListener {
 
         /**
-         * Method to remove update of time interval
+         * Overide Method to remove update of time interval
          */
         @Override
         public void removeUpdate(DocumentEvent e) {
@@ -85,7 +110,7 @@ public class TopController extends TopAbstractController {
         }
 
         /**
-         * Method to update the time interval
+         * Override Method to update the time interval
          */
         @Override
         public void insertUpdate(DocumentEvent e) {
@@ -137,13 +162,13 @@ public class TopController extends TopAbstractController {
             logger.info(ServerConstants.START_STOP_PRESSED);
             boolean isStarted = topModel.isServerStarted();
             if (isStarted) {
-                serverConnectionService.stopServerEndpoint();
-                topModel.setServerStarted(false);
-                topModel.setSendButtonEnabled(false);
-                topModel.setServerStartStopButtonText(ServerConstants.START_SERVER);
-                setBlinking(false);
+//                ServiceModel.getInstance().setServerStatus(false);
+            	stopServerConnection();
             } else {
-                serverConnectionService.initServerEndpoint();
+            	serverConnectionService.setServerType(serverType);
+//                ServiceModel.getInstance().setServerStatus(true);
+        		serverConnectionService.initServerEndpoint();
+                consoleController.getConsoleModel().logMessage(ServerConstants.SERVER_STARTED);
                 topModel.setServerStarted(true);
                 topModel.setSendButtonEnabled(true);
                 topModel.setServerStartStopButtonText(ServerConstants.STOP_SERVER);
@@ -165,21 +190,23 @@ public class TopController extends TopAbstractController {
                 if (topModel.isAutoRepeatCheckBoxChecked()) {
                     if (topModel.getSendButtonText().equals(START)) {
                         topModel.setSendButtonText(STOP);
-                        ServerController.getInstance().getConsoleController().getConsoleModel().
-                                logMessage(ServerConstants.DATA_TO_CLIENT);
+                        consoleController.getConsoleModel().logMessage(ServerConstants.DATA_TO_CLIENT);
                     } else {
                         topModel.setSendButtonText(START);
-                        ServerController.getInstance().getConsoleController().getConsoleModel().
-                                logMessage(ServerConstants.DATA_STOPPED_SENDING);
+                        consoleController.getConsoleModel().logMessage(ServerConstants.DATA_STOPPED_SENDING);
                     }
                     topModel.setAutoRepeatEnabled(!topModel.isAutoRepeatEnabled());
+                    ServerCommonData.getInstance().setShouldRepeat(true);
                     topModel.setIntervalEditable(!topModel.isIntervalEditable());
                     topView.updateView(topModel);
-                }
+                } else
+                	ServerCommonData.getInstance().setShouldRepeat(false);
                 if (topModel.isShouldSendData()) {
                     topModel.setShouldSendData(false);
+                    ServerCommonData.getInstance().setShouldSendData(false);
                 } else {
                     topModel.setShouldSendData(true);
+                    ServerCommonData.getInstance().setShouldSendData(true);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, ServerConstants.INVALID_INTERVAL);
@@ -191,10 +218,10 @@ public class TopController extends TopAbstractController {
      * Method to set the server connection service interface
      *
      * @param serverConnectionService ServerConnectionServiceInterface object
-     */
+
     public void setServerConnectionService(ServerConnectionServiceInterface serverConnectionService) {
         this.serverConnectionService = serverConnectionService;
-    }
+    }*/
 
     /**
      * Method to set the server status indicator

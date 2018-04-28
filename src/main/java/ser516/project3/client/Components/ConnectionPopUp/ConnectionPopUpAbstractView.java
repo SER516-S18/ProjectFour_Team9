@@ -16,6 +16,12 @@ import ser516.project3.constants.ClientConstants;
 import ser516.project3.interfaces.ModelInterface;
 import ser516.project3.interfaces.ViewInterface;
 
+/**
+ * Abstract view class for connection pop up view to define the basic
+ * functions to be implemented by all implementing classes
+ *
+ * @author Adhiraj Tikku
+ */
 @SuppressWarnings("serial")
 public abstract class ConnectionPopUpAbstractView extends JDialog implements ViewInterface {
 	protected ConnectionPopUpModel connectionPopUpModel;
@@ -51,10 +57,19 @@ public abstract class ConnectionPopUpAbstractView extends JDialog implements Vie
         setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2 - getSize().height / 2);
 	}
 	
+	/**
+	 * Intentionally left empty
+	 */
 	@Override
 	public void updateView(ModelInterface model) {
 		
 	}
-	
+
+    /**
+     * Adds the listener to the respective component in the view class
+     *
+     * @param eventListener the listener for the respective component
+     * @param componentName component to which the listener has to be added
+     */
 	public abstract void addListener(EventListener eventListener, String componentName);
 }

@@ -9,8 +9,18 @@ import ser516.project3.interfaces.ModelInterface;
  */
 public class HeaderModel implements ModelInterface {
 
+	enum SelectedServer {
+		NO_SERVER_SELECTED,
+		EMOTIONS_SERVER,
+		HEALTH_SERVER
+	}
+	
     private boolean connectionStatus;
     private double timeStamp;
+    private boolean healthConnectionStatus;
+    private double healthTimeStamp;
+    private SelectedServer openDropdown;
+    private SelectedServer connectDropdown;
 
     /**
      * @return the connectionStatus
@@ -40,5 +50,62 @@ public class HeaderModel implements ModelInterface {
         this.timeStamp = timeStamp;
     }
 
+	/**
+	 * @return the healthConnectionStatus
+	 */
+	public boolean isHealthConnectionStatus() {
+		return healthConnectionStatus;
+	}
+
+	/**
+	 * @param healthConnectionStatus the healthConnectionStatus to set
+	 */
+	public void setHealthConnectionStatus(boolean healthConnectionStatus) {
+		this.healthConnectionStatus = healthConnectionStatus;
+	}
+
+	/**
+	 * @return the healthTimeStamp
+	 */
+	public double getHealthTimeStamp() {
+		return healthTimeStamp;
+	}
+
+	/**
+	 * @param healthTimeStamp the healthTimeStamp to set
+	 */
+	public void setHealthTimeStamp(double healthTimeStamp) {
+		this.healthTimeStamp = healthTimeStamp;
+	}
+
+	/**
+	 * @return the openDropdown
+	 */
+	public SelectedServer getOpenDropdown() {
+		return openDropdown;
+	}
+
+	/**
+	 * @param openDropdown the openDropdown to set
+	 */
+	public void setOpenDropdown(SelectedServer openDropdown) {
+		this.openDropdown = openDropdown;
+	}
+
+	/**
+	 * @return the connectDropdown
+	 */
+	public SelectedServer getConnectDropdown() {
+		return connectDropdown;
+	}
+
+	/**
+	 * @param connectDropdown the connectDropdown to set
+	 */
+	public void setConnectDropdown(SelectedServer connectDropdown) {
+		this.connectDropdown = connectDropdown;
+	}
+
+    
 
 }

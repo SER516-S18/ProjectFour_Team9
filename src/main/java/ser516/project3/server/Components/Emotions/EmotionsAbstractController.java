@@ -2,6 +2,13 @@ package ser516.project3.server.Components.Emotions;
 
 import ser516.project3.interfaces.ControllerInterface;
 
+/**
+ * EmotionsAbstractController to define the basic
+ * functionality for Emotions panel in server
+ *
+ * @author Adhiraj Tikku
+ */
+
 public abstract class EmotionsAbstractController implements ControllerInterface {
 
 	protected EmotionsModel emotionsModel;

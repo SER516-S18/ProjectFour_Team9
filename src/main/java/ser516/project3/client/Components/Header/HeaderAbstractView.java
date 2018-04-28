@@ -9,6 +9,13 @@ import javax.swing.JPanel;
 import ser516.project3.constants.ClientConstants;
 import ser516.project3.interfaces.ViewInterface;
 
+/**
+ * Abstract view class for Header view to define the basic
+ * functions to be implemented by all implementing classes
+ *
+ * @author Adhiraj Tikku
+ */
+
 public abstract class HeaderAbstractView extends JPanel implements ViewInterface {
 
 	protected HeaderModel headerModel;
@@ -22,6 +29,10 @@ public abstract class HeaderAbstractView extends JPanel implements ViewInterface
         this.headerModel = headerModel;
     }
 	
+    /**
+     * This method intializes the view and configures it
+     * @param subViews an array of ViewInterfaces
+     */
 	@Override
 	public void initializeView(ViewInterface[] subViews) {
 		setBorder(null);

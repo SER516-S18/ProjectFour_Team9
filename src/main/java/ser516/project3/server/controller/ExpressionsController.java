@@ -1,4 +1,4 @@
-package ser516.project3.server.Components.Expressions;
+package ser516.project3.server.controller;
 
 import static java.lang.Thread.sleep;
 
@@ -17,8 +17,10 @@ import javax.swing.event.ChangeListener;
 
 import ser516.project3.constants.ServerConstants;
 import ser516.project3.model.MessageModel;
-import ser516.project3.server.Components.ServerCommonData;
-import ser516.project3.server.controller.ServerController;
+import ser516.project3.server.Components.Expressions.ExpressionsAbstractController;
+import ser516.project3.server.Components.Expressions.ExpressionsModel;
+import ser516.project3.server.Components.Expressions.ExpressionsView;
+import ser516.project3.server.Components.Utility.ServerCommonData;
 
 /**
  * Class that helps communicate between ExpressionsView and ExpressionsModel.
@@ -28,6 +30,8 @@ import ser516.project3.server.controller.ServerController;
  * @author Adhiraj Tikku
  */
 public class ExpressionsController extends ExpressionsAbstractController {
+	
+	private TopController topController;
 
     /**
      * Constructor to set the emotions view and model object
@@ -35,12 +39,13 @@ public class ExpressionsController extends ExpressionsAbstractController {
      * @param expressionsModel ExpressionsModel object
      * @param expressionsView  ExpressionsView object
      */
-    public ExpressionsController(ExpressionsModel expressionsModel, ExpressionsView expressionsView) {
+    public ExpressionsController(ExpressionsModel expressionsModel, ExpressionsView expressionsView, TopController topController) {
         super(expressionsModel, expressionsView);
+        this.topController = topController;
     }
 
     /**
-     * Method to initialize the expressions view and to add listeners
+     * Override Method to initialize the expressions view and to add listeners
      * to all the components in the panel
      */
     @Override
@@ -146,7 +151,7 @@ public class ExpressionsController extends ExpressionsAbstractController {
             if (model.isPressed() != pressed) {
                 expressionsModel.setEyeValue(true);
                 try {
-                    sleep((long) ServerController.getInstance().getTopController().getTopModel().getInterval() * 1000);
+                    sleep((long) topController.getTopModel().getInterval() * 1000);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }

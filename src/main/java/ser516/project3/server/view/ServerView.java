@@ -27,7 +27,6 @@ import ser516.project3.server.Components.Top.TopView;
 
 /**
  * The JFrame class of Server application
- * 
  * @author Ganesh, Janani, Sangeetha
  */
 @SuppressWarnings("serial")
@@ -40,35 +39,29 @@ public class ServerView extends JFrame implements ViewInterface {
     private ExpressionsView expressionsView;
     private ConsoleView consoleView;
     private HealthView healthView;
+    
+    private String selectedServer;
 
     private static final Font FONT = new Font(ServerConstants.FONT_NAME, Font.BOLD, 17);
 
 	/**
-	 * Method to return the ServerView instance
-	 * 
-	 */
-	public static ServerView getServerView() {
-		if (serverViewInstance == null) {
-			serverViewInstance = new ServerView();
-		}
-		return serverViewInstance;
-	}
-
-	/**
-	 * Method to initialize the expressions view panel
-	 * 
-	 * @param subViews
-	 *            object of type ViewInterface
-	 * 
+	 * Override Method to initialize the expressions view panel
+	 * @param subViews object of type ViewInterface
 	 */
 	@Override
 	public void initializeView(ViewInterface[] subViews) {
 		topView = (TopView) subViews[0];
 		timerView = (TimerView) subViews[1];
-		emotionsView = (EmotionsView) subViews[2];
-		expressionsView = (ExpressionsView) subViews[3];
-		consoleView = (ConsoleView) subViews[4];
-		healthView = (HealthView) subViews[5];
+		consoleView = (ConsoleView) subViews[2];
+		switch(selectedServer) {
+		case "EMOTIONS_SERVER":
+			emotionsView = (EmotionsView) subViews[3];
+			expressionsView = (ExpressionsView) subViews[4];
+			break;
+		case "HEALTH_SERVER":
+			healthView = (HealthView) subViews[3];
+			break;
+		}
 
 		setLayout(new BorderLayout());
 		add(topView, BorderLayout.PAGE_START);
@@ -80,15 +73,28 @@ public class ServerView extends JFrame implements ViewInterface {
 		setVisible(true);
 	}
 	
+	/**
+	 * Override Method to update the view
+	 * Empty but mandatory as it is an override method
+	 * @param model object of type ModelInterface
+	 */
+	
 	@Override
 	public void updateView(ModelInterface model) {
 		// TODO Auto-generated method stub
 		
 	}
+	/**
+	 * Setter method to set the selected server
+	 * 
+	 * @param selectedServer the name of the server selected
+	 */
+	public void setSelectedServer(String selectedServer) {
+		this.selectedServer = selectedServer;
+	}
 
 	/**
 	 * This method will initialize the second sub panel of the Server window
-	 *
 	 * @return the second sub-panel
 	 */
 	private Component createConfigurationPanels() {
@@ -105,12 +111,15 @@ public class ServerView extends JFrame implements ViewInterface {
 		JSplitPane splitHealthPanel = new JSplitPane();
 
 		configPanel.setOpaque(false);
-
+		
 		configPanel.add(timerPanel);
-		configPanel.add(emotionsPanel);
-		configPanel.add(expressionPanel);
+		if(selectedServer.equals("EMOTIONS_SERVER")) {
+			configPanel.add(emotionsPanel);
+			configPanel.add(expressionPanel);
+		} else {
+			configPanel.add(healthPanel);
+		}
 		configPanel.add(consolePanel);
-		configPanel.add(healthPanel);
 
 		Border titledBorder = new TitledBorder(null, "Configuration", TitledBorder.LEADING, 
 				TitledBorder.TOP, FONT, null);
@@ -155,11 +164,8 @@ public class ServerView extends JFrame implements ViewInterface {
 	}
 
 	/**
-	 * Method to WindowListener to the Server window
-	 * 
-	 * @param windowAdapter
-	 *            WindowAdapter object
-	 * 
+	 * Method to add WindowListener to the Server window
+	 * @param windowAdapter WindowAdapter object
 	 */
 	public void addServerWindowListener(WindowAdapter windowAdapter) {
 		addWindowListener(windowAdapter);

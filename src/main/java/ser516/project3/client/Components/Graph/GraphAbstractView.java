@@ -10,6 +10,13 @@ import javax.swing.border.TitledBorder;
 import ser516.project3.constants.ClientConstants;
 import ser516.project3.interfaces.ViewInterface;
 
+/**
+ * Abstract view class for Graph view to define the basic
+ * functions to be implemented by all implementing classes
+ *
+ * @author Adhiraj Tikku
+ */
+
 public abstract class GraphAbstractView extends JPanel implements ViewInterface {
 
 	protected GraphModel graphModel;

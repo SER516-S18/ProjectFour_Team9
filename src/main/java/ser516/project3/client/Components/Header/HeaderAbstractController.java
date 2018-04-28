@@ -3,6 +3,12 @@ package ser516.project3.client.Components.Header;
 import ser516.project3.interfaces.CommonDataInterface;
 import ser516.project3.interfaces.ControllerInterface;
 
+/**
+ * HeaderAbstractController to define the basic
+ * functionality for client header classes
+ *
+ * @author Adhiraj Tikku
+ */
 public abstract class HeaderAbstractController implements ControllerInterface, CommonDataInterface {
 
 	protected HeaderAbstractView headerView;

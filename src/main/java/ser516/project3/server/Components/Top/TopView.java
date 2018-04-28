@@ -1,19 +1,27 @@
 package ser516.project3.server.Components.Top;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.util.EventListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.event.DocumentListener;
+
 import com.alee.laf.button.WebButton;
+
 import ser516.project3.constants.ClientConstants;
 import ser516.project3.constants.ServerConstants;
 import ser516.project3.interfaces.ModelInterface;
 import ser516.project3.interfaces.ViewInterface;
-import ser516.project3.server.Components.NumberTextField;
-
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.DocumentListener;
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.util.EventListener;
+import ser516.project3.server.Components.Utility.NumberTextField;
 
 /**
  * Class to create components in server settings panel in the server
@@ -29,11 +37,10 @@ public class TopView extends TopAbstractView {
     private WebButton serverStartStopButton;
     private WebButton sendButton;
 
-    private static StatusIndicator statusIndicator = new StatusIndicator();
+    private StatusIndicator statusIndicator = new StatusIndicator();
 
     private static final String INTERVAL_LABEL_NAME = "Interval (seconds):  ";
     private static final String AUTO_REPEAT_CHECKBOX_NAME = "Auto Repeat";
-    private static final Font FONT = new Font("Courier New", Font.BOLD, 17);
     private static final int FONT_SIZE = 15;
 
     /**
@@ -47,7 +54,7 @@ public class TopView extends TopAbstractView {
     }
 
     /**
-     * Method to initialize the server settings panel
+     * Override Method to initialize the server settings panel
      *
      * @param subViews object of type ViewInterface
      */
@@ -64,6 +71,10 @@ public class TopView extends TopAbstractView {
         createStatusIndicator(gridBagConstraints);
     }
     
+    /**
+     * Override Method to update the view
+     * @param subViews object of type ModelInterface
+     */
     @Override
 	public void updateView(ModelInterface model) {
     	topModel = (TopModel) model;
@@ -74,6 +85,12 @@ public class TopView extends TopAbstractView {
     	intervalInputTextField.setEditable(topModel.isIntervalEditable());
 	}
     
+    /**
+     * Adds the listener to the respective component in the view class
+     *
+     * @param eventListener the listener for the respective component
+     * @param componentName component to which the listener has to be added
+     */
     @Override
 	public void addListener(EventListener eventListener, String componentName) {
 		switch(componentName) {
@@ -93,7 +110,7 @@ public class TopView extends TopAbstractView {
 	}
 
     /**
-     * Method to set the state status indicator
+     * Override Method to set the state status indicator
      *
      * @param status status of the server
      */

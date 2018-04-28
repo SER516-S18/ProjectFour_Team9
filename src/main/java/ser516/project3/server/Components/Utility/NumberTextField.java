@@ -1,4 +1,4 @@
-package ser516.project3.client.Components;
+package ser516.project3.server.Components.Utility;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -35,6 +35,8 @@ public class NumberTextField extends JTextField {
 				|| keyEvent.getKeyChar() == VK_ENTER || keyEvent.getKeyCode() == VK_LEFT
 				|| keyEvent.getKeyCode() == VK_RIGHT)
 				|| (getText().length() < 4 && (Character.isDigit(keyEvent.getKeyChar())))) {
+			super.processKeyEvent(keyEvent);
+		} else if(getText().length() < 4 && keyEvent.getKeyChar() == VK_PERIOD) {
 			super.processKeyEvent(keyEvent);
 		}
 		keyEvent.consume();

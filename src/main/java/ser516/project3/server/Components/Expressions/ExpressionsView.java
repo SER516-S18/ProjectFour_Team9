@@ -46,7 +46,7 @@ public class ExpressionsView extends ExpressionsAbstractView {
     }
 
     /**
-     * Method to initialize the expressions view panel
+     * Override Method to initialize the expressions view panel
      *
      * @param subViews object of type ViewInterface
      */
@@ -65,6 +65,12 @@ public class ExpressionsView extends ExpressionsAbstractView {
         createEyeCheckBox(gridBagConstraints);
     }
     
+    /**
+     * Adds the listener to the respective component in the view class
+     *
+     * @param eventListener the listener for the respective component
+     * @param componentName component to which the listener has to be added
+     */
     @Override
 	public void addListener(EventListener eventListener, String componentName) {
 		switch(componentName) {
@@ -95,6 +101,9 @@ public class ExpressionsView extends ExpressionsAbstractView {
 		}
 	}
     
+    /**
+     * Override Method to change the status of Activate Button
+     */
     @Override
     public void changeActivateButtonType() {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();

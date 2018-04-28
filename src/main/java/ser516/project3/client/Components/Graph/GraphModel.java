@@ -27,6 +27,9 @@ public class GraphModel implements ModelInterface {
     private String[] legendNames;
     private int xStartPoint;
 
+    /**
+     * Constructor initializing the Graph Model
+     */
     public GraphModel() {
         XLength = 1;
         noOfChannels = 1;

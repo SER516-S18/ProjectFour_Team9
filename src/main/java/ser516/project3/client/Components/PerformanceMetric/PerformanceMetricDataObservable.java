@@ -15,6 +15,9 @@ public class PerformanceMetricDataObservable extends Observable {
     private static PerformanceMetricDataObservable instance;
     private ArrayList<ArrayList<CoordinatesModel>> performanceMetricData;
 
+    /**
+     * This constructor initializes the PerformanceMetricDataObservable instance
+     */
     private PerformanceMetricDataObservable() {
         performanceMetricData = new ArrayList<ArrayList<CoordinatesModel>>();
     }

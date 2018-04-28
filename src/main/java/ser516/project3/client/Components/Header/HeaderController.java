@@ -3,9 +3,16 @@ package ser516.project3.client.Components.Header;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.alee.laf.combobox.WebComboBox;
+
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpController;
-import ser516.project3.client.controller.ClientControllerFactory;
+import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpView;
+import ser516.project3.client.Components.Header.HeaderModel.SelectedServer;
+import ser516.project3.client.service.ClientConnectionServiceImpl;
+import ser516.project3.client.service.ClientConnectionServiceInterface;
+import ser516.project3.constants.ClientConstants;
 import ser516.project3.interfaces.ControllerInterface;
+import ser516.project3.server.controller.ServerController;
 
 /**
  * This class controls the UI for the header view on client which helps in
@@ -16,7 +23,10 @@ import ser516.project3.interfaces.ControllerInterface;
 
 public class HeaderController extends HeaderAbstractController {
 
-    private ControllerInterface connectionPopUpController;
+    private ConnectionPopUpController connectionPopUpController;
+    private ServerController serverController;
+    private ServerController healthServerController;
+    private ClientConnectionServiceInterface clientConnectionService;
     private boolean tabSelected;
 
     /**
@@ -24,11 +34,21 @@ public class HeaderController extends HeaderAbstractController {
      *
      * @param headerModel
      * @param headerView
+     * @param clientConnectionService 
+     * @param subControllers 
      */
     public HeaderController(HeaderModel headerModel, HeaderView headerView,
-                            ConnectionPopUpController connectionPopUpController) {
+                            ConnectionPopUpController connectionPopUpController, 
+                            ServerController serverController,
+                            ServerController healthServerController,
+                            ClientConnectionServiceImpl clientConnectionService) {
         super(headerModel, headerView);
         this.connectionPopUpController = connectionPopUpController;
+        this.serverController = serverController;
+        this.healthServerController = healthServerController;
+        this.connectionPopUpController.setConnectionData(clientConnectionService);
+        headerModel.setConnectDropdown(SelectedServer.NO_SERVER_SELECTED);
+        headerModel.setOpenDropdown(SelectedServer.NO_SERVER_SELECTED);
     }
 
     /**
@@ -37,8 +57,10 @@ public class HeaderController extends HeaderAbstractController {
     @Override
     public void initializeView() {
         headerView.initializeView(null);
-        headerView.addListener(new ConnectListener(), "BUTTON_CONNECT");
-        headerView.addListener(new ServerOpenListener(), "BUTTON_OPENSERVER");
+        headerView.addListener(new ConnectListener(), "BUTTON_CONNECT_EMOTION");
+        headerView.addListener(new ServerOpenListener(), "BUTTON_OPENSERVER_EMOTION");
+        headerView.addListener(new HealthConnectListener(), "BUTTON_CONNECT_HEALTH");
+        headerView.addListener(new HealthServerOpenListener(), "BUTTON_OPENSERVER_HEALTH");
     }
 
     /**
@@ -89,27 +111,103 @@ public class HeaderController extends HeaderAbstractController {
 
     /**
      * Class implemented to handle action listener
-     * of server open button
+     * of server open button for Emotion server
      */
     class ServerOpenListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            ClientControllerFactory.getInstance().getClientController().openServer();
+        	if(serverController.isServerOpen()) {
+            	serverController.showServer();
+            }
+            else
+            	serverController.initializeView();
         }
     }
 
     /**
      * Class implemented to handle action listener
-     * of Connect to server button
+     * of Connect to server button for Emotion Server
      */
     class ConnectListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (headerModel.isConnectionStatus()) {
-                ClientControllerFactory.getInstance().getClientController().toggleConnectionToServer(null, 0);
-            } else {
-                connectionPopUpController.initializeView();
-            }
+        	connectToEmotionServer();
         }
     }
+    
+    /**
+     * Class implemented to handle action listener
+     * of Connect to server button for health server
+     *
+     */
+    class HealthConnectListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        	connectToHealthServer();
+        }
+    }
+    
+    /**
+     * Class implemented to handle action listener
+     * of server open button for Health server
+     */
+    class HealthServerOpenListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        	if(healthServerController.isServerOpen()) {
+        		healthServerController.showServer();
+            }
+            else
+            	healthServerController.initializeView();
+        }
+    }
+    
+    /**
+     * Method to handle the connection to the health server
+     */
+    public void connectToHealthServer() {
+    	if (headerModel.isHealthConnectionStatus()) {
+			clientConnectionService.stopClientConnection();
+			headerModel.setHealthConnectionStatus(false);
+			headerView.updateView(headerModel);
+			connectionPopUpController.setConnectionStatus(false);
+		} else {
+			connectionPopUpController.setServerType("HEALTH");
+			connectionPopUpController.initializeView();
+			headerModel.setHealthConnectionStatus(connectionPopUpController.getConnectionStatus());
+		}
+    }
+    
+    /**
+     * Method to handle the connection to the emotion server
+     */
+    public void connectToEmotionServer() {
+    	if (headerModel.isConnectionStatus()) {
+			clientConnectionService.stopClientConnection();
+			headerModel.setConnectionStatus(false);
+			headerView.updateView(headerModel);
+			connectionPopUpController.setConnectionStatus(false);
+		} else {
+			connectionPopUpController.setServerType("EMOTIONS");
+			connectionPopUpController.initializeView();
+			headerModel.setConnectionStatus(connectionPopUpController.getConnectionStatus());
+		}
+    }
+    
+    /**
+	 * Method to connect to a server end point
+	 * @param ipAddress - the IP address field
+	 * @param port - the port field
+	 */
+	public void toggleConnectionToServer(String ipAddress, int port) {
+		if (headerModel.isConnectionStatus()) {
+			clientConnectionService.stopClientConnection();
+			headerModel.setConnectionStatus(false);
+			// TODO: Find a way to stop the client container
+		} else {
+			clientConnectionService = new ClientConnectionServiceImpl();
+			clientConnectionService.createClientConnection(ipAddress, port, ClientConstants.ENDPOINT);
+			headerModel.setConnectionStatus(true);
+		}
+	}
 }

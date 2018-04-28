@@ -1,4 +1,4 @@
-package ser516.project3.server.controller;
+package ser516.project3.server.view;
 
 import ser516.project3.interfaces.ModelInterface;
 import ser516.project3.interfaces.ViewInterface;
@@ -34,7 +34,7 @@ public class ServerViewFactory {
             return null;
         }
         if (viewType.equalsIgnoreCase("SERVER")) {
-            return ServerView.getServerView();
+            return new ServerView();
         } else if (viewType.equalsIgnoreCase("TOP")) {
             return new TopView((TopModel) model);
         } else if (viewType.equalsIgnoreCase("TIMER")) {

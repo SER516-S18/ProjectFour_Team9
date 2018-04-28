@@ -1,22 +1,27 @@
 package ser516.project3.server.Components.Health;
 
-import ser516.project3.constants.ServerConstants;
-import ser516.project3.interfaces.ModelInterface;
-import ser516.project3.interfaces.ViewInterface;
-import ser516.project3.server.Components.Console.ConsoleView;
-import ser516.project3.server.Components.Emotions.EmotionsAbstractView;
-import ser516.project3.server.Components.Emotions.EmotionsModel;
-import ser516.project3.server.Components.Timer.TimerView;
-import ser516.project3.server.Components.Top.TopView;
-
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeListener;
-import java.awt.*;
-import java.awt.event.WindowAdapter;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
 import java.util.EventListener;
 
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeListener;
+
+import ser516.project3.constants.ServerConstants;
+import ser516.project3.interfaces.ViewInterface;
+
+/**
+ * View to show the panel on the UI for health control data
+ * 
+ * @author abhinab, garv
+ *
+ */
 public class HealthView extends HealthAbstractView {
     //private JPanel mainPanel;
     private JSpinner jspinner[];

@@ -7,7 +7,7 @@ package ser516.project3.client.Components.Graph;
  * @version 1.0
  * @since 30 March,2018
  */
-public class CoordinatesModel {
+public class CoordinatesModel extends AbstractCoordinate{
 
     private double xCoordinate;
     private double yCoordinate;

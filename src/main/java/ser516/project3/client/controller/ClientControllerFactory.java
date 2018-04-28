@@ -1,5 +1,8 @@
 package ser516.project3.client.controller;
 
+import ser516.project3.client.Components.BodyVitals.BodyVitalsController;
+import ser516.project3.client.Components.BodyVitals.BodyVitalsModel;
+import ser516.project3.client.Components.BodyVitals.BodyVitalsView;
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpAbstractView;
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpController;
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpModel;
@@ -19,10 +22,13 @@ import ser516.project3.client.Components.Header.HeaderView;
 import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricController;
 import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricModel;
 import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricView;
+import ser516.project3.client.service.ClientConnectionServiceImpl;
+import ser516.project3.client.service.ClientConnectionServiceInterface;
 import ser516.project3.constants.ClientConstants;
 import ser516.project3.interfaces.ControllerInterface;
 import ser516.project3.interfaces.ModelInterface;
 import ser516.project3.interfaces.ViewInterface;
+import ser516.project3.server.controller.ServerController;
 
 /**
  * The ControllerFactory class is a factory class that handles creation of
@@ -35,6 +41,7 @@ public class ClientControllerFactory {
     private HeaderController headerController;
     private FaceController faceController;
     private GraphController performanceMetricGraphController;
+    private GraphController bodyVitalsGraphController;
     private GraphController expressionsGraphController;
 
     private static ClientControllerFactory instance;
@@ -62,7 +69,7 @@ public class ClientControllerFactory {
      * @return the controller object
      */
     public ControllerInterface getController(String controllerType, ModelInterface model, ViewInterface view,
-                                             ControllerInterface subControllers[]) {
+                                             ControllerInterface subControllers[], ClientConnectionServiceInterface service) {
         if (controllerType == null) {
             return null;
         }
@@ -71,13 +78,18 @@ public class ClientControllerFactory {
             return clientController;
         } else if (controllerType.equalsIgnoreCase(ClientConstants.HEADER)) {
             headerController = new HeaderController((HeaderModel) model, (HeaderView) view,
-                    (ConnectionPopUpController) subControllers[0]);
+                    (ConnectionPopUpController) subControllers[0], (ServerController)subControllers[1], 
+                    (ServerController)subControllers[2], (ClientConnectionServiceImpl)service);
             return headerController;
         } else if (controllerType.equalsIgnoreCase(ClientConstants.PERFORMANCE_METRICS)) {
             performanceMetricGraphController = (GraphController) subControllers[0];
             return new PerformanceMetricController((PerformanceMetricModel) model, (PerformanceMetricView) view,
                     performanceMetricGraphController);
-        } else if (controllerType.equalsIgnoreCase(ClientConstants.EXPRESSIONS)) {
+        } else if (controllerType.equalsIgnoreCase(ClientConstants.BODY_VITALS)) {
+            bodyVitalsGraphController = (GraphController) subControllers[0];
+            return new BodyVitalsController((BodyVitalsModel) model, (BodyVitalsView) view,
+                    bodyVitalsGraphController);
+        }else if (controllerType.equalsIgnoreCase(ClientConstants.EXPRESSIONS)) {
             expressionsGraphController = (GraphController) subControllers[0];
             return new ExpressionsController((ExpressionsModel) model, (ExpressionsView) view,
                     expressionsGraphController, (FaceController) subControllers[1]);
@@ -120,6 +132,14 @@ public class ClientControllerFactory {
     public GraphController getPerformanceMetricGraphController() {
         return performanceMetricGraphController;
     }
+    
+    /**
+     * @return returns the instance of the Graph body vitals controller
+     */
+    public GraphController getBodyVitalsGraphController() {
+        return bodyVitalsGraphController;
+    }
+
 
     /**
      * @return returns the instance of the Graph expressions Controller
