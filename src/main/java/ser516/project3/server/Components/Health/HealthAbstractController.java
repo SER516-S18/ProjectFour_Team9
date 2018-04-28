@@ -5,6 +5,11 @@ import ser516.project3.server.Components.Expressions.ExpressionsAbstractView;
 import ser516.project3.server.Components.Expressions.ExpressionsModel;
 import ser516.project3.server.Components.Expressions.ExpressionsView;
 
+/**
+ * This class creates Controller to handle health component on server
+ * @author garv, abhinab
+ *
+ */
 public abstract class HealthAbstractController implements ControllerInterface {
 
     protected HealthModel healthModel;
