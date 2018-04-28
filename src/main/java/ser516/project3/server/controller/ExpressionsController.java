@@ -17,10 +17,10 @@ import javax.swing.event.ChangeListener;
 
 import ser516.project3.constants.ServerConstants;
 import ser516.project3.model.MessageModel;
-import ser516.project3.server.Components.ServerCommonData;
 import ser516.project3.server.Components.Expressions.ExpressionsAbstractController;
 import ser516.project3.server.Components.Expressions.ExpressionsModel;
 import ser516.project3.server.Components.Expressions.ExpressionsView;
+import ser516.project3.server.Components.Utility.ServerCommonData;
 
 /**
  * Class that helps communicate between ExpressionsView and ExpressionsModel.

@@ -2,7 +2,7 @@ package ser516.project3.client.Components.ConnectionPopUp;
 
 import com.alee.laf.button.WebButton;
 
-import ser516.project3.client.Components.NumberTextField;
+import ser516.project3.client.Components.Utility.NumberTextField;
 import ser516.project3.constants.ClientConstants;
 import ser516.project3.interfaces.ViewInterface;
 

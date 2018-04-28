@@ -4,10 +4,10 @@ import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import ser516.project3.server.Components.ServerCommonData;
 import ser516.project3.server.Components.Health.HealthAbstractController;
 import ser516.project3.server.Components.Health.HealthModel;
 import ser516.project3.server.Components.Health.HealthView;
+import ser516.project3.server.Components.Utility.ServerCommonData;
 
 public class HealthController extends HealthAbstractController {
 

@@ -11,10 +11,10 @@ import javax.swing.text.BadLocationException;
 import org.apache.log4j.Logger;
 
 import ser516.project3.constants.ServerConstants;
-import ser516.project3.server.Components.ServerCommonData;
 import ser516.project3.server.Components.Top.TopAbstractController;
 import ser516.project3.server.Components.Top.TopModel;
 import ser516.project3.server.Components.Top.TopView;
+import ser516.project3.server.Components.Utility.ServerCommonData;
 import ser516.project3.server.service.ServerConnectionServiceImpl;
 import ser516.project3.server.service.ServerConnectionServiceInterface;
 

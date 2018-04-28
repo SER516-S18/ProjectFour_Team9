@@ -21,7 +21,7 @@ import ser516.project3.constants.ClientConstants;
 import ser516.project3.constants.ServerConstants;
 import ser516.project3.interfaces.ModelInterface;
 import ser516.project3.interfaces.ViewInterface;
-import ser516.project3.server.Components.NumberTextField;
+import ser516.project3.server.Components.Utility.NumberTextField;
 
 /**
  * Class to create components in server settings panel in the server
