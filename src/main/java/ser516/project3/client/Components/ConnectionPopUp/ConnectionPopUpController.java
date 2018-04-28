@@ -133,7 +133,9 @@ public class ConnectionPopUpController extends ConnectionPopUpAbstractController
                 System.out.println(ex);
             }
         }
-
+        /**
+         * Intentionally left empty
+         */
         @Override
         public void changedUpdate(DocumentEvent e) {
         }
