@@ -7,6 +7,13 @@ import ser516.project3.server.controller.ServerController;
 import ser516.project3.server.helper.ServerContainerThread;
 import ser516.project3.server.service.HealthServerConnectionServiceInterface;
 
+
+/**
+ * Class to implement the connection service for health server
+ * 
+ * @author abhinab, garv
+ *
+ */
 public class HealthServerConnectionServiceImpl
 		implements HealthServerConnectionServiceInterface {
 
