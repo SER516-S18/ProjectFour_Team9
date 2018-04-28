@@ -45,14 +45,26 @@ public class ConnectionPopUpController extends ConnectionPopUpAbstractController
         connectionPopUpView.addListener(new PortDocumentListener(), "TEXTFIELD_PORT");
     }
     
+    /**
+     * Sets service for connection
+     * @param clientConnectionService an instance of ClientConnectionServiceInterface
+     */
     public void setConnectionData(ClientConnectionServiceInterface clientConnectionService) {
     	this.clientConnectionService = clientConnectionService;
     }
     
+    /**
+     * sets the connection status on client
+     * @param status boolean value
+     */
     public void setConnectionStatus(boolean status) {
     	connectionPopUpModel.setConnectionStatus(status);
     }
     
+    /**
+     * gets connection status 
+     * @return boolean indicating status of connection
+     */
     public boolean getConnectionStatus() {
     	return connectionPopUpModel.isConnectionStatus();
     }
