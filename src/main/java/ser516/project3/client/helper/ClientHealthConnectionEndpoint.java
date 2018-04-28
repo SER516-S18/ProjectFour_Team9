@@ -14,9 +14,10 @@ import javax.websocket.Session;
 
 import org.apache.log4j.Logger;
 
-import ser516.project3.client.Components.BodyVitals.BodyVitalsModel;
+import ser516.project3.client.Components.BodyVitals.BodyVitalsDataObservable;
 import ser516.project3.client.controller.ClientControllerFactory;
 import ser516.project3.constants.ClientConstants;
+import ser516.project3.model.BodyMessageModel;
 import ser516.project3.server.Components.Utility.ServerCommonData;
 
 /**
@@ -35,17 +36,16 @@ public class ClientHealthConnectionEndpoint {
     public void onOpen(Session session) {
         logger.info("Connected to endpoint: " + session.getBasicRemote());
         try {
-            session.getBasicRemote().sendText(ServerCommonData.getInstance().getMessage().toString());
+            session.getBasicRemote().sendText(ServerCommonData.getInstance().getBodyMessage().toString());
         } catch (IOException ex) {
             logger.error("Exception in onOpen method::::" + ex.getMessage());
         }
     }
 
     @OnMessage
-    public void processMessage(BodyVitalsModel bodyVitalsModel, Session session) {
-        logger.info("Received data:::: " + bodyVitalsModel);
-        //TODO: create method for this
-//        BodyVitalsDataObservable.getInstance().addToListValues(MessageFormatConverter.convertMessageToPeformanceMetrics(bodyVitalsModel));
+    public void processMessage(BodyMessageModel bodyMessageModel, Session session) {
+        logger.info("Received data:::: " + bodyMessageModel);
+        //BodyVitalsDataObservable.getInstance().addToListValues(MessageFormatConverter.convertMessageToPeformanceMetrics(bodyMessageModel));
     }
 
     @OnError
