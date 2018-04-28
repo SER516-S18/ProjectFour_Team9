@@ -18,7 +18,9 @@ import java.io.InputStreamReader;
 public class ServerContainerThread implements Runnable {
 	final static Logger logger = Logger.getLogger(ServerContainerThread.class);
 	private static final int PORT = 1516;
+	private static final int HEALTH_PORT = 1517;
 	private Server server;
+	private Server healthServer;
 	private String serverType;
 
 	public ServerContainerThread(String serverType) {
@@ -28,7 +30,7 @@ public class ServerContainerThread implements Runnable {
 	@Override
 	public void run() {
 		if (serverType.equalsIgnoreCase(ServerConstants.HEALTH_SERVER)) {
-			server = new Server(ServerConstants.LOCALHOST, PORT, "", null,
+			healthServer = new Server(ServerConstants.LOCALHOST, HEALTH_PORT, "", null,
 					HealthServerConnectionEndpoint.class);
 		} else if(serverType.equalsIgnoreCase(ServerConstants.MAIN_SERVER)){
 			server = new Server(ServerConstants.LOCALHOST, PORT, "", null,
@@ -47,6 +49,21 @@ public class ServerContainerThread implements Runnable {
 			server.stop();
 			ServiceHelperModel.getInstance().setServerStartedStatus(false);
 		}
+	}
+	
+
+	/**
+	 * @return the healthServer
+	 */
+	public Server getHealthServer() {
+		return healthServer;
+	}
+
+	/**
+	 * @param healthServer the healthServer to set
+	 */
+	public void setHealthServer(Server healthServer) {
+		this.healthServer = healthServer;
 	}
 
 	/**

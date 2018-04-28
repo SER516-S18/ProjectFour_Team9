@@ -131,7 +131,21 @@ public class HeaderView extends HeaderAbstractView {
      *                           on panel
      */
     private void createLabels(GridBagConstraints gridbagConstraints) {
-        connectionEmotionTextLabel = new JLabel(EMOTION_SERVER_LABEL);
+        
+    	createEmotionConnectionStatusView(gridbagConstraints);
+        createHealthConnectionStatusView(gridbagConstraints);
+        createDropdowns(gridbagConstraints);
+    }
+    
+
+    /**
+     * Method to create the view for the emotion server Connection Status
+     * 
+     * @param gridbagConstraints sets the position of the elements
+     */
+    private void createEmotionConnectionStatusView(GridBagConstraints gridbagConstraints) {
+    	
+    	connectionEmotionTextLabel = new JLabel(EMOTION_SERVER_LABEL);
         connectionEmotionTextLabel.setHorizontalAlignment(JLabel.RIGHT);
         connectionEmotionTextLabel.setVerticalTextPosition(JLabel.CENTER);
         connectionEmotionTextLabel.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
@@ -177,8 +191,17 @@ public class HeaderView extends HeaderAbstractView {
         gridbagConstraints.gridy = 2;
         gridbagConstraints.insets = new Insets(0, 0, 10, 80);
         add(timestampEmotionValueLabel, gridbagConstraints);
-
-        connectionHealthTextLabel = new JLabel(HEALTH_SERVER_LABEL);
+    	
+    }
+    
+    /**
+     * Method to create the view for the health Connection Status
+     * 
+     * @param gridbagConstraints sets the position of the elements
+     */
+    private void createHealthConnectionStatusView(GridBagConstraints gridbagConstraints) {
+    	
+    	connectionHealthTextLabel = new JLabel(HEALTH_SERVER_LABEL);
         connectionHealthTextLabel.setHorizontalAlignment(JLabel.RIGHT);
         connectionHealthTextLabel.setVerticalTextPosition(JLabel.CENTER);
         connectionHealthTextLabel.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
@@ -281,4 +304,27 @@ public class HeaderView extends HeaderAbstractView {
         	serverOpenButtonHealth = serverButton;
         }
     }
+    
+    /**
+     * Method to create the two dropdown menu for the open server and connect buttons 
+     * @param gridbagConstraints sets the position of the dropdowns
+     */
+    private void createDropdowns(GridBagConstraints gridbagConstraints) {
+    	// Creating Drop down
+        connectServerChoice = new WebComboBox(ServerChoice);
+        connectServerChoice.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
+        gridbagConstraints.gridx = 4;
+        gridbagConstraints.gridy = 1;
+        gridbagConstraints.insets = new Insets(0, 0, 10, 10);
+        add(connectServerChoice, gridbagConstraints);
+
+        openServerChoice = new WebComboBox(ServerChoice);
+        openServerChoice.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
+        gridbagConstraints.gridx = 4;
+        gridbagConstraints.gridy = 2;
+        gridbagConstraints.insets = new Insets(0, 0, 10, 10);
+        add(openServerChoice, gridbagConstraints);
+    }
+    
+    
 }

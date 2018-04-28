@@ -7,8 +7,13 @@ public class ServiceHelperModel extends java.util.Observable {
     private double timeElapsed; 
     private boolean serverStartedStatus;
     private boolean isServerError;
+    private String logMessage;
     private static ServiceHelperModel serviceModel;
 
+    public ServiceHelperModel() {
+    	logMessage = "";
+    }
+    
     public static ServiceHelperModel getInstance(){
         if (serviceModel == null) {
             serviceModel = new ServiceHelperModel();
@@ -75,6 +80,20 @@ public class ServiceHelperModel extends java.util.Observable {
 	public void setServerError(boolean isServerError) {
 		this.isServerError = isServerError;
 		this.notifyAllObservers();
+	}
+
+	/**
+	 * @return the logMessage
+	 */
+	public String getLogMessage() {
+		return logMessage;
+	}
+
+	/**
+	 * @param logMessage the logMessage to set
+	 */
+	public void setLogMessage(String logMessage) {
+		this.logMessage = logMessage;
 	}
 
 	public void notifyAllObservers() {
