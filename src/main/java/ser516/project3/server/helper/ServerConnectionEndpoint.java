@@ -37,7 +37,9 @@ public class ServerConnectionEndpoint {
         try {
             logger.info(ServerConstants.CLIENT_CONNECTED + session.getBasicRemote());
             ServiceHelperModel.getInstance().setServerStatus(true);
+            ServiceHelperModel.getInstance().setLogMessage(ServerConstants.CLIENT_CONNECTED);
             ServerCommonData serverCommonDataObject = ServerCommonData.getInstance();
+
             while (true) {
                 boolean isShouldSend =serverCommonDataObject.isShouldSendData();
                 boolean isAutoRepeat = serverCommonDataObject.isShouldRepeat();
@@ -59,6 +61,7 @@ public class ServerConnectionEndpoint {
         } catch (IOException | EncodeException | InterruptedException e) {
             logger.error(ServerConstants.ERROR_CLIENT_CONNECTION + e.getMessage());
             ServiceHelperModel.getInstance().setServerStatus(false);
+            ServiceHelperModel.getInstance().setLogMessage(ServerConstants.ERROR_CLIENT_CONNECTION);
         }
     }
 

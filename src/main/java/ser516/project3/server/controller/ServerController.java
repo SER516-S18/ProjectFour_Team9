@@ -234,11 +234,10 @@ public class ServerController implements ControllerInterface, Observer {
     public void update(Observable o, Object arg) {
     	// TODO Auto-generated method stub
     	ServiceHelperModel helperModel = (ServiceHelperModel)o;
-    	if (helperModel.isServerStatus()) {
-    		consoleController.getConsoleModel().logMessage(ServerConstants.CLIENT_CONNECTED);
-		} else {
-			consoleController.getConsoleModel().logMessage(ServerConstants.ERROR_CLIENT_CONNECTION);
-		}
+    	if (helperModel.getLogMessage().length() > 0) {
+    		consoleController.getConsoleModel().logMessage(helperModel.getLogMessage());
+    		helperModel.setLogMessage("");
+    	}
     	timerController.updateTimeStamp(helperModel.getTimeElapsed());
 		if (helperModel.isServerError()) {
 			consoleController.getConsoleModel().logMessage(ServerConstants.ERROR_SERVER_START);
