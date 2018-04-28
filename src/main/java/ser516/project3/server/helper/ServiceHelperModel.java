@@ -1,5 +1,11 @@
 package ser516.project3.server.helper;
 
+/**
+ * Service model for notifying the controllers and views 
+ * about changes from the service 
+ * 
+ * @author vishakhasingal
+ */
 public class ServiceHelperModel extends java.util.Observable {
 
     private boolean serverStatus;
@@ -10,10 +16,18 @@ public class ServiceHelperModel extends java.util.Observable {
     private String logMessage;
     private static ServiceHelperModel serviceModel;
 
+    /**
+     * Constructor to initialize with default values
+     */
     public ServiceHelperModel() {
     	logMessage = "";
     }
     
+    /**
+     * Static method to create singleton instance
+     * 
+     * @return returns singleton instance of ServiceHelperModel
+     */
     public static ServiceHelperModel getInstance(){
         if (serviceModel == null) {
             serviceModel = new ServiceHelperModel();
@@ -21,11 +35,21 @@ public class ServiceHelperModel extends java.util.Observable {
         return serviceModel;
     }
 
+    /**
+     * sets the variable server status
+     * 
+     * @param serverStatus the status of the server
+     */
     public void setServerStatus(boolean serverStatus) {
         this.serverStatus = serverStatus;
         notifyAllObservers();
     }
 
+    /**
+     * get the status of the server
+     * 
+     * @return boolean value of the server status
+     */
     public boolean isServerStatus() {
         return serverStatus;
     }
