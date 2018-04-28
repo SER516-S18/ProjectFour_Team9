@@ -38,6 +38,11 @@ public class ClientConnectionEndpoint {
         }
     }
 
+    /**
+     * This method receives data on client side sent by server 
+     * @param messageModelBean
+     * @param session
+     */
     @OnMessage
     public void processMessage(MessageModel messageModelBean, Session session) {
         logger.info("Received data:::: " + messageModelBean);
@@ -48,6 +53,10 @@ public class ClientConnectionEndpoint {
         HeaderObservable.getInstance().setHeaderData(messageModelBean.getTimeStamp(), messageModelBean.getInterval());
     }
 
+    /**
+     * This method records error on console log
+     * @param t
+     */
     @OnError
     public void processError(Throwable t) {
 
