@@ -14,6 +14,11 @@ public abstract class ExpressionsAbstractController implements ControllerInterfa
 	protected ExpressionsModel expressionsModel;
 	protected ExpressionsView expressionsView;
 	
+	/**
+	 * The constructor intializes model and view of Expressions
+	 * @param expressionsModel
+	 * @param expressionsView
+	 */
 	public ExpressionsAbstractController(ExpressionsModel expressionsModel, ExpressionsView expressionsView) {
 		this.expressionsModel = expressionsModel;
 	    this.expressionsView = expressionsView;
