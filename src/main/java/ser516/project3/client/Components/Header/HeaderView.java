@@ -31,10 +31,10 @@ public class HeaderView extends HeaderAbstractView {
     private JLabel connectionHealthStatusValueLabel;
     private JLabel timestampEmotionValueLabel;
     private JLabel timestampHealthValueLabel;
-    private WebButton connectButton;
-    private WebButton serverOpenButton;
-    private WebComboBox connectServerChoice;
-    private WebComboBox openServerChoice;
+    private WebButton connectButtonEmotion;
+    private WebButton serverOpenButtonEmotion;
+    private WebButton connectButtonHealth;
+    private WebButton serverOpenButtonHealth;
 
     private final static int FONT_SIZE = 15;
     private final static String EMOTION_SERVER_LABEL = "Emotion Server";
@@ -64,8 +64,10 @@ public class HeaderView extends HeaderAbstractView {
         bagConstraints.fill = GridBagConstraints.HORIZONTAL;
 
         createLabels(bagConstraints);
-        createConnectButton(bagConstraints);
-        createServerOpenButton(bagConstraints);
+        createConnectButton(bagConstraints, "EMOTIONS", 4, 1, connectButtonEmotion);
+        createConnectButton(bagConstraints, "HEALTH", 4, 2, serverOpenButtonEmotion);
+        createServerOpenButton(bagConstraints, "EMOTIONS", 5, 1, connectButtonHealth);
+        createServerOpenButton(bagConstraints, "HEALTH", 5, 2, serverOpenButtonHealth);
     }
     
     @Override
@@ -78,17 +80,17 @@ public class HeaderView extends HeaderAbstractView {
 	@Override
 	public void addListener(EventListener eventListener, String componentName) {
 		switch(componentName) {
-			case "BUTTON_CONNECT":
-				connectButton.addActionListener((ActionListener)eventListener);
+			case "BUTTON_CONNECT_EMOTION":
+				connectButtonEmotion.addActionListener((ActionListener)eventListener);
 				break;
-			case "BUTTON_OPENSERVER":
-				serverOpenButton.addActionListener((ActionListener)eventListener);
+			case "BUTTON_OPENSERVER_EMOTION":
+				serverOpenButtonEmotion.addActionListener((ActionListener)eventListener);
 				break;
-			case "OPEN_DROPDOWN":
-				openServerChoice.addActionListener((ActionListener)eventListener);
+			case "BUTTON_CONNECT_HEALTH":
+				connectButtonHealth.addActionListener((ActionListener)eventListener);
 				break;
-			case "CONNECT_DROPDOWN":
-				connectServerChoice.addActionListener((ActionListener)eventListener);
+			case "BUTTON_OPENSERVER_HEALTH":
+				serverOpenButtonHealth.addActionListener((ActionListener)eventListener);
 				break;
 		}
 	}
@@ -97,22 +99,18 @@ public class HeaderView extends HeaderAbstractView {
      * This method updates the connection status on panel.
      */
     private void updateConnectionData() {
-        // May need to update this
         if (headerModel.isConnectionStatus()) {
-            connectButton.setText(ClientConstants.DISCONNECT);
+        	connectButtonEmotion.setText(ClientConstants.DISCONNECT);
             connectionEmotionStatusValueLabel.setText(ClientConstants.CONNECTED);
-            /*switch(openServerChoice.getSelectedIndex()){
-                case 1:
-                    connectionEmotionStatusValueLabel.setText(ClientConstants.CONNECTED);
-                    break;
-                case 2:
-                    connectionHealthStatusValueLabel.setText(ClientConstants.CONNECTED);
-            }*/
-
-
         } else {
-            connectButton.setText(ClientConstants.CONNECT);
+        	connectButtonEmotion.setText(ClientConstants.CONNECT);
             connectionEmotionStatusValueLabel.setText(ClientConstants.DISCONNECTED);
+        }
+        if (headerModel.isHealthConnectionStatus()) {
+        	connectButtonHealth.setText(ClientConstants.DISCONNECT);
+        	connectionHealthStatusValueLabel.setText(ClientConstants.CONNECTED);
+        } else {
+        	connectButtonHealth.setText(ClientConstants.CONNECT);
             connectionHealthStatusValueLabel.setText(ClientConstants.DISCONNECTED);
         }
     }
@@ -122,15 +120,6 @@ public class HeaderView extends HeaderAbstractView {
      */
     private void updateTimeStamp() {
        timestampEmotionValueLabel.setText(String.valueOf(headerModel.getTimeStamp()));
-/*       switch(openServerChoice.getSelectedIndex()){
-            case 1:
-                timestampEmotionValueLabel.setText(String.valueOf(headerModel.getTimeStamp()));
-                break;
-            case 2:
-                timestampHealthValueLabel.setText(String.valueOf(headerModel.getTimeStamp()));
-        }
-*/
-
     }
 
     /**
@@ -235,22 +224,6 @@ public class HeaderView extends HeaderAbstractView {
         gridbagConstraints.gridy = 2;
         gridbagConstraints.insets = new Insets(0, 0, 10, 140);
         add(timestampHealthValueLabel, gridbagConstraints);
-
-        // Creating Drop down
-        connectServerChoice = new WebComboBox(ServerChoice);
-        connectServerChoice.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
-        gridbagConstraints.gridx = 4;
-        gridbagConstraints.gridy = 1;
-        gridbagConstraints.insets = new Insets(0, 0, 10, 10);
-        add(connectServerChoice, gridbagConstraints);
-
-        openServerChoice = new WebComboBox(ServerChoice);
-        openServerChoice.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
-        gridbagConstraints.gridx = 4;
-        gridbagConstraints.gridy = 2;
-        gridbagConstraints.insets = new Insets(0, 0, 10, 10);
-        add(openServerChoice, gridbagConstraints);
-
     }
 
     /**
@@ -258,22 +231,27 @@ public class HeaderView extends HeaderAbstractView {
      *
      * @param bagConstraints to set the position of button on panel.
      */
-    private void createConnectButton(GridBagConstraints bagConstraints) {
-        connectButton = new WebButton(ClientConstants.CONNECT);
-        connectButton.setPreferredSize(new Dimension(120, 35));
-        connectButton.setBackground(Color.decode(ClientConstants.PANEL_COLOR_HEX));
-        connectButton.setBottomBgColor(Color.BLACK);
-        connectButton.setTopBgColor(Color.BLACK);
-        connectButton.setBottomSelectedBgColor(Color.WHITE);
-        connectButton.setTopSelectedBgColor(Color.WHITE);
-        connectButton.setForeground(Color.WHITE);
-        connectButton.setDrawShade(false);
-        connectButton.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
-        bagConstraints.gridx = 5;
-        bagConstraints.gridy = 1;
+    private void createConnectButton(GridBagConstraints bagConstraints, String connectionType, int gridX, int gridY, WebButton connectionButton) {
+        connectionButton = new WebButton(ClientConstants.CONNECT + connectionType);
+        connectionButton.setPreferredSize(new Dimension(140, 50));
+        connectionButton.setBackground(Color.decode(ClientConstants.PANEL_COLOR_HEX));
+        connectionButton.setBottomBgColor(Color.BLACK);
+        connectionButton.setTopBgColor(Color.BLACK);
+        connectionButton.setBottomSelectedBgColor(Color.WHITE);
+        connectionButton.setTopSelectedBgColor(Color.WHITE);
+        connectionButton.setForeground(Color.WHITE);
+        connectionButton.setDrawShade(false);
+        connectionButton.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
+        bagConstraints.gridx = gridX;
+        bagConstraints.gridy = gridY;
         bagConstraints.gridheight = 3;
         bagConstraints.insets = new Insets(0, 20, 70, 10);
-        add(connectButton, bagConstraints);
+        add(connectionButton, bagConstraints);
+        if(connectionType.equals("EMOTIONS")) {
+        	connectButtonEmotion = connectionButton;
+        } else {
+        	connectButtonHealth = connectionButton;
+        }
     }
 
     /**
@@ -281,22 +259,26 @@ public class HeaderView extends HeaderAbstractView {
      *
      * @param bagConstraints to set position of button on panel.
      */
-    private void createServerOpenButton(GridBagConstraints bagConstraints) {
-        serverOpenButton = new WebButton(ClientConstants.OPEN_SERVER);
-        serverOpenButton.setPreferredSize(new Dimension(120, 35));
-        serverOpenButton.setBackground(Color.decode(ClientConstants.PANEL_COLOR_HEX));
-        serverOpenButton.setBottomBgColor(Color.BLACK);
-        serverOpenButton.setTopBgColor(Color.BLACK);
-        serverOpenButton.setBottomSelectedBgColor(Color.WHITE);
-        serverOpenButton.setTopSelectedBgColor(Color.WHITE);
-        serverOpenButton.setForeground(Color.WHITE);
-        serverOpenButton.setDrawShade(false);
-        serverOpenButton.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
-        bagConstraints.gridx = 5;
-        bagConstraints.gridy = 2;
+    private void createServerOpenButton(GridBagConstraints bagConstraints, String connectionType, int gridX, int gridY, WebButton serverButton) {
+    	serverButton = new WebButton(ClientConstants.OPEN_SERVER + connectionType);
+    	serverButton.setPreferredSize(new Dimension(140, 50));
+    	serverButton.setBackground(Color.decode(ClientConstants.PANEL_COLOR_HEX));
+    	serverButton.setBottomBgColor(Color.BLACK);
+    	serverButton.setTopBgColor(Color.BLACK);
+    	serverButton.setBottomSelectedBgColor(Color.WHITE);
+    	serverButton.setTopSelectedBgColor(Color.WHITE);
+    	serverButton.setForeground(Color.WHITE);
+    	serverButton.setDrawShade(false);
+    	serverButton.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
+        bagConstraints.gridx = gridX;
+        bagConstraints.gridy = gridY;
         bagConstraints.gridheight = 3;
         bagConstraints.insets = new Insets(0, 20, 40, 20);
-        add(serverOpenButton, bagConstraints);
-
+        add(serverButton, bagConstraints);
+        if(connectionType.equals("EMOTIONS")) {
+        	serverOpenButtonEmotion = serverButton;
+        } else {
+        	serverOpenButtonHealth = serverButton;
+        }
     }
 }

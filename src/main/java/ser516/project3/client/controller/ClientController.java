@@ -234,7 +234,7 @@ public class ClientController implements ControllerInterface, CommonDataInterfac
 	class ServerMenuItemListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			headerController.openServer();
+			headerController.connectToHealthServer();
 		}
 	}
 	/**

@@ -149,7 +149,7 @@ public class HeaderController extends HeaderAbstractController {
     class ConnectListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-        	openServer();
+        	connectToHealthServer();
         }
     }
     
@@ -179,6 +179,7 @@ public class HeaderController extends HeaderAbstractController {
 			default:
 				break;
 			}
+    		headerView.updateView(headerModel);
     	}
     }
     
@@ -212,7 +213,20 @@ public class HeaderController extends HeaderAbstractController {
     	
     }
     
-    public void openServer() {
+    public void connectToHealthServer() {
+    	if (headerModel.isHealthConnectionStatus()) {
+			clientConnectionService.stopClientConnection();
+			headerModel.setHealthConnectionStatus(false);
+			headerView.updateView(headerModel);
+			connectionPopUpController.setConnectionStatus(false);
+		} else {
+			connectionPopUpController.initializeView();
+			//clientConnectionService.createClientConnection(null, 0, ClientConstants.ENDPOINT);
+			headerModel.setHealthConnectionStatus(connectionPopUpController.getConnectionStatus());
+		}
+    }
+    
+    public void connectToEmotionServer() {
     	if (headerModel.isConnectionStatus()) {
 			clientConnectionService.stopClientConnection();
 			headerModel.setConnectionStatus(false);
