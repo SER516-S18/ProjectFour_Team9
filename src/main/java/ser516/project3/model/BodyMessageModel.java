@@ -92,7 +92,7 @@ public class BodyMessageModel {
 	     * Enum to standardize the kind of body vitals
 	     */
 	    public enum BodyVitals {
-	    		pulse,heartRate,bodyTemperature,bloodSugar,bmi
+	    		pulse,heartrate,bodytemperature,bloodsugar,bmi
 	    }
 
 }

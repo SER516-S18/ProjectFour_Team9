@@ -172,7 +172,7 @@ public class HeaderController extends HeaderAbstractController {
 			headerView.updateView(headerModel);
 			connectionPopUpController.setConnectionStatus(false);
 		} else {
-			connectionPopUpController.setServerType("EMOTIONS");
+			connectionPopUpController.setServerType("HEALTH");
 			connectionPopUpController.initializeView();
 			headerModel.setHealthConnectionStatus(connectionPopUpController.getConnectionStatus());
 		}
@@ -188,6 +188,7 @@ public class HeaderController extends HeaderAbstractController {
 			headerView.updateView(headerModel);
 			connectionPopUpController.setConnectionStatus(false);
 		} else {
+			connectionPopUpController.setServerType("EMOTIONS");
 			connectionPopUpController.initializeView();
 			headerModel.setConnectionStatus(connectionPopUpController.getConnectionStatus());
 		}

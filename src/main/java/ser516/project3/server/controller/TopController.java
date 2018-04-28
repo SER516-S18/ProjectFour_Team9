@@ -28,8 +28,9 @@ import ser516.project3.server.service.ServerConnectionServiceInterface;
 public class TopController extends TopAbstractController {
     final static Logger logger = Logger.getLogger(TopController.class);
 
-    private ServerConnectionServiceInterface serverConnectionService;
+    private ServerConnectionServiceImpl serverConnectionService;
     private ConsoleController consoleController;
+    private String serverType;
 
     private static final String START = "Start";
     private static final String STOP = "Stop";
@@ -59,6 +60,10 @@ public class TopController extends TopAbstractController {
         topView.addListener(new ServerStartStopButtonListener(), "BUTTON_SERVER");
         topView.addListener(new SendButtonListener(), "BUTTON_SEND");
         ServerCommonData.getInstance().getMessage().setInterval(topModel.getInterval());
+    }
+    
+    public void setServerType(String serverType) {
+    	this.serverType = serverType;
     }
 
     public void stopServerConnection() {
@@ -160,8 +165,9 @@ public class TopController extends TopAbstractController {
 //                ServiceModel.getInstance().setServerStatus(false);
             	stopServerConnection();
             } else {
+            	serverConnectionService.setServerType(serverType);
 //                ServiceModel.getInstance().setServerStatus(true);
-                serverConnectionService.initServerEndpoint();
+        		serverConnectionService.initServerEndpoint();
                 consoleController.getConsoleModel().logMessage(ServerConstants.SERVER_STARTED);
                 topModel.setServerStarted(true);
                 topModel.setSendButtonEnabled(true);
