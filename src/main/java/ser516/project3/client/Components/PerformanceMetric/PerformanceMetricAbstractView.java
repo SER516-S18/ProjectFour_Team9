@@ -27,6 +27,9 @@ public abstract class PerformanceMetricAbstractView extends JPanel implements Vi
         this.performanceMetricModel = performanceMetricModel;
     }
 	
+    /**
+     * This method configures the view
+     */
 	@Override
 	public void initializeView(ViewInterface[] subViews) {
 		setLayout(new GridBagLayout());
