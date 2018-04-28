@@ -64,10 +64,10 @@ public class HeaderView extends HeaderAbstractView {
         bagConstraints.fill = GridBagConstraints.HORIZONTAL;
 
         createLabels(bagConstraints);
-        createConnectButton(bagConstraints, "EMOTIONS", 4, 1, connectButtonEmotion);
-        createConnectButton(bagConstraints, "HEALTH", 4, 2, serverOpenButtonEmotion);
-        createServerOpenButton(bagConstraints, "EMOTIONS", 5, 1, connectButtonHealth);
-        createServerOpenButton(bagConstraints, "HEALTH", 5, 2, serverOpenButtonHealth);
+        createConnectButton(bagConstraints, "EMOTIONS", 4, 1, connectButtonEmotion,0,20,70,0);
+        createConnectButton(bagConstraints, "HEALTH", 5, 1, serverOpenButtonEmotion,0,20,70,0);
+        createServerOpenButton(bagConstraints, "EMOTIONS", 4, 2, connectButtonHealth,0,20,70,0);
+        createServerOpenButton(bagConstraints, "HEALTH", 5, 2, serverOpenButtonHealth,0,20,70,0);
     }
     
     @Override
@@ -253,7 +253,8 @@ public class HeaderView extends HeaderAbstractView {
      *
      * @param bagConstraints to set the position of button on panel.
      */
-    private void createConnectButton(GridBagConstraints bagConstraints, String connectionType, int gridX, int gridY, WebButton connectionButton) {
+    private void createConnectButton(GridBagConstraints bagConstraints, String connectionType, int gridX, int gridY,
+                                     WebButton connectionButton, int top, int left, int bottom, int right) {
         connectionButton = new WebButton(ClientConstants.CONNECT + connectionType);
         connectionButton.setPreferredSize(new Dimension(140, 50));
         connectionButton.setBackground(Color.decode(ClientConstants.PANEL_COLOR_HEX));
@@ -267,7 +268,7 @@ public class HeaderView extends HeaderAbstractView {
         bagConstraints.gridx = gridX;
         bagConstraints.gridy = gridY;
         bagConstraints.gridheight = 3;
-        bagConstraints.insets = new Insets(0, 20, 70, 10);
+        bagConstraints.insets = new Insets(top,left,bottom, right);
         add(connectionButton, bagConstraints);
         if(connectionType.equals("EMOTIONS")) {
         	connectButtonEmotion = connectionButton;
@@ -281,7 +282,8 @@ public class HeaderView extends HeaderAbstractView {
      *
      * @param bagConstraints to set position of button on panel.
      */
-    private void createServerOpenButton(GridBagConstraints bagConstraints, String connectionType, int gridX, int gridY, WebButton serverButton) {
+    private void createServerOpenButton(GridBagConstraints bagConstraints, String connectionType, int gridX, int gridY,
+                                        WebButton serverButton, int top, int left, int bottom, int right) {
     	serverButton = new WebButton(ClientConstants.OPEN_SERVER + connectionType);
     	serverButton.setPreferredSize(new Dimension(140, 50));
     	serverButton.setBackground(Color.decode(ClientConstants.PANEL_COLOR_HEX));
@@ -295,7 +297,7 @@ public class HeaderView extends HeaderAbstractView {
         bagConstraints.gridx = gridX;
         bagConstraints.gridy = gridY;
         bagConstraints.gridheight = 3;
-        bagConstraints.insets = new Insets(0, 20, 40, 20);
+        bagConstraints.insets = new Insets(top,left,bottom, right);
         add(serverButton, bagConstraints);
         if(connectionType.equals("EMOTIONS")) {
         	serverOpenButtonEmotion = serverButton;
