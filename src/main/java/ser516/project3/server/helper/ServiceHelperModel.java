@@ -10,6 +10,10 @@ public class ServiceHelperModel extends java.util.Observable {
     private String logMessage;
     private static ServiceHelperModel serviceModel;
 
+    public ServiceHelperModel() {
+    	logMessage = "";
+    }
+    
     public static ServiceHelperModel getInstance(){
         if (serviceModel == null) {
             serviceModel = new ServiceHelperModel();
