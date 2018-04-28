@@ -13,6 +13,11 @@ public class BodyMessageModel {
 	    
 	    private HashMap<String, Double> bodyVitalsMap = new HashMap<String, Double>();
 	    
+	    public BodyMessageModel(){
+	    	interval = 1;
+	    	timeStamp = 0;
+	    }
+	    
 
 
 	    /**
