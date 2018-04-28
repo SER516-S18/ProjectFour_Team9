@@ -1,15 +1,13 @@
 package ser516.project3.server.controller;
 
-import ser516.project3.constants.ServerConstants;
+import javax.swing.JSpinner;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import ser516.project3.server.Components.ServerCommonData;
 import ser516.project3.server.Components.Health.HealthAbstractController;
 import ser516.project3.server.Components.Health.HealthModel;
 import ser516.project3.server.Components.Health.HealthView;
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.util.EventListener;
 
 public class HealthController extends HealthAbstractController {
 
@@ -48,8 +46,7 @@ public class HealthController extends HealthAbstractController {
                     healthModel.setWeight((double) source.getValue());
                     break;
             }
-            ServerCommonData.getInstance().getMessage().setEmotion(source.getName(),
-                    (Double) source.getValue());
+            ServerCommonData.getInstance().getBodyMessage().setBodyVitalsMap(source.getName(), (Double) source.getValue());
         }
     }
 }
