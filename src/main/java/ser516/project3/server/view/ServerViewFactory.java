@@ -34,7 +34,7 @@ public class ServerViewFactory {
             return null;
         }
         if (viewType.equalsIgnoreCase("SERVER")) {
-            return ServerView.getServerView();
+            return new ServerView();
         } else if (viewType.equalsIgnoreCase("TOP")) {
             return new TopView((TopModel) model);
         } else if (viewType.equalsIgnoreCase("TIMER")) {

@@ -39,18 +39,10 @@ public class ServerView extends JFrame implements ViewInterface {
     private ExpressionsView expressionsView;
     private ConsoleView consoleView;
     private HealthView healthView;
+    
+    private String selectedServer;
 
     private static final Font FONT = new Font(ServerConstants.FONT_NAME, Font.BOLD, 17);
-
-	/**
-	 * Method to return the ServerView instance
-	 */
-	public static ServerView getServerView() {
-		if (serverViewInstance == null) {
-			serverViewInstance = new ServerView();
-		}
-		return serverViewInstance;
-	}
 
 	/**
 	 * Override Method to initialize the expressions view panel
@@ -60,10 +52,16 @@ public class ServerView extends JFrame implements ViewInterface {
 	public void initializeView(ViewInterface[] subViews) {
 		topView = (TopView) subViews[0];
 		timerView = (TimerView) subViews[1];
-		emotionsView = (EmotionsView) subViews[2];
-		expressionsView = (ExpressionsView) subViews[3];
-		consoleView = (ConsoleView) subViews[4];
-		healthView = (HealthView) subViews[5];
+		consoleView = (ConsoleView) subViews[2];
+		switch(selectedServer) {
+		case "EMOTIONS_SERVER":
+			emotionsView = (EmotionsView) subViews[3];
+			expressionsView = (ExpressionsView) subViews[4];
+			break;
+		case "HEALTH_SERVER":
+			healthView = (HealthView) subViews[3];
+			break;
+		}
 
 		setLayout(new BorderLayout());
 		add(topView, BorderLayout.PAGE_START);
@@ -86,6 +84,10 @@ public class ServerView extends JFrame implements ViewInterface {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void setSelectedServer(String selectedServer) {
+		this.selectedServer = selectedServer;
+	}
 
 	/**
 	 * This method will initialize the second sub panel of the Server window
@@ -105,12 +107,15 @@ public class ServerView extends JFrame implements ViewInterface {
 		JSplitPane splitHealthPanel = new JSplitPane();
 
 		configPanel.setOpaque(false);
-
+		
 		configPanel.add(timerPanel);
-		configPanel.add(emotionsPanel);
-		configPanel.add(expressionPanel);
+		if(selectedServer.equals("EMOTIONS_SERVER")) {
+			configPanel.add(emotionsPanel);
+			configPanel.add(expressionPanel);
+		} else {
+			configPanel.add(healthPanel);
+		}
 		configPanel.add(consolePanel);
-		configPanel.add(healthPanel);
 
 		Border titledBorder = new TitledBorder(null, "Configuration", TitledBorder.LEADING, 
 				TitledBorder.TOP, FONT, null);

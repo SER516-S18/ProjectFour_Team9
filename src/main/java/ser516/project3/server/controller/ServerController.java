@@ -50,8 +50,7 @@ public class ServerController implements ControllerInterface, Observer {
     private ExpressionsController expressionsController;
     private ConsoleController consoleController;
     private ServerConnectionServiceInterface serverConnectionService;
-    
-    private enum SelectedServer {EMOTIONS_SERVER, HEALTH_SERVER};
+    private String selectedServer;
 
     /**
      * Constructor to initialize all components in the
@@ -69,6 +68,7 @@ public class ServerController implements ControllerInterface, Observer {
     
     public ServerController(Observable observable, String selectedServer) {
     	this();
+    	this.selectedServer = selectedServer;
         if(selectedServer.equals("EMOTIONS_SERVER")) {
         	initializeEmotions();
         	initializeExpressions();
@@ -84,11 +84,17 @@ public class ServerController implements ControllerInterface, Observer {
     @Override
     public void initializeView() {
         serverView = (ServerView) viewFactory.getView(ServerConstants.SERVER, null);
-        serverView = ServerView.getServerView();
-        ViewInterface subViews[] = {topController.getView(), timerController.getView(),
-                emotionsController.getView(), expressionsController.getView(),
-                consoleController.getView(), healthController.getView()};
-        serverView.initializeView(subViews);
+        serverView.setSelectedServer(selectedServer);
+        if(selectedServer.equals("EMOTIONS_SERVER")) {
+        	ViewInterface subViews[] = {topController.getView(), timerController.getView(),
+        			consoleController.getView(), emotionsController.getView(),
+        			expressionsController.getView()};
+        	serverView.initializeView(subViews);
+        } else {
+        	ViewInterface subViews[] = {topController.getView(), timerController.getView(),
+        			consoleController.getView(), healthController.getView()};
+        	serverView.initializeView(subViews);
+        }
         serverView.addServerWindowListener(new ServerWindowsListener());
         serverOpen = true;
     }
@@ -125,7 +131,6 @@ public class ServerController implements ControllerInterface, Observer {
         TopView topView = (TopView) viewFactory.getView("TOP", topModel);
         ControllerInterface subControllers[] = {consoleController};
         topController = (TopController) serverControllerFactory.getController("TOP", topModel, topView, subControllers);
-//        topController.setServerConnectionService(serverConnectionService);
         topController.initializeView();
     }
 
