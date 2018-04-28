@@ -134,7 +134,6 @@ public class HeaderView extends HeaderAbstractView {
         
     	createEmotionConnectionStatusView(gridbagConstraints);
         createHealthConnectionStatusView(gridbagConstraints);
-        createDropdowns(gridbagConstraints);
     }
     
 
@@ -304,27 +303,4 @@ public class HeaderView extends HeaderAbstractView {
         	serverOpenButtonHealth = serverButton;
         }
     }
-    
-    /**
-     * Method to create the two dropdown menu for the open server and connect buttons 
-     * @param gridbagConstraints sets the position of the dropdowns
-     */
-    private void createDropdowns(GridBagConstraints gridbagConstraints) {
-    	// Creating Drop down
-        connectServerChoice = new WebComboBox(ServerChoice);
-        connectServerChoice.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
-        gridbagConstraints.gridx = 4;
-        gridbagConstraints.gridy = 1;
-        gridbagConstraints.insets = new Insets(0, 0, 10, 10);
-        add(connectServerChoice, gridbagConstraints);
-
-        openServerChoice = new WebComboBox(ServerChoice);
-        openServerChoice.setFont(new Font(ClientConstants.FONT_NAME, Font.BOLD, FONT_SIZE));
-        gridbagConstraints.gridx = 4;
-        gridbagConstraints.gridy = 2;
-        gridbagConstraints.insets = new Insets(0, 0, 10, 10);
-        add(openServerChoice, gridbagConstraints);
-    }
-    
-    
 }
