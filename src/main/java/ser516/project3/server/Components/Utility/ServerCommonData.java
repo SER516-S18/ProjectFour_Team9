@@ -1,4 +1,4 @@
-package ser516.project3.server.Components;
+package ser516.project3.server.Components.Utility;
 
 import ser516.project3.model.BodyMessageModel;
 import ser516.project3.model.MessageModel;

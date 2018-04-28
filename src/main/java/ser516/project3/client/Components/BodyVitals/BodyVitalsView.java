@@ -18,9 +18,9 @@ import javax.swing.event.DocumentListener;
 
 import com.alee.laf.button.WebButton;
 
-import ser516.project3.client.Components.NumberTextField;
 import ser516.project3.client.Components.Graph.GraphView;
 import ser516.project3.client.Components.PerformanceMetric.PerformanceMetricModel;
+import ser516.project3.client.Components.Utility.NumberTextField;
 import ser516.project3.constants.ClientConstants;
 import ser516.project3.interfaces.ModelInterface;
 import ser516.project3.interfaces.ViewInterface;

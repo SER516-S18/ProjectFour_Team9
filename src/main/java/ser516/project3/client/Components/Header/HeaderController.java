@@ -3,10 +3,6 @@ package ser516.project3.client.Components.Header;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JDialog;
-
-import org.apache.maven.settings.Server;
-
 import com.alee.laf.combobox.WebComboBox;
 
 import ser516.project3.client.Components.ConnectionPopUp.ConnectionPopUpController;
